@@ -6,10 +6,10 @@ use Monolog\Handler\StreamHandler;
 session_start();
 
 require_once 'vendor/autoload.php';
-
-DB::$user = 'slimshop';
-DB::$password = 'FYcIUsxlc3l20rHZ';
-DB::$dbName = 'slimshop';
+//remote db password yNF3tRC[p3eC
+DB::$user = 'cp4809_pricehub';
+DB::$password = 'yNF3tRC[p3eC';
+DB::$dbName = 'cp4809_pricehub';
 DB::$encoding = 'utf8';
 
 //DB ERROR HANDLING
@@ -58,5 +58,11 @@ if (!isset($_SESSION['user'])) {
 //
 //URL/EVENT HANDLERS GO HERE 
 //
+$app->get('/', function() use($app){
+    $app->render('master.html.twig');
+});
+
+require_once 'stores.php';
+
 $app->run();
 

@@ -1,0 +1,15 @@
+Every day, both team members write the following:
+
+date and name
+
+1. What have i done / not done since last Scrum?
+2. What will I do from now until next Scrum?
+3. Where do I need help from my teammate, teacher, or internet?
+
+
+11/3/2017 -- Alex
+1. downloaded and set up framework7
+2. --products and stores PHP CRUD functions
+   -- UI for products and stores pages
+3. need help from teacher or internet for barcode reader implementation
+

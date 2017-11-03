@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 02, 2017 at 03:53 AM
+-- Generation Time: Nov 03, 2017 at 02:40 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -34,8 +34,9 @@ CREATE TABLE `prices` (
   `storeId` int(11) NOT NULL,
   `productId` int(11) NOT NULL,
   `price` decimal(6,2) NOT NULL,
+  `onSpecial` tinyint(1) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `unit` enum('unit','g','kg') NOT NULL,
+  `unit` enum('unit','g','kg','ml','l') NOT NULL,
   `picPath` varchar(100) NOT NULL,
   `comment` varchar(500) NOT NULL,
   `dateRegistered` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
