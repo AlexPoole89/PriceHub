@@ -62,7 +62,12 @@ $app->get('/', function() use($app){
     $app->render('master.html.twig');
 });
 
+
 require_once 'stores.php';
+require_once 'products.php';
+require_once 'users.php';
+require_once 'prices.php';
+
 
 $app->run();
 

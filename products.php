@@ -5,7 +5,7 @@ if (false) {
     $log = new Logger('main');
 }
 
-$app->get('/about', function() use($app, $log){
-    $app->render('');
+$app->get('/products/add', function() use($app, $log){
+    $app->render('products_addedit.html.twig');
 });
 
