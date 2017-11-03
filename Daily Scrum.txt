@@ -13,3 +13,7 @@ date and name
    -- UI for products and stores pages
 3. need help from teacher or internet for barcode reader implementation
 
+11/3/2017 Derek
+1.setup project with frameworks
+2.-Prices and users crud/ui
+3. nothing yet
