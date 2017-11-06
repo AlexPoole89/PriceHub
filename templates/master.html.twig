@@ -5,12 +5,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
-        <title>My App</title>
+        <title>{% block title %}{% endblock %}</title>
 
-        <link rel="stylesheet" href="css/framework7.ios.min.css">
-        <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
-
-        <link rel="stylesheet" href="css/my-app.css">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>  
+        <link rel="stylesheet" href="/css/framework7.ios.min.css">
+        <link rel="stylesheet" href="/css/framework7.ios.colors.min.css">
+ <link rel="stylesheet" href="/css/framework7-icons.css">
+        <link rel="stylesheet" href="/css/my-app.css">
+        {% block headextra %} {% endblock %}
     </head>
     <body>
 
@@ -41,10 +43,10 @@
 
                         <div class="page-content">
 
+                           
+                            {% block content %}{% endblock %}
 
-                          {% block content %} {% endblock %}
-
-
+                      
                     </div>
                 </div>
             </div>
@@ -233,5 +235,6 @@
     <script type="text/javascript" src="js/framework7.min.js"></script>
 
     <script type="text/javascript" src="js/my-app.js"></script>
+    <script>{% block scriptextra %}{% endblock %}</script>
 </body>
 </html>

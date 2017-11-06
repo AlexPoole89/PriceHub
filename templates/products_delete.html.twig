@@ -1,0 +1,47 @@
+{% extends "master.html.twig" %}
+
+
+{% if errorList %}
+    <ul>
+        {% for error in errorList %}
+            <li>{{error}}</li>
+            {% endfor %}
+    </ul>
+{% endif %}
+{% block content %}
+    <div class="page-content">
+        <div class="content-block-title">Delete Product</div>
+        <div class="list-block">
+            <ul>
+                <li class="item-content">
+                    <div class="item-media"><img src="{{p.picPath}}"></div>
+                    <div class="item-inner">
+                        <div class="item-title">{{p.name}}</div>
+                        <div class="item-after">Label</div>
+                    </div>
+                </li>
+            </ul>
+            <div class="list-block-label">Are you sure you want to delete this product?</div>
+        </div>
+        <form method="post" class="ajax-submit-onchange">
+            <div class="row">
+                <div class="col-50">
+                    <a href="/" class="button button-big button-red">Cancel</a>
+                </div>
+        </form>
+        {# action not necessary since we're already on URL
+           looking like action="/admin/products/delete/{{p.id}}" #}
+        <form method="post" class="ajax-submit-onchange">
+            <input type="hidden" name="confirmed" value="true">
+            <div class="col-50">
+                <a href="/products/delete/{{p.id}}" class="button button-big button-green">Submit</a>
+            </div>
+    </div> 
+</form>
+</div
+</div>
+
+
+
+{% endblock %}
+
