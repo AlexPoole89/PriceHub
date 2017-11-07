@@ -67,6 +67,7 @@ $app->post('/priceadd', function() use ($app) {
         if (!$product) {
             $product = DB::insert('products', array('name' => $productName, 'userId' => $_SESSION['user']['id']));
         }
+        $product = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
         $productId = $product['id'];
 
         //check if store exists
@@ -74,10 +75,8 @@ $app->post('/priceadd', function() use ($app) {
         if (!$store) {
             $store = DB::insert('stores', array('name' =>$storeName, 'userId' =>$_SESSION['user']['id'], 'longitude'=>$long, 'latitude'=>$lat));
         }
+        $store = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s', $storeName);
         $storeId = $store['id'];
-
-
-
 
         DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial, 'unit' => $unit, 'userId' => $_SESSION['user']['id']));
 
