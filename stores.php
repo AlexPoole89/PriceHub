@@ -108,10 +108,11 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         $app->render('stores_addedit.html.twig', array(
             'errorList' => $errorList,
             'v' => $values));
-    } else { //2. successful submission
+    } else { //2. successful submission        
+        $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
         if ($storeImage) { //   '[^a-zA-Z0-9_\.-]' 
            // $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $storeImage['name']);
-            $logoPath = 'uploads/' . $storeImage['name'];  // $storeImage['name']
+            $logoPath = 'uploads/' . $storeImage['name'];  //  write new file nname with function   $storeImage['name'] //
             if (!move_uploaded_file($storeImage['tmp_name'], $logoPath)) {
                 $log->err(sprintf("Error moving uploaded file: " . print_r($storeImage, true)));
                 $app->render('error_internal.html.twig');
@@ -119,12 +120,16 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             }
             //TODO: if EDITING and new file is uploaded we should delete the old one in uploads
             $values['logoPath'] = "/" . $logoPath;
+            // if updating store with new image then remove the old one
+            if ($id != -1) {
+                unlink('.' . $store['logoPath']);
+            }
         }
 //UPDATE
         if ($id != -1) {
 //VERIFY USER MATCHES ORIGINAL STORE ADDER
-            $row = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
-            if ($row['userId'] == $_SESSION['user']['id']) {
+            
+            if ($store['userId'] == $_SESSION['user']['id']) {
                 DB::update('stores', $values, "id=%i", $id);
             } else { //access denied
                 $app->render('access_denied.html.twig');
@@ -193,14 +198,14 @@ $app->get('/stores/list', function() use($app) {
     $app->render('stores_list.html.twig', array('list' => $storeList));
 });
 
-
+//
 //STORE PROFILE
 $app->get('/stores/store/:id', function($id = -1) use($app) {
-    if (!$_SESSION['user']) {
-        $app->render('access_denied.html.twig');
-        return;
-    }
+//    if (!$_SESSION['user']) {
+//        $app->render('access_denied.html.twig');
+//        return;
+//    }
     $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
-    $app->render('stores_list.html.twig', array('store' => $store));
+    $app->render('stores_view.html.twig', array('store' => $store));
 });
 

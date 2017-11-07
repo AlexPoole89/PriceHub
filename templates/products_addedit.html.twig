@@ -1,14 +1,17 @@
 {% extends "master.html.twig" %}
 
-
-{# {% if errorList %}
-    <ul>
-        {% for error in errorList %}
-            <li>{{error}}</li>
-            {% endfor %}
-    </ul>
-{% endif %} #}
 {% block content %}
+    
+{% if errorList %}
+    <div class="content-block"> 
+        <ul>
+            {% for error in errorList %}
+                <li>{{error}}</li>
+                {% endfor %}
+        </ul>
+    </div>
+{% endif %} 
+
 
     <div class="content-block"> 
         <div class="content-block-title">Products</div>
@@ -18,10 +21,10 @@
                     <!-- Text inputs -->
                     <li>
                         <div class="item-content">
-                            <div class="item-media"><i class="icon f7-icons">person</i></div>
+                            <div class="item-media"><i class="icon f7-icons">bag</i></div>                            
                             <div class="item-inner">
                                 <div class="item-input">
-                                    <input type="text" placeholder="Name" name="name" value="{{v.name}}">
+                                    <input type="text" placeholder="Product name" name="name" value="{{v.name}}">
                                 </div>
                             </div>
                         </div>
@@ -45,7 +48,7 @@
                             <div class="item-media"><i class="icon f7-icons">compose</i></div>
                             <div class="item-inner">
                                 <div class="item-input">
-                                    <textarea name="comment" class="resizable">{{v.comment}}</textarea>
+                                    <textarea placeholder="Write a comment..." name="comment" class="resizable">{{v.comment}}</textarea>
                                 </div>    
                             </div>
                         </div>

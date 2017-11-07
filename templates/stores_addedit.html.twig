@@ -11,7 +11,7 @@
 
 
     <div class="content-block"> 
-        <div class="content-block-title">Products</div>
+        <div class="content-block-title">Stores</div>
         <form method="post" enctype="multipart/form-data">
             <div class="list-block">
                 <ul>
@@ -44,31 +44,9 @@
                     </li>
                     <input type="hidden" name="longitude" id="longitude">
                     <input type="hidden" name="latitude" id="latitude">
-                    {# display longitude #}
-                    {#  <li>
-                         <div class="item-content">
-                             
-                             <div class="item-inner">                            
-                                     <div id="longitude" class="list-block-label"></div>                                                     
-                         </div>
-                     </li> #}
-                    {# <li>
-                         <div class="item-content">
- 
-                             <div class="item-inner">        #}                    
+                    <input type="hidden" name="address" id="address">
                     <div class="list-block-label"><p id="noGeo"></p></div>                                                     
-                        {#        </div>
-                        </li>  #}
 
-                    {#display latitude #}
-                    {#      <li>
-                             <div class="item-content">
-                                 
-                                 <div class="item-inner">                            
-                                     <div class="list-block-label"><p id="latitude"></p></div>    
-                                     <input type="hidden" name="latitude">
-                             </div>
-                         </li> #}
                     {# image path #}
                     <li>
                         <div class="item-content">
@@ -81,6 +59,7 @@
                         </div>
                     </li>
 
+                    
                     {# submit #}
                     <li>
                         <div class="item-content">
@@ -112,6 +91,8 @@
 
             document.getElementById("longitude").value = long;
             document.getElementById("latitude").value = lat;
+            
+            
         }
 
         function showError(error) {
