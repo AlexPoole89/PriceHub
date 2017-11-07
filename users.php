@@ -26,7 +26,7 @@ $app->get('/register', function() use ($app) {
 });
 
 $app->post('/register', function() use ($app) {
-    
+
     $email = $app->request()->post('email');
     $pass1 = $app->request()->post('pass1');
     $pass2 = $app->request()->post('pass2');
@@ -35,7 +35,7 @@ $app->post('/register', function() use ($app) {
     $errorList = array();
 
 
-  
+
     if (filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
         array_push($errorList, "Invalid email");
         $value['email'] = '';
@@ -71,28 +71,28 @@ $app->post('/register', function() use ($app) {
 
 
 
- //Login
-    $app->get('/login', function() use ($app){
+//Login
+$app->get('/login', function() use ($app) {
     $app->render('login.html.twig');
 });
 
-$app->post('/login', function() use ($app){
-   
-   $email = $app->request()->post('email');
-   $password = $app->request()->post('password');
-   
-   $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
-   
-   $error = false;
-   
+$app->post('/login', function() use ($app) {
+
+    $email = $app->request()->post('email');
+    $password = $app->request()->post('password');
+
+    $row = DB::queryFirstRow("SELECT * FROM users WHERE email=%s", $email);
+
+    $error = false;
+
     if (!$row) {
         $error = true; // user not found
     } else {
-        if (password_verify($password, $row['password'])== false) {
+        if (password_verify($password, $row['password']) == false) {
             $error = true; // password invalid
         }
     }
-    
+
     if ($error) {
         //failed
         $app->render('login.html.twig', array('error' => true));
@@ -102,12 +102,11 @@ $app->post('/login', function() use ($app){
         $_SESSION['user'] = $row;
         $app->render('login_success.html.twig', array('userSession' => $_SESSION['user']));
     }
-    
 });
-   
-     $app->get('/logout', function() use ($app){
-     $_SESSION['user'] = array();
-     $app->render('logout.html.twig', array('userSession' => $_SESSION['user']));
+
+$app->get('/logout', function() use ($app) {
+    $_SESSION['user'] = array();
+    $app->render('logout.html.twig', array('userSession' => $_SESSION['user']));
 });
 
 //Password Reset
@@ -121,25 +120,72 @@ function generateRandomString($length = 10) {
     return $randomString;
 }
 
-$app->map('/passreset/request', function()use ($app, $log){
-    if($app->request()->isGet()){
+$app->map('/passreset/request', function()use ($app, $log) {
+    if ($app->request()->isGet()) {
         $app->render('passreset_request.html.twig');
         return;
     }
-     $email= $app->request()->post('email');
-     $user = DB::queryFirstRow('SELECT * FROM users WHERE email=%s', $email);
-     if($user){
-         $secretToken = generateRandomString(50);
-         DB::insertUpdate('passresets', array('userId'=> $user['id'],'secretToken'=>$secretToken,'expiryDateTime'=>date("Y-m-d H:i:s", strtotime("+1 day"))));
-         $url = 'http://' . $_SERVER['SERVER_NAME'] . '/passreset/token/' . $secretToken;
-         $emailBody = $app->view()->render('passreset_email.html.twig',array('url'=>$url));
-         $headers ="MIME-Version: 1.0\r\n";
-         $headers .="Content-Type: text/html\r\n";
-         $headers .="From: Noreply <noreply@ipd10.com>\r\n";
-         mail($email, "Your password reset for". $_SERVER['SERVER_NAME'],$emailBody,$headers);
-         $app->render('passreset_request_success.html.twig');
-     }else{//fail
-         $app->render('passreset_request.html.twig',array('error'=> true));
-     }
-    
-})->via('GET','POST');
+    $email = $app->request()->post('email');
+    $user = DB::queryFirstRow('SELECT * FROM users WHERE email=%s', $email);
+    if ($user) {
+        $secretToken = generateRandomString(50);
+        DB::insertUpdate('passresets', array('userId' => $user['id'], 'secretToken' => $secretToken, 'expiryDateTime' => date("Y-m-d H:i:s", strtotime("+1 day"))));
+        $url = 'http://' . $_SERVER['SERVER_NAME'] . '/passreset/token/' . $secretToken;
+        $emailBody = $app->view()->render('passreset_email.html.twig', array('url' => $url));
+        $headers = "MIME-Version: 1.0\r\n";
+        $headers .= "Content-Type: text/html\r\n";
+        $headers .= "From: Noreply <noreply@ipd10.com>\r\n";
+        mail($email, "Your password reset for" . $_SERVER['SERVER_NAME'], $emailBody, $headers);
+        $log->info('Email sent for password reset for user id =' . $user['id']);
+        $app->render('passreset_request_success.html.twig');
+    } else {//fail
+        $app->render('passreset_request.html.twig', array('error' => true));
+    }
+})->via('GET', 'POST');
+
+$app->map('/passreset/token/:secretToken', function($secretToken)use ($app, $log) {
+    $row = DB::query('SELECT * FROM passresets WHERE secretToken=%s', $secretToken);
+    if (!$row) {
+        $app->render('passreset_notfound_expired.html.twig');
+        return;
+    }
+
+    $user = DB::queryFirstRow('SELECT * FROM users WHERE id=%i', $row['userId']);
+    if (!$user) {
+        $log->err(sprintf('Passreset for token user id=%d not found', $row['secretToken'], $row['userId']));
+        $app->render('error_internal.html.twig');
+        return;
+    }
+
+
+
+    if (strtotime($row['expiryDateTime']) < time()) {
+        $app->render('passreset_form.html.twig', array('email' => $user['email']));
+        return;
+    } else {
+         
+        $pass1 = $app->request()->post('pass1');
+        $pass2 = $app->request()->post('pass2');
+        $errorList = array();
+        if ($pass1 != $pass2) {
+            array_push($errorList, "Passwords do not match");
+        } else {
+            if (strlen($pass1) < 2 || strlen($pass1) > 50) {
+                array_push($errorList, "Password must be between 2 and 50 characters");
+            }
+        }
+
+        if ($errorList) {
+            // 3. failed submission
+            $app->render('register.html.twig', array(
+                'errorList' => $errorList,
+                'v' => $values));
+        } else {
+
+            // 2. successful submission
+            $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
+            DB::update('users', array('password' => $passEnc), 'id=%d', $user['id']);
+            $app->render('passreset_success.html.twig', array('email' => $email));
+        }
+    }
+});
