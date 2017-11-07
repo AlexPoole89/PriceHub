@@ -1,0 +1,138 @@
+{% extends "master.html.twig" %}
+
+{% block overlayTitle %}Register{% endblock %}
+{% block headextra %}
+<script>
+window.onload = function() {
+  var startPos;
+  var geoSuccess = function(position) {
+    startPos = position;
+    document.getElementById('lat').value = startPos.coords.latitude;
+    document.getElementById('long').value = startPos.coords.longitude;
+  };
+  navigator.geolocation.getCurrentPosition(geoSuccess);
+};
+</script>
+{% endblock %}
+{% block content %}
+
+    <form method="post">
+ <input type="hidden" name="lat" id="lat" value="">
+    <input type="hidden" name="long" id="long" value="">
+<div class="list-block">
+    <br>
+  <ul>
+    <!-- Text inputs -->
+
+       <li>
+      <div class="item-content">
+        <div class="item-inner">
+          <div class="item-title label">Barcode</div>
+          <div class="item-input">
+              <button onclick="Quagga.start();" class="external">Scan</button>
+          </div>
+        </div>
+      </div>
+    </li>
+    
+      <li>
+      <div class="item-content">
+        <div class="item-inner">
+          <div class="item-title label">Store</div>
+          <div class="item-input">
+            <input type="text" placeholder="Store" name="store">
+          </div>
+        </div>
+      </div>
+    </li>
+    
+    <li>
+      <div class="item-content">
+        <div class="item-inner">
+          <div class="item-title label">Product</div>
+          <div class="item-input">
+            <input type="text" placeholder="Product name" name="product">
+          </div>
+        </div>
+      </div>
+    </li>
+
+        <li>
+      <div class="item-content">
+        <div class="item-inner">
+          <div class="item-title label">Price</div>
+          <div class="item-input">
+            <input type="number" step="0.01" placeholder="0.00" name="price">
+          </div>
+        </div>
+      </div>
+    </li>
+    
+     <li>
+      <div class="item-content">
+        <div class="item-inner">
+          <div class="item-title label">On Special</div>
+          <div class="item-input">
+            <label class="label-switch">
+              <input type="checkbox" name="onSpecial">
+              <div class="checkbox"></div>
+            </label>
+          </div>
+        </div>
+      </div>
+    </li>
+    
+       <li>
+      <div class="item-content">
+        <div class="item-inner">
+          <div class="item-title label">Unit</div>
+          <div class="item-input">
+            <select name="unit">
+              <option style="color:black;" value="unit">unit</option>
+              <option style="color:black;" value="g">g(grams)</option>
+               <option style="color:black;" value="kg">kg(kilograms)</option>
+              <option style="color:black;" value="ml">ml(mililiters)</option>
+               <option style="color:black;" value="l">l(liters)</option> 
+            </select>
+          </div>
+        </div>
+      </div>
+    </li>
+    
+    <li>
+        
+        <div class="item-content">
+             <div class="item-inner">
+        <input type="submit" value="Add Price" class="button button-big color-blue"/>
+             </div>
+        </div>
+    </li>
+       <li>
+       
+        <div class="item-content">
+             <div class="item-inner">
+                 <a href="/pricehub/pricelist" class="external">Go Back</a>
+             </div>
+        </div>
+    </li>
+  </ul>
+   
+    </form>
+    {% if errorList %}
+        <br>
+        <div class="item-content">
+<ul>
+    {% for error in errorList %}
+        
+    <li>{{error}}</li>
+    {% endfor %}
+    
+</ul>
+{% endif %}
+    </div>
+</div>
+  
+    
+    
+{% endblock %}
+

@@ -1,0 +1,65 @@
+{% extends "master.html.twig" %}
+
+{% block overlayTitle %}Login{% endblock %}
+
+{% block content %}
+
+    <form method="post">
+
+<div class="list-block">
+    <br>
+  <ul>
+    <!-- Text inputs -->
+
+    <li>
+      <div class="item-content">
+        <div class="item-inner">
+          <div class="item-title label">E-mail</div>
+          <div class="item-input">
+            <input type="email" placeholder="E-mail" name="email">
+          </div>
+        </div>
+      </div>
+    </li>
+
+        <li>
+      <div class="item-content">
+        <div class="item-inner">
+          <div class="item-title label">Password</div>
+          <div class="item-input">
+            <input type="password" placeholder="Password" name="password">
+          </div>
+        </div>
+      </div>
+    </li>
+    
+  
+    <li>
+        <div class="item-content">
+             <div class="item-inner">
+        <input type="submit" value="Login" class="button button-big color-blue"/>
+             </div>
+        </div>
+       </li>
+       <li>
+        <div class="item-content">
+             <div class="item-inner">
+                 <a href="/pricehub/register" class='external'>Or create an account</a>
+             </div>
+        </div>
+            </li>
+  
+  </ul>
+    
+    <div class="content-block">
+        {% if error %}
+    <p>Login failed, try again or <a href="/pricehub/register">register</a></p>
+{% endif %}
+    </div>
+    
+    </div>
+</div>
+    
+    
+    
+{% endblock %}
