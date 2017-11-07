@@ -13,6 +13,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
             'title' => array($this, 'block_title'),
             'headextra' => array($this, 'block_headextra'),
             'content' => array($this, 'block_content'),
+            'scriptextra' => array($this, 'block_scriptextra'),
         );
     }
 
@@ -31,14 +32,15 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
         $this->displayBlock('title', $context, $blocks);
         echo "</title>
 
+         <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>  
         <link rel=\"stylesheet\" href=\"/css/framework7.ios.min.css\">
         <link rel=\"stylesheet\" href=\"/css/framework7.ios.colors.min.css\">
  <link rel=\"stylesheet\" href=\"/css/framework7-icons.css\">
         <link rel=\"stylesheet\" href=\"/css/my-app.css\">
         ";
-        // line 14
-        $this->displayBlock('headextra', $context, $blocks);
         // line 15
+        $this->displayBlock('headextra', $context, $blocks);
+        // line 16
         echo "    </head>
     <body>
 
@@ -71,9 +73,9 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
 
                            
                             ";
-        // line 46
-        $this->displayBlock('content', $context, $blocks);
         // line 47
+        $this->displayBlock('content', $context, $blocks);
+        // line 48
         echo "
                       
                     </div>
@@ -261,10 +263,14 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
         </div>
     </div>
 
-    <script type=\"text/javascript\" src=\"js/framework7.min.js\"></script>
+    <script type=\"text/javascript\" src=\"/js/framework7.min.js\"></script>
 
-    <script type=\"text/javascript\" src=\"js/my-app.js\"></script>
-</body>
+    <script type=\"text/javascript\" src=\"/js/my-app.js\"></script>
+    ";
+        // line 238
+        $this->displayBlock('scriptextra', $context, $blocks);
+        // line 239
+        echo "</body>
 </html>
 ";
     }
@@ -274,14 +280,19 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
     {
     }
 
-    // line 14
+    // line 15
     public function block_headextra($context, array $blocks = array())
     {
         echo " ";
     }
 
-    // line 46
+    // line 47
     public function block_content($context, array $blocks = array())
+    {
+    }
+
+    // line 238
+    public function block_scriptextra($context, array $blocks = array())
     {
     }
 
@@ -292,7 +303,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
 
     public function getDebugInfo()
     {
-        return array (  284 => 46,  278 => 14,  273 => 8,  77 => 47,  75 => 46,  42 => 15,  40 => 14,  31 => 8,  22 => 1,);
+        return array (  295 => 238,  290 => 47,  284 => 15,  279 => 8,  273 => 239,  271 => 238,  79 => 48,  77 => 47,  44 => 16,  42 => 15,  32 => 8,  23 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -314,6 +325,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
         <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\">
         <title>{% block title %}{% endblock %}</title>
 
+         <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>  
         <link rel=\"stylesheet\" href=\"/css/framework7.ios.min.css\">
         <link rel=\"stylesheet\" href=\"/css/framework7.ios.colors.min.css\">
  <link rel=\"stylesheet\" href=\"/css/framework7-icons.css\">
@@ -538,9 +550,10 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
         </div>
     </div>
 
-    <script type=\"text/javascript\" src=\"js/framework7.min.js\"></script>
+    <script type=\"text/javascript\" src=\"/js/framework7.min.js\"></script>
 
-    <script type=\"text/javascript\" src=\"js/my-app.js\"></script>
+    <script type=\"text/javascript\" src=\"/js/my-app.js\"></script>
+    {% block scriptextra %}{% endblock %}
 </body>
 </html>
 ", "master.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\master.html.twig");

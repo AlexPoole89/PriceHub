@@ -1,0 +1,36 @@
+Every day, both team members write the following:
+
+date and name
+
+1. What have i done / not done since last Scrum?
+2. What will I do from now until next Scrum?
+3. Where do I need help from my teammate, teacher, or internet?
+
+
+11/3/2017 -- Alex
+1. downloaded and set up framework7
+2. --products and stores PHP CRUD functions
+   -- UI for products and stores pages
+3. need help from teacher or internet for barcode reader implementation
+
+11/3/2017 Derek
+1.setup project with frameworks
+2.-Prices and users crud/ui
+3. nothing yet
+
+
+11/4/2017 -- Alex
+1. wrote up html for products page
+2. write script for products CRUD
+3. nothing
+
+
+11/5/2017 -- Alex
+1. wrote script for products page CRUD
+2. write html and start writing CRUD script for stores page
+3. how to pass geolocation from HTML5 and JavaScript to PHP variables
+
+11/6/2017 -- Alex 
+1. started writing CRUD script for stores page
+2. work on passing JavaScript geolocation variables to PHP variables
+3. pass variables on checkbox click or on button submit?

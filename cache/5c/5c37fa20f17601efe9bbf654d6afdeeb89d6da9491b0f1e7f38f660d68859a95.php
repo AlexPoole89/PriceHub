@@ -28,10 +28,10 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
     public function block_content($context, array $blocks = array())
     {
         // line 12
-        echo "   
+        echo "
     <div class=\"content-block\"> 
         <div class=\"content-block-title\">Products</div>
-        <form method=\"post\" enctype=\"multipart/form-data\" class=\"ajax-submit\">
+        <form method=\"post\" enctype=\"multipart/form-data\" >
             <div class=\"list-block\">
                 <ul>
                     <!-- Text inputs -->
@@ -77,15 +77,25 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
                             </div>
                         </div>
                     </li>
-                </ul>
-               <input type=\"submit\" class=\"button button-big button-fill\" value=\"";
-        // line 54
+
+                    ";
+        // line 55
+        echo "                    <li>
+                        <div class=\"item-content\">
+                            <div class=\"item-inner\">
+                                <input type=\"submit\" class=\"button button-big button-fill\" value=\"";
+        // line 58
         if (($context["isEditing"] ?? null)) {
             echo "Update";
         } else {
             echo "Add";
         }
         echo "Product\">
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+
         </form>
     </div> 
 </div>
@@ -104,7 +114,7 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
 
     public function getDebugInfo()
     {
-        return array (  83 => 54,  74 => 48,  67 => 43,  54 => 31,  45 => 24,  31 => 12,  28 => 11,  11 => 1,);
+        return array (  88 => 58,  83 => 55,  74 => 48,  67 => 43,  54 => 31,  45 => 24,  31 => 12,  28 => 11,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -128,10 +138,10 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
     </ul>
 {% endif %} #}
 {% block content %}
-   
+
     <div class=\"content-block\"> 
         <div class=\"content-block-title\">Products</div>
-        <form method=\"post\" enctype=\"multipart/form-data\" class=\"ajax-submit\">
+        <form method=\"post\" enctype=\"multipart/form-data\" >
             <div class=\"list-block\">
                 <ul>
                     <!-- Text inputs -->
@@ -169,8 +179,17 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
                             </div>
                         </div>
                     </li>
+
+                    {# submit #}
+                    <li>
+                        <div class=\"item-content\">
+                            <div class=\"item-inner\">
+                                <input type=\"submit\" class=\"button button-big button-fill\" value=\"{% if isEditing %}Update{% else %}Add{% endif %}Product\">
+                            </div>
+                        </div>
+                    </li>
                 </ul>
-               <input type=\"submit\" class=\"button button-big button-fill\" value=\"{% if isEditing %}Update{% else %}Add{% endif %}Product\">
+
         </form>
     </div> 
 </div>

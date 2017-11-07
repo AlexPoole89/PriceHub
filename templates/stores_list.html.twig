@@ -1,0 +1,28 @@
+{% extends "master.html.twig" %}
+ 
+{% block content %}
+
+{% for l in list %}                      
+                       <img style="float: left;" src="{{l.logoPath}}" width="40">                          
+                       <p>{{l.name}} posted on {{l.datePosted}}</p>
+                       <h2>{{l.title}}</h2>  
+                       <p>{{l.body}}</p>
+                        {% else %}
+                            <tr><td colspan="6">No posts to display</td></tr>
+                        {% endfor %}
+<div class="list-block">
+  <ul>
+    <li>
+      <a href="" class="item-link item-content">
+        <div class="item-media"><img src="{{l.logoPath}}" width="40"> </div>
+        <div class="item-inner">
+          <div class="item-title">{{l.name}}</div>
+          <div class="item-after"></div>
+        </div>
+      </a>
+    </li>
+    <li>
+  </ul>
+  <div class="list-block-label">List block label text goes here</div>
+</div>
+{% endblock %}

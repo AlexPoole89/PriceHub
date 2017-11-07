@@ -7,9 +7,13 @@ session_start();
 
 require_once 'vendor/autoload.php';
 //remote db password yNF3tRC[p3eC
-DB::$user = 'cp4809_pricehub';
-DB::$password = 'yNF3tRC[p3eC';
-DB::$dbName = 'cp4809_pricehub';
+//DB::$user = 'cp4809_pricehub';
+//DB::$password = 'yNF3tRC[p3eC';
+//DB::$dbName = 'cp4809_pricehub';
+//DB::$encoding = 'utf8';
+DB::$user = 'root';
+DB::$password = '';
+DB::$dbName = 'test';
 DB::$encoding = 'utf8';
 
 //DB ERROR HANDLING

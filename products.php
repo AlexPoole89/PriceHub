@@ -121,7 +121,7 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 //
 //DELETE PRODUCT
 // PRODUCT DELETE FIRST SHOW
-$app->get('/delete/:id', function($id) use ($app) {
+$app->get('/products/delete/:id', function($id) use ($app) {
 //VERIFY USER MATCHES ORIGINAL product adder
     $product = DB::queryFirstRow("SELECT * FROM products WHERE id=%i", $id);
     if (!$_SESSION['user'] || $product['userId'] != $_SESSION['user']['id']) {
@@ -157,7 +157,13 @@ $app->post('/products/delete/:id', function($id) use ($app) {
     }
 });
 //
-
-
-
-
+//
+//LIST ALL PRODUCTS
+$app->get('/products/list', function() use($app){
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    } 
+    $productsList = DB::query("SELECT * FROM products WHERE products.userId=users.id");
+    $app->render('products_list.html.twig', array('list' => $productList));
+});

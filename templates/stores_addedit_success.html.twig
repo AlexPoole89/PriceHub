@@ -1,0 +1,22 @@
+{% extends "master.html.twig" %}
+
+{% block title %} Product {% if isEditing %}edited{% else %}added{% endif %}{% endblock %}
+
+{% block content %}    
+    <div class="list-block">
+  <ul>
+    <li>
+      <a href="#" class="item-link item-content">
+        <div class="item-media"><i class="icon icon-f7"></i></div>
+        <div class="item-inner">
+            <div class="item-title">{{v.name}}</div>
+          <div class="item-after">See more</div>
+        </div>
+      </a>
+    </li>
+   
+  </ul>
+  <div class="list-block-label">New store added</div>
+</div>
+{% endblock %}
+

@@ -35,10 +35,26 @@ class __TwigTemplate_89c509f0d18a1d2180929fef1162c9caaeaf93ec47751b0836d387afabf
     public function block_content($context, array $blocks = array())
     {
         // line 6
-        echo "    
-    <h3>Access Denied</h3> <br>
-    <p><a href=\"/register\">Register</a> or <a href=\"/login\">Login here</a>.</p>
-    <img src=\"/images/denied.jpg\">
+        echo "    <div class=\"list-block\">
+    <br>
+  <ul>
+      
+      <li>
+        <div class=\"item-content\">
+             <div class=\"item-inner\">
+       <a href=\"/pricehub/login\" class='external'>Login</a>
+             </div>
+        </div>
+       </li>
+       <li>
+        <div class=\"item-content\">
+             <div class=\"item-inner\">
+                 <a href=\"/pricehub/register\" class='external'>Or create an account</a>
+             </div>
+        </div>
+            </li>
+  
+  </ul>
 ";
     }
 
@@ -72,10 +88,26 @@ class __TwigTemplate_89c509f0d18a1d2180929fef1162c9caaeaf93ec47751b0836d387afabf
 {% block title %}Access Denied{% endblock %}
 
 {% block content %}
-    
-    <h3>Access Denied</h3> <br>
-    <p><a href=\"/register\">Register</a> or <a href=\"/login\">Login here</a>.</p>
-    <img src=\"/images/denied.jpg\">
+    <div class=\"list-block\">
+    <br>
+  <ul>
+      
+      <li>
+        <div class=\"item-content\">
+             <div class=\"item-inner\">
+       <a href=\"/pricehub/login\" class='external'>Login</a>
+             </div>
+        </div>
+       </li>
+       <li>
+        <div class=\"item-content\">
+             <div class=\"item-inner\">
+                 <a href=\"/pricehub/register\" class='external'>Or create an account</a>
+             </div>
+        </div>
+            </li>
+  
+  </ul>
 {% endblock %}", "access_denied.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\access_denied.html.twig");
     }
 }
