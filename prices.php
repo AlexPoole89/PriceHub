@@ -12,9 +12,8 @@ $app->get('/price/list', function() use ($app) {
         return;
     }
     //
-    $productsList = DB::query("SELECT * FROM prices");
-    $storeName = DB::query("SELECT name FROM stores where id=%d", $productsList['id']);
-    $productName = DB::query("SELECT name FROM products where id=%d", $productsList['id']);
+    
+    $productsList = DB::query("SELECT stores.name AS storeName, products.name AS productName, price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
     $app->render('pricelist.html.twig', array('list' => $productsList,'storeName'=>$storeName,'productName' =>$productName));
 });
 
@@ -62,11 +61,12 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
     $productName = $app->request()->post('product');
     $price = $app->request()->post('price');
     $onSpecial = $app->request()->post('onSpecial');
+    $quantity = $app->request()->post('quantity');
     $unit = $app->request()->post('unit');
     $lat = $app->request()->post('lat');
     $long = $app->request()->post('long');
 
-    $values = array('store' => $storeName, 'product' => $productName, 'price' => $price, 'onSpecial' => $onSpecial, 'unit' => $unit, 'lat' => $lat, 'long' => $long);
+    $values = array('store' => $storeName, 'product' => $productName, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity, 'unit' => $unit, 'lat' => $lat, 'long' => $long);
     $errorList = array();
 
     if (isset($onSpecial)) {
@@ -98,7 +98,7 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 //check if product exists
         if ($id != -1) {
 
-            DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial, 'unit' => $unit, 'userId' => $_SESSION['user']['id']), "id=%i", $id);
+            DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity,'unit' => $unit, 'userId' => $_SESSION['user']['id']), "id=%i", $id);
         } else {
             $product = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
             if (!$product) {
@@ -114,7 +114,7 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             $storeId = $store['id'];
 
 
-            DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial, 'unit' => $unit, 'userId' => $_SESSION['user']['id']));
+            DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity,'unit' => $unit, 'userId' => $_SESSION['user']['id']));
         }
         $app->render('price_addedit_success.html.twig', array('isEditing' => ($id != -1)));
     }
@@ -126,10 +126,12 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 //delete a price
 
 $app->get('/price/delete/:id', function($id) use ($app) {
-    if (!$_SESSION['user']) {
+     $priceDelete = DB::queryFirstRow("SELECT * FROM prices WHERE id=%i", $id);
+    if (!$_SESSION['user'] || $_SESSION['user']['id'] != $priceDelete['userId']) {
         $app->render('access_denied.html.twig');
         return;
-    }
+    } 
+        
     $price = DB::queryFirstRow('SELECT * FROM prices WHERE id=%d', $id);
     if (!$price) {
         $app->render('admin_not_found.html.twig');

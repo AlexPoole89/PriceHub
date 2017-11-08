@@ -30,8 +30,10 @@
     <!-- Left panel with reveal effect-->
     <div class="panel panel-left panel-reveal">
       <div class="content-block">
+         
           {% if userSession %}
-                     <li>
+              
+               <div class="content-block">      
       <div class="item-content">
         <div class="item-inner">
           <div class="item-input">
@@ -39,8 +41,8 @@
           </div>
         </div>
       </div>
-    </li>
-               <li>
+    </div>
+            <div class="content-block">   
       <div class="item-content">
         <div class="item-inner">
           <div class="item-input">
@@ -48,10 +50,11 @@
           </div>
         </div>
       </div>
-    </li>
+    </div>
             
             {% else %}
-                <li>
+               
+             <div class="content-block">
                     <div class="item-content">
         <div class="item-inner">
           <div class="item-input">
@@ -59,8 +62,8 @@
           </div>
         </div>
       </div>
-    </li>
-    <li>
+                 </div>
+    <div class="content-block">
                    <div class="item-content">
         <div class="item-inner">
           <div class="item-input">
@@ -68,10 +71,45 @@
           </div>
         </div>
       </div>
-    </li>
-    
+    </div>
+   
            
         {% endif %}
+        
+        <!--NAV AREA -->
+        <div class="list-block">
+  <ul>
+    <li>
+      <a href="#" class="item-link item-content">
+        <div class="item-media"><i class="icon icon-f7"></i></div>
+        <div class="item-inner">
+          <div class="item-title">Products</div>
+          
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="item-link item-content">
+        <div class="item-media"><i class="icon icon-f7"></i></div>
+        <div class="item-inner">
+          <div class="item-title">Stores</div>
+          
+        </div>
+      </a>
+    </li>
+     <li>
+      <a href="#" class="item-link item-content">
+        <div class="item-media"><i class="icon icon-f7"></i></div>
+        <div class="item-inner">
+          <div class="item-title">Prices</div>
+          
+        </div>
+      </a>
+    </li>
+  </ul>
+  
+</div>
+         
       </div>
     </div>
     <!-- Views -->
@@ -79,15 +117,17 @@
     <div class="views  layout-white">
       <!-- Your main view, should have "view-main" class -->
       <div class="view view-main">
+          {% block floater %}
               <a href="/price/add" class="floating-button external">
     <i class="f7-icons">add</i>
   </a>
+              {% endblock %}
         <!-- Top Navbar-->
         <div class="navbar">
           <div class="navbar-inner">
             <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
             
-            <div class="center sliding">{% block overlayTitle %}Main{% endblock %}</div>
+            <div class="center sliding">{% block overlayTitle %}PriceTrack{% endblock %}</div>
             
             <div class="right">
               <!-- 

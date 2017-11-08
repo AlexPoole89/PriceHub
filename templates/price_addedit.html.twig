@@ -1,6 +1,6 @@
 {% extends "master.html.twig" %}
 
-{% block overlayTitle %}{% if isEditing %}Update{% else %}Add{% endif %}Price{% endblock %}
+
 {% block headextra %}
     <script>
         window.onload = function () {
@@ -14,27 +14,42 @@
         };
     </script>
 {% endblock %}
+{% block floater %}{% endblock %}
 {% block content %}
+    <div class="content-block-title">{% if isEditing %}Update{% else %}Add{% endif %} Price</div>
 
     <div class="content-block"></div>
-    
+
     <form method="post">
         <input type="hidden" name="lat" id="lat" value="">
         <input type="hidden" name="long" id="long" value="">
         <div class="list-block">
             <br>
-            <ul>
-                <!-- Text inputs -->
 
-                <li>
+            <!-- Text inputs -->
+            <div class="row">
+                <div class="col-50">
                     <div class="item-content">
                         <div class="item-inner">
                             <div>
                                 <button class="button button-big button-fill external">Barcode Scan</button>
                             </div>
                         </div>
-                </li>
+                    </div>
+                </div>
 
+                <div class="col-50">
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div>
+                                <button class="button button-big button-fill external">Select Product</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <ul>
                 <li>
                     <div class="item-content">
                         <div class="item-inner">
@@ -82,40 +97,48 @@
                     </div>
                 </li>
 
-                <li>
-                    <div class="item-content">
-                        <div class="item-inner">
-                            <div class="item-title label">Unit</div>
-                            <div class="item-input">
-                                <select name="unit">
-                                    <option {%if v.unit == "unit"%} selected {%endif%} value="unit">unit</option>
-                                    <option value="g">g(grams)</option>
-                                    <option value="kg">kg(kilograms)</option>
-                                    <option  value="ml">ml(mililiters)</option>
-                                    <option  value="l">l(liters)</option> 
-                                </select>
+
+
+
+                <div class="row">
+                    <div class="col-50">
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Qty</div>
+                                <div class="item-input">
+                                    <input type="number" name="quantity" placeholder="Qty">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </li>
+                    <div class="col-50">
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-title label">Unit</div>
+                                <div class="item-input">
 
-                <li>
-
-                    <div class="item-content">
-                        <div class="item-inner">
-                            <input type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %} Price" class="button button-fill button-big color-blue"/>
-                        </div>
+                                    <select name="unit">
+                                        <option {%if v.unit == "unit"%} selected {%endif%} value="unit">unit</option>
+                                        <option value="g">g(grams)</option>
+                                        <option value="kg">kg(kilograms)</option>
+                                        <option  value="ml">ml(mililiters)</option>
+                                        <option  value="l">l(liters)</option> 
+                                    </select>
+                                </div>
+                            </div>
+                        </div>                               
                     </div>
-                </li>
-                <li>
 
-                    <div class="item-content">
-                        <div class="item-inner">
-                            <a href="/price/list" class="external">Go Back</a>
-                        </div>
-                    </div>
-                </li>
+
             </ul>
+            <div class="content-block">
+                <div class="item-content">
+                    <div class="item-inner">
+                        <input type="submit" value="{% if isEditing %}Update{% else %}Add{% endif %}" class="button button-fill button-big color-blue"/>
+                    </div>
+                </div>
+
+            </div>
 
     </form>
     {% if errorList %}

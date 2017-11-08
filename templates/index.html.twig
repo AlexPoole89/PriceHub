@@ -1,23 +1,20 @@
 {% extends "master.html.twig" %}
 
-{% block overlayTitle %}Main{% endblock %}
+
 
 {% block content %}
 
     <div class="content-block">
-   
-    <a href="/price/add" class="button button-fill button-big button-blue">Add Product</a> 
+    <a href="/price/add" class="button button-fill button-big button-blue">Add Price</a> 
     </div>
-    
     <div class="content-block">
-<div class="row">
-  <div class="col-50">
     <a href="/stores/list" class="button button-fill button-big button-blue">Stores</a>
-  </div>
-  <div class="col-50">
+    </div>
+   <div class="content-block">
     <a href="/products/list" class="button button-fill button-big button-blue">Products</a>
-  </div>
-</div>  
+    </div>  
+     <div class="content-block">
+    <a href="/price/list" class="button button-fill button-big button-blue">Prices</a> 
     </div>
 {% endblock %}
 
