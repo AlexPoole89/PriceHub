@@ -6,8 +6,8 @@
  
        
     
-<div class="card demo-card-header-pic">
-  <div style="background-image:{{s.logoPath}}" valign="bottom" class="card-header color-white no-border">{{s.name}}</div>
+<div class="card">
+  <div style="background-image:url({{s.logoPath}})" valign="bottom" class="card-header color-white no-border">{{s.name}}</div>
   <div class="card-content">
     <div class="card-content-inner">
       <p class="color-gray">Posted on January 21, 2015</p>
@@ -15,8 +15,9 @@
     </div>
   </div>
   <div class="card-footer">
-    <a href="/stores/list" class="link external">Back</a>
-    <a href="/stores/delete/{{s.id}}" class="link color-red external">Delete</a>
+    <a href="/stores/list" class="link external">Store list</a>
+    <a href="/stores/edit/{{s.id}}" class="link external">Update</a>
+    <a href="/stores/delete/{{s.id}}" class="link  external">Delete</a>
   </div>
 </div>
   

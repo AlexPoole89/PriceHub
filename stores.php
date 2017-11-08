@@ -25,7 +25,7 @@ $app->get('/stores/:op(/:id)', function($op, $id = -1) use ($app) {
         $values = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
         if (!$values) {
             $app->render('error_internal.html.twig');
-        return;
+            return;
         }
     } else {// nothing to load from database - adding
         $values = array();
@@ -50,15 +50,14 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         return;
     }
 //
-
 //extract submission
     $name = $app->request()->post('name');
     //$address
     $longitude = $app->request()->post('longitude');
     $latitude = $app->request()->post('latitude');
-    $storeImage = array();
+    $logoPath = '';
 //
-    $values = array('name' => $name, 'longitude' => $longitude, 'latitude' => $latitude, 'storeImage' => $storeImage);
+    $values = array('name' => $name, 'longitude' => $longitude, 'latitude' => $latitude, 'logoPath' => $logoPath);
     $errorList = array();
 //
     if (strlen($name) < 1 || strlen($name) > 100) {
@@ -92,7 +91,7 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 //                    array_push($errorList, "Image must not be bigger than 300x300 pixels.");
 //                }
                 //check valid file type
-                if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/png' || $info['mime'] == 'image/gif') {
+                if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/png' || $info['mime'] == 'image/gif' || $info['mime'] == 'image/bmp') {
                     //image type is valid- all good
                 } else {
                     array_push($errorList, "Image must be a JPG, GIF, or PNG only.");
@@ -112,8 +111,23 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
     } else { //2. successful submission        
         $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
         if ($storeImage) { //   '[^a-zA-Z0-9_\.-]' 
-           // $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $storeImage['name']);
-            $logoPath = 'uploads/' . $storeImage['name'];  //  write new file nname with function   $storeImage['name'] //
+            // $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $storeImage['name']);
+//            $ext = '';
+//            switch ($info['mime']) {
+//                case "image/gif":
+//                    $ext = '.gif';
+//                    break;
+//                case "image/jpeg":
+//                    $ext = '.jpg';
+//                    break;
+//                case "image/png":
+//                    $ext = '.png';
+//                    break;
+//                case "image/bmp":
+//                    $ext = '.bmp';
+//                    break;
+//            }
+            $logoPath = 'uploads/' . $storeImage['name'];  //  write new file name with function getUniqueFileNameForExtension('uploads/', $ext)
             if (!move_uploaded_file($storeImage['tmp_name'], $logoPath)) {
                 $log->err(sprintf("Error moving uploaded file: " . print_r($storeImage, true)));
                 $app->render('error_internal.html.twig');
@@ -123,22 +137,24 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             $values['logoPath'] = "/" . $logoPath;
             // if updating store with new image then remove the old one
             if ($id != -1) {
-                unlink('.' . $store['logoPath']);
+              //  unlink('.' . $values['logoPath']);
+              //  $values['logoPath'] = $logoPath;
             }
         }
 //UPDATE
         if ($id != -1) {
 //VERIFY USER MATCHES ORIGINAL STORE ADDER
-            
-         //  if ($store['userId'] == $_SESSION['user']['id']) {
-                DB::update('stores', $values, "id=%i", $id);
-         //   } else { //access denied
-              //  $app->render('access_denied.html.twig');
-             //   return;
-         //  }
-     //   } else {
+            //  if ($store['userId'] == $_SESSION['user']['id']) {
+           
+            DB::update('stores', $values, "id=%i", $id);
+            $values = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
+            //   } else { //access denied
+            //  $app->render('access_denied.html.twig');
+            //   return;
+            //  }
+            //   } else {
 //INSERT STATEMENT
-        //  DB::insert('stores', array('userId' => 1, 'name' => $name, 'longitude' => $longitude, 'latitude' => $latitude, 'logoPath' => $values['logoPath']));
+            //  DB::insert('stores', array('userId' => 1, 'name' => $name, 'longitude' => $longitude, 'latitude' => $latitude, 'logoPath' => $values['logoPath']));
         }
         $app->render('stores_addedit_success.html.twig', array('v' => $values, 'isEditing' => ($id != -1)));
     }
@@ -180,6 +196,7 @@ $app->post('/stores/delete/:id', function($id) use ($app) {
         return;
     }
     //delete store from database
+    DB::delete('prices', "storeId=%i", $id);
     DB::delete('stores', "id=%i", $id);
     if (DB::affectedRows() == 0) {
         $app->render('not_found.html.twig');

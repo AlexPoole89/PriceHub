@@ -12,16 +12,21 @@
           <div class="item-title">{{l.name}}</div>
         </div></a>
       <div class="accordion-item-content">
-        <div class="content-block">           
-                <div class="col-50">
-                   <a href="/stores/view/{{l.id}}" class="button button-big button-fill button-raised color-cyan">View</a>
+        <div class="content-block">    
+            <div class="row">
+                <div class="col-33">
+                   <a href="/stores/view/{{l.id}}" class="external button button-big button-fill button-raised color-cyan">View</a>
                 </div>
-            <form method="post"  action="/stores/delete/{{l.id}}" >
-                <input type="hidden" name="confirmed" value="true">
-                <div class="col-50">
-                    <input type="submit" class="button button-big button-fill button-raised color-pink" value="Delete">
+                 <div class="col-33">
+                   <a href="/stores/edit/{{l.id}}" class="external button button-big button-fill button-raised color-cyan">Update</a>
                 </div>
-            </form>
+            {# <form method="post"  action="/stores/delete/{{l.id}}" >
+                <input type="hidden" name="confirmed" value="true"> #}
+                <div class="col-33"> 
+                    <a href="/stores/delete/{{l.id}}" class="button button-big button-fill button-raised color-pink external">Delete</a>
+               </div>
+           {# </form> #}
+            </div>
         </div>
       </div>
     </li>

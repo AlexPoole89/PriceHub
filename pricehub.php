@@ -7,14 +7,14 @@ session_start();
 
 require_once 'vendor/autoload.php';
 //remote db password yNF3tRC[p3eC
-//DB::$user = 'cp4809_pricehub';
-//DB::$password = 'yNF3tRC[p3eC';
-//DB::$dbName = 'cp4809_pricehub';
-//DB::$encoding = 'utf8';
-DB::$user = 'root';
-DB::$password = '';
-DB::$dbName = 'test';
+DB::$user = 'cp4809_pricehub';
+DB::$password = 'yNF3tRC[p3eC';
+DB::$dbName = 'cp4809_pricehub';
 DB::$encoding = 'utf8';
+//DB::$user = 'root';
+//DB::$password = '';
+//DB::$dbName = 'test';
+//DB::$encoding = 'utf8';
 
 //DB ERROR HANDLING
 DB::$error_handler = 'sql_error_handler';
@@ -71,6 +71,15 @@ require_once 'stores.php';
 require_once 'products.php';
 require_once 'users.php';
 require_once 'prices.php';
+
+
+function getUniqueFileNameForExtension($subdir, $ext) {
+	do {
+		$name = $subdir . "/" . md5(time()) . $ext;
+	} while (file_exists($name));
+	return $name;
+}
+
 
 
 $app->run();
