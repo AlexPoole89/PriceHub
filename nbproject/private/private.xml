@@ -3,17 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/XAMPP/htdocs/php-project/pricehub.php</file>
-            <file>file:/D:/XAMPP/htdocs/php-project/templates/master.html.twig</file>
-            <file>file:/D:/XAMPP/htdocs/php-project/templates/stores_addedit.html.twig</file>
-            <file>file:/D:/XAMPP/htdocs/php-project/templates/stores_delete.html.twig</file>
-            <file>file:/D:/XAMPP/htdocs/php-project/stores.php</file>
-            <file>file:/D:/XAMPP/htdocs/php-project/templates/stores_delete_success.html.twig</file>
-            <file>file:/D:/XAMPP/htdocs/php-project/logs/errors.log</file>
-            <file>file:/D:/XAMPP/htdocs/php-project/templates/stores_addedit_success.html.twig</file>
-            <file>file:/D:/XAMPP/htdocs/php-project/products.php</file>
-            <file>file:/D:/XAMPP/htdocs/php-project/templates/products_delete_success.html.twig</file>
-            <file>file:/D:/XAMPP/htdocs/php-project/templates/products_addedit.html.twig</file>
+            <file>file:/C:/xampp/htdocs/pricehub/templates/pricelist.html.twig</file>
+            <file>file:/C:/xampp/htdocs/pricehub/templates/index.html.twig</file>
+            <file>file:/C:/xampp/htdocs/pricehub/users.php</file>
+            <file>file:/C:/xampp/htdocs/pricehub/prices.php</file>
+            <file>file:/C:/xampp/htdocs/pricehub/templates/access_denied.html.twig</file>
+            <file>file:/C:/xampp/htdocs/pricehub/templates/passreset_success.html.twig</file>
+            <file>file:/C:/xampp/htdocs/pricehub/pricehub.php</file>
+            <file>file:/C:/xampp/htdocs/pricehub/templates/register.html.twig</file>
+            <file>file:/C:/xampp/htdocs/pricehub/logs/errors.log</file>
+            <file>file:/C:/xampp/htdocs/pricehub/templates/priceadd.html.twig</file>
+            <file>file:/C:/xampp/htdocs/pricehub/templates/register_success.html.twig</file>
+            <file>file:/C:/xampp/htdocs/pricehub/templates/master.html.twig</file>
         </group>
     </open-files>
 </project-private>
