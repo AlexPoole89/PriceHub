@@ -1,28 +1,39 @@
 {% extends "master.html.twig" %}
- 
+ {% block title %}Store List{% endblock %}
 {% block content %}
-
-{% for l in list %}                      
-                       <img style="float: left;" src="{{l.logoPath}}" width="40">                          
-                       <p>{{l.name}} posted on {{l.datePosted}}</p>
-                       <h2>{{l.title}}</h2>  
-                       <p>{{l.body}}</p>
-                        {% else %}
-                            <tr><td colspan="6">No posts to display</td></tr>
-                        {% endfor %}
-<div class="list-block">
+                                                          
+<!-- List View -->
+<div class="content-block-title">Store List</div>
+<div class="list-block accordion-list">
   <ul>
-    <li>
-      <a href="" class="item-link item-content">
-        <div class="item-media"><img src="{{l.logoPath}}" width="40"> </div>
+      {% for l in list %}
+    <li class="accordion-item"><a href="#" class="item-content item-link">
         <div class="item-inner">
           <div class="item-title">{{l.name}}</div>
-          <div class="item-after"></div>
+        </div></a>
+      <div class="accordion-item-content">
+        <div class="content-block">    
+            <div class="row">
+                <div class="col-33">
+                   <a href="/stores/view/{{l.id}}" class="external button button-big button-fill button-raised color-cyan">View</a>
+                </div>
+                 <div class="col-33">
+                   <a href="/stores/edit/{{l.id}}" class="external button button-big button-fill button-raised color-cyan">Update</a>
+                </div>
+            {# <form method="post"  action="/stores/delete/{{l.id}}" >
+                <input type="hidden" name="confirmed" value="true"> #}
+                <div class="col-33"> 
+                    <a href="/stores/delete/{{l.id}}" class="button button-big button-fill button-raised color-pink external">Delete</a>
+               </div>
+           {# </form> #}
+            </div>
         </div>
-      </a>
+      </div>
     </li>
-    <li>
+    {% else %}
+                            
+                        {% endfor %}
   </ul>
-  <div class="list-block-label">List block label text goes here</div>
 </div>
+          
 {% endblock %}

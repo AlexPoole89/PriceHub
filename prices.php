@@ -6,22 +6,56 @@ if (false) {
     $log = new Logger('main');
 }
 
-$app->get('/pricelist', function() use ($app) {
-    $app->render('pricelist.html.twig');
+$app->get('/price/list', function() use ($app) {
+     if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    //
+    $productsList = DB::query("SELECT * FROM prices");
+    $storeName = DB::query("SELECT name FROM stores where id=%d", $productsList['id']);
+    $productName = DB::query("SELECT name FROM products where id=%d", $productsList['id']);
+    $app->render('pricelist.html.twig', array('list' => $productsList,'storeName'=>$storeName,'productName' =>$productName));
 });
 
-//add a price
-$app->get('/priceadd', function() use ($app) {
+//add/edit a price
+
+$app->get('/price/:op(/:id)', function($op, $id = -1) use ($app) {
     if (!$_SESSION['user']) {
         $app->render('access_denied.html.twig');
         return;
     }
-    $app->render('priceadd.html.twig');
-});
+    if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
+        echo "INVALID REQUEST"; // FIXME on Monday - display standard 404 from slim
+        return;
+    }
+    //
+    if ($id != -1) {
+        $values = DB::queryFirstRow('SELECT * FROM prices WHERE id=%i', $id);
+        if (!$values) {
+            echo "NOT FOUND";  // FIXME on Monday - display standard 404 from slim
+            return;
+        }
+    } else { // nothing to load from database - adding
+        $values = array();
+    }
+    $app->render('price_addedit.html.twig', array(
+        'v' => $values,
+        'isEditing' => ($id != -1)
+    ));
+})->conditions(array(
+    'op' => '(edit|add)',
+    'id' => '\d+'
+));
 
-$app->post('/priceadd', function() use ($app) {
+
+$app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
     if (!$_SESSION['user']) {
         $app->render('access_denied.html.twig');
+        return;
+    }
+    if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
+        $app->render('error_internal.html.twig');
         return;
     }
     $storeName = $app->request()->post('store');
@@ -32,7 +66,7 @@ $app->post('/priceadd', function() use ($app) {
     $lat = $app->request()->post('lat');
     $long = $app->request()->post('long');
 
-    $values = array('store' => $storeName, 'product' => $productName, 'price' => $price, 'onSpecial' => $onSpecial, 'unit' => $unit, 'lat'=>$lat,'long'=>$long);
+    $values = array('store' => $storeName, 'product' => $productName, 'price' => $price, 'onSpecial' => $onSpecial, 'unit' => $unit, 'lat' => $lat, 'long' => $long);
     $errorList = array();
 
     if (isset($onSpecial)) {
@@ -56,37 +90,42 @@ $app->post('/priceadd', function() use ($app) {
 
     if ($errorList) {
         // 3. failed submission
-        $app->render('priceadd.html.twig', array(
+        $app->render('price_addedit.html.twig', array(
             'errorList' => $errorList,
             'v' => $values));
     } else {
         // 2. successful submission
 //check if product exists
-        
-        $product = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
-        if (!$product) {
-            $product = DB::insert('products', array('name' => $productName, 'userId' => $_SESSION['user']['id']));
+        if ($id != -1) {
+
+            DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial, 'unit' => $unit, 'userId' => $_SESSION['user']['id']), "id=%i", $id);
+        } else {
+            $product = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
+            if (!$product) {
+                $product = DB::insert('products', array('name' => $productName, 'userId' => $_SESSION['user']['id']));
+            }
+            $productId = $product['id'];
+
+            //check if store exists
+            $store = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s', $storeName);
+            if (!$store) {
+                $store = DB::insert('stores', array('name' => $storeName, 'userId' => $_SESSION['user']['id'], 'longitude' => $long, 'latitude' => $lat));
+            }
+            $storeId = $store['id'];
+
+
+            DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial, 'unit' => $unit, 'userId' => $_SESSION['user']['id']));
         }
-        $product = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
-        $productId = $product['id'];
-
-        //check if store exists
-        $store = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s', $storeName);
-        if (!$store) {
-            $store = DB::insert('stores', array('name' =>$storeName, 'userId' =>$_SESSION['user']['id'], 'longitude'=>$long, 'latitude'=>$lat));
-        }
-        $store = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s', $storeName);
-        $storeId = $store['id'];
-
-        DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial, 'unit' => $unit, 'userId' => $_SESSION['user']['id']));
-
-        $app->render('register_success.html.twig', array());
+        $app->render('price_addedit_success.html.twig', array('isEditing' => ($id != -1)));
     }
-});
+})->conditions(array(
+    'op' => '(edit|add)',
+    'id' => '\d+'
+));
 
 //delete a price
 
-$app->get('/delete/:id', function($id) use ($app) {
+$app->get('/price/delete/:id', function($id) use ($app) {
     if (!$_SESSION['user']) {
         $app->render('access_denied.html.twig');
         return;
@@ -96,23 +135,23 @@ $app->get('/delete/:id', function($id) use ($app) {
         $app->render('admin_not_found.html.twig');
         return;
     }
-    $app->render('admin_products_delete.html.twig', array('p' => $product));
+    $app->render('price_delete.html.twig', array('p' => $product));
 });
 
-$app->post('/delete/:id', function($id) use ($app) {
+$app->post('/price/delete/:id', function($id) use ($app) {
     if (!$_SESSION['user']) {
         $app->render('access_denied.html.twig');
         return;
     }
     $confirmed = $app->request()->post('confirmed');
     if ($confirmed != 'true') {
-        $app->render('admin/not_found.html.twig');
+        $app->render('not_found.html.twig');
         return;
     }
-    DB::delete('products', "id=%i", $id);
+    DB::delete('prices', "id=%i", $id);
     if (DB::affectedRows() == 0) {
-        $app->render('admin_not_found.html.twig');
+        $app->render('not_found.html.twig');
     } else {
-        $app->render('admin_products_delete_success.html.twig');
+        $app->render('price_delete_success.html.twig');
     }
 });

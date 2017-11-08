@@ -73,5 +73,14 @@ require_once 'users.php';
 require_once 'prices.php';
 
 
+function getUniqueFileNameForExtension($subdir, $ext) {
+	do {
+		$name = $subdir . "/" . md5(time()) . $ext;
+	} while (file_exists($name));
+	return $name;
+}
+
+
+
 $app->run();
 

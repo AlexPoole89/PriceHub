@@ -31,17 +31,27 @@
     <div class="panel panel-left panel-reveal">
       <div class="content-block">
           {% if userSession %}
+                     <li>
+      <div class="item-content">
+        <div class="item-inner">
+          <div class="item-input">
+            Signed in as {{userSession.email}}
+          </div>
+        </div>
+      </div>
+    </li>
                <li>
       <div class="item-content">
         <div class="item-inner">
           <div class="item-input">
-            <a class="button button-fill external" href='/logout'>Log Out</a>Signed in as {{userSession.email}}<a class="nav-link" href="/settings"></a>
+            <a class="button button-fill external" href='/logout'>Log Out</a>
           </div>
         </div>
       </div>
     </li>
             
             {% else %}
+                <li>
                     <div class="item-content">
         <div class="item-inner">
           <div class="item-input">
@@ -50,6 +60,7 @@
         </div>
       </div>
     </li>
+    <li>
                    <div class="item-content">
         <div class="item-inner">
           <div class="item-input">
@@ -68,7 +79,7 @@
     <div class="views  layout-white">
       <!-- Your main view, should have "view-main" class -->
       <div class="view view-main">
-              <a href="/priceadd" class="floating-button external">
+              <a href="/price/add" class="floating-button external">
     <i class="f7-icons">add</i>
   </a>
         <!-- Top Navbar-->

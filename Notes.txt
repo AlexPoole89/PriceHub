@@ -27,3 +27,12 @@ echo $uniqueName;
 
 
 unlink("./uploads/234k2jlkjsadlkfjwalkjd.jpg");
+
+
+DELETE: COLOR-PINK
+UPDATE/EDIT: COLOR-CYAN
+VIEW: COLOR-CYAN
+
+------PRICES----
+load 50 most used products at start
+then ajax for products that match search name

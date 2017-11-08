@@ -18,19 +18,6 @@ date and name
 2.-Prices and users crud/ui
 3. nothing yet
 
-
-11/4/2017 -- Alex
-1. wrote up html for products page
-2. write script for products CRUD
-3. nothing
-
-
-11/5/2017 -- Alex
-1. wrote script for products page CRUD
-2. write html and start writing CRUD script for stores page
-3. how to pass geolocation from HTML5 and JavaScript to PHP variables
-
-
 11/5/2017 Derek
 1.work on crud and ui
 2.continue crud and ui
@@ -41,18 +28,6 @@ date and name
 2.continue crud and ui
 3.will need help on some queries
 
-
-11/6/2017 -- Alex 
-1. started writing CRUD script for stores page
-2. work on passing JavaScript geolocation variables to PHP variables
-3. pass variables on checkbox click or on button submit?
-
-
-11/7/2017 -- Alex
-1. completed javaScript geolocation and attached it to doc.ready
-2. continue working on store and product CRUD and UI
-3. how to get see store link to work on store successfully added page
-
 11/7/2017 Derek
 1.1.work on crud(delete/list) and ui
 2.finalize crud
@@ -60,4 +35,4 @@ date and name
 11/8/2017 Derek
 1.worked on price list queries/ui/
 2.continue
-3.may need help im
+3.may need help implementing barcode

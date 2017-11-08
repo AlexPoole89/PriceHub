@@ -1,18 +1,13 @@
 {% extends "master.html.twig" %}
-
+{% block title %}{{s.name}} Page{% endblock %}
 {% block content %}
-    {% for s in store %}
+  {#  {% for s in store %}  #}
     <div class="content-block-title">{{s.name}}</div>
  
-    <div class="card">
-  <div class="card-content">
-    <div class="card-content-inner">Another card. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-        Suspendisse feugiat sem est, non tincidunt ligula volutpat sit amet. Mauris aliquet magna justo. </div>
-  </div>
-</div>      
+       
     
-<div class="card demo-card-header-pic">
-  <div style="background-image:url(...)" valign="bottom" class="card-header color-white no-border">Journey To Mountains</div>
+<div class="card">
+  <div style="background-image:url({{s.logoPath}})" valign="bottom" class="card-header color-white no-border">{{s.name}}</div>
   <div class="card-content">
     <div class="card-content-inner">
       <p class="color-gray">Posted on January 21, 2015</p>
@@ -20,11 +15,18 @@
     </div>
   </div>
   <div class="card-footer">
-    <a href="#" class="link">Like</a>
-    <a href="#" class="link">Read more</a>
+    <a href="/stores/list" class="link external">Store list</a>
+    <a href="/stores/edit/{{s.id}}" class="link external">Update</a>
+    <a href="/stores/delete/{{s.id}}" class="link  external">Delete</a>
   </div>
 </div>
+  
+   <div class="card">
+  <div class="card-content">
+    <div class="card-content-inner">gonna put google map with location in here</div>
+  </div>
+</div>  
     
-    {% endfor %}
+   {# {% endfor %}  #}
     
     {% endblock %}

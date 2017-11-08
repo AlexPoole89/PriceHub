@@ -1,22 +1,18 @@
 {% extends "master.html.twig" %}
 
-{% block title %} Product {% if isEditing %}edited{% else %}added{% endif %}{% endblock %}
+{% block title %}Store {% if isEditing %}edited{% else %}added{% endif %}{% endblock %}
 
 {% block content %}    
-    <div class="list-block">
-  <ul>
-    <li>
-      <a href="#" class="item-link item-content">
-        <div class="item-media"><i class="icon icon-f7"></i></div>
-        <div class="item-inner">
-            <div class="item-title">{{v.name}}</div>
-          <div class="item-after">See more</div>
-        </div>
-      </a>
-    </li>
-   
-  </ul>
-  <div class="list-block-label">New store added</div>
+    <div class="content-block-title">Store {% if isEditing %}Edited{% else %}Added{% endif %}</div>
+    <div class="card">
+  <div class="card-content">
+    <div class="card-content-inner">{{v.name}} {% if isEditing %}edited{% else %}added{% endif %} successfully</div>
+  </div>
+         <div class="card-footer">
+    <a href="/stores/list" class="external">Go to list</a>
+    <a href="/stores/view/{{v.id}}" class="external">See store</a>
+  </div>
 </div>
+    
 {% endblock %}
 

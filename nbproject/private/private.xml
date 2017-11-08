@@ -5,13 +5,18 @@
         <group>
             <file>file:/C:/xampp/htdocs/php-project/templates/products_addedit.html.twig</file>
             <file>file:/C:/xampp/htdocs/php-project/templates/passreset_request_success.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/products.php</file>
             <file>file:/C:/xampp/htdocs/php-project/templates/passreset_request.html.twig</file>
             <file>file:/C:/xampp/htdocs/php-project/templates/products_addedit_success.html.twig</file>
             <file>file:/C:/xampp/htdocs/php-project/templates/stores_addedit.html.twig</file>
+            <file>file:/C:/xampp/htdocs/php-project/pricehub.php</file>
             <file>file:/C:/xampp/htdocs/php-project/templates/stores_view.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/passreset_success.html.twig</file>
+            <file>file:/C:/xampp/htdocs/php-project/templates/stores_delete.html.twig</file>
             <file>file:/C:/xampp/htdocs/php-project/users.php</file>
+            <file>file:/C:/xampp/htdocs/php-project/templates/stores_addedit_success.html.twig</file>
+            <file>file:/C:/xampp/htdocs/php-project/products.php</file>
+            <file>file:/C:/xampp/htdocs/php-project/templates/stores_delete_success.html.twig</file>
+            <file>file:/C:/xampp/htdocs/php-project/templates/pricelist.html.twig</file>
+            <file>file:/C:/xampp/htdocs/php-project/templates/passreset_success.html.twig</file>
             <file>file:/C:/xampp/htdocs/php-project/stores.php</file>
             <file>file:/C:/xampp/htdocs/php-project/templates/stores_list.html.twig</file>
         </group>
