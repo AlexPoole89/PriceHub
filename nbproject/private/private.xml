@@ -3,11 +3,22 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/D:/XAMPP/htdocs/php-project/pricehub.php</file>
             <file>file:/D:/XAMPP/htdocs/php-project/templates/master.html.twig</file>
             <file>file:/D:/XAMPP/htdocs/php-project/templates/stores_list.html.twig</file>
             <file>file:/D:/XAMPP/htdocs/php-project/stores.php</file>
             <file>file:/D:/XAMPP/htdocs/php-project/templates/stores_view.html.twig</file>
+=======
+            <file>file:/D:/Xampp/htdocs/pricetrack/templates/price_delete_success.html.twig</file>
+            <file>file:/D:/Xampp/htdocs/pricetrack/templates/index.html.twig</file>
+            <file>file:/D:/Xampp/htdocs/pricetrack/prices.php</file>
+            <file>file:/D:/Xampp/htdocs/pricetrack/templates/master.html.twig</file>
+            <file>file:/D:/Xampp/htdocs/pricetrack/templates/price_delete.html.twig</file>
+            <file>file:/D:/Xampp/htdocs/pricetrack/templates/pricelist.html.twig</file>
+            <file>file:/D:/Xampp/htdocs/pricetrack/templates/login.html.twig</file>
+            <file>file:/D:/Xampp/htdocs/pricetrack/templates/price_addedit.html.twig</file>
+>>>>>>> afc807bad5ce428651c7d364c902b314a49890a0
         </group>
     </open-files>
 </project-private>
