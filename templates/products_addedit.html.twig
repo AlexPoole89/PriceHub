@@ -1,5 +1,5 @@
 {% extends "master.html.twig" %}
-
+{% block title %}Products {% if isEditing %}Edit{% else %}Add{% endif %} {% endblock %}
 {% block content %}
     
 {% if errorList %}

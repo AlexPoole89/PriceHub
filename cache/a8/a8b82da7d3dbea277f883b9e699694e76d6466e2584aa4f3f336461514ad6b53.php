@@ -42,14 +42,14 @@ class __TwigTemplate_89c509f0d18a1d2180929fef1162c9caaeaf93ec47751b0836d387afabf
       <li>
         <div class=\"item-content\">
              <div class=\"item-inner\">
-       <a href=\"/pricehub/login\" class='external'>Login</a>
+       <a href=\"/login\" class='external'>Login</a>
              </div>
         </div>
        </li>
        <li>
         <div class=\"item-content\">
              <div class=\"item-inner\">
-                 <a href=\"/pricehub/register\" class='external'>Or create an account</a>
+                 <a href=\"/register\" class='external'>Or create an account</a>
              </div>
         </div>
             </li>
@@ -95,14 +95,14 @@ class __TwigTemplate_89c509f0d18a1d2180929fef1162c9caaeaf93ec47751b0836d387afabf
       <li>
         <div class=\"item-content\">
              <div class=\"item-inner\">
-       <a href=\"/pricehub/login\" class='external'>Login</a>
+       <a href=\"/login\" class='external'>Login</a>
              </div>
         </div>
        </li>
        <li>
         <div class=\"item-content\">
              <div class=\"item-inner\">
-                 <a href=\"/pricehub/register\" class='external'>Or create an account</a>
+                 <a href=\"/register\" class='external'>Or create an account</a>
              </div>
         </div>
             </li>

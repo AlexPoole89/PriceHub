@@ -56,7 +56,7 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
 
 
     <div class=\"content-block\"> 
-        <div class=\"content-block-title\">Products</div>
+        <div class=\"content-block-title\">Stores</div>
         <form method=\"post\" enctype=\"multipart/form-data\">
             <div class=\"list-block\">
                 <ul>
@@ -77,58 +77,46 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
 
                     ";
         // line 31
-        echo "                    <li>
-                        <div class=\"item-content\">
-                            <div class=\"item-media\"><i class=\"icon f7-icons\">world-fill</i></div>
-                            <div class=\"item-inner\">
-                                <div class=\"item-title label\">Get location</div>
-                                <div class=\"item-input\">
-                                    <label class=\"label-switch\">
-                                        <input type=\"checkbox\" id=\"getLocation\" > ";
+        echo "                   ";
         // line 39
-        echo "                                        <div class=\"checkbox\"></div>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <input type=\"hidden\" name=\"longitude\" id=\"longitude\">
-                    <input type=\"hidden\" name=\"latitude\" id=\"latitude\">
-                    ";
-        // line 48
-        echo "                    ";
-        // line 55
-        echo "                    ";
-        // line 58
-        echo "                    
+        echo "                                    ";
+        // line 44
+        echo "                    </li>
+                    <input type=\"hidden\" name=\"longitude\" id=\"longitude\" value=\"";
+        // line 45
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "longitude", array()), "html", null, true);
+        echo "\">
+                    <input type=\"hidden\" name=\"latitude\" id=\"latitude\" ";
+        // line 46
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "latitude", array()), "html", null, true);
+        echo ">
+                    <input type=\"hidden\" name=\"address\" id=\"address\">
                     <div class=\"list-block-label\"><p id=\"noGeo\"></p></div>                                                     
-                        ";
-        // line 62
-        echo "
+
                     ";
-        // line 64
-        echo "                    ";
-        // line 72
-        echo "                    ";
-        // line 73
+        // line 51
         echo "                    <li>
                         <div class=\"item-content\">
                             <div class=\"item-media\"><i class=\"icon f7-icons\">camera</i></div>
                             <div class=\"item-inner\">
                                 <div class=\"item-input\">
-                                    <input type=\"file\" name=\"storeImage\">
+                                    <input type=\"file\" name=\"storeImage\" value=\"";
+        // line 56
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "logoPath", array()), "html", null, true);
+        echo "\">
                                 </div>
                             </div>
                         </div>
                     </li>
 
+                    
                     ";
-        // line 85
+        // line 64
         echo "                    <li>
                         <div class=\"item-content\">
                             <div class=\"item-inner\">
                                 <input type=\"submit\" class=\"button button-big button-fill\" value=\"";
-        // line 88
+        // line 67
         if (($context["isEditing"] ?? null)) {
             echo "Update";
         } else {
@@ -146,11 +134,11 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
 ";
     }
 
-    // line 99
+    // line 78
     public function block_scriptextra($context, array $blocks = array())
     {
-        // line 100
-        echo "    <script>
+        echo " 
+    <script>
         var x = document.getElementById(\"noGeo\");
         function getLocation() {
             if (navigator.geolocation) {
@@ -165,6 +153,8 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
 
             document.getElementById(\"longitude\").value = long;
             document.getElementById(\"latitude\").value = lat;
+            
+            
         }
 
         function showError(error) {
@@ -183,11 +173,12 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
                     break;
             }
         }
-        \$(\"#getLocation\").change(function () {
+       /* \$(\"#getLocation\").change(function () {
             if (this.checked) {
                 getLocation();
             }
-        });
+        }); */
+           \$(document).ready(getLocation);
     </script>
 ";
     }
@@ -204,7 +195,7 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
 
     public function getDebugInfo()
     {
-        return array (  153 => 100,  150 => 99,  132 => 88,  127 => 85,  114 => 73,  112 => 72,  110 => 64,  107 => 62,  103 => 58,  101 => 55,  99 => 48,  89 => 39,  80 => 31,  71 => 24,  55 => 10,  51 => 9,  42 => 7,  38 => 6,  35 => 5,  32 => 4,  29 => 3,  11 => 1,);
+        return array (  138 => 78,  120 => 67,  115 => 64,  105 => 56,  98 => 51,  91 => 46,  87 => 45,  84 => 44,  82 => 39,  80 => 31,  71 => 24,  55 => 10,  51 => 9,  42 => 7,  38 => 6,  35 => 5,  32 => 4,  29 => 3,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -230,7 +221,7 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
 
 
     <div class=\"content-block\"> 
-        <div class=\"content-block-title\">Products</div>
+        <div class=\"content-block-title\">Stores</div>
         <form method=\"post\" enctype=\"multipart/form-data\">
             <div class=\"list-block\">
                 <ul>
@@ -247,7 +238,7 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
                     </li>
 
                     {# get current location #}
-                    <li>
+                   {# <li>
                         <div class=\"item-content\">
                             <div class=\"item-media\"><i class=\"icon f7-icons\">world-fill</i></div>
                             <div class=\"item-inner\">
@@ -255,51 +246,30 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
                                 <div class=\"item-input\">
                                     <label class=\"label-switch\">
                                         <input type=\"checkbox\" id=\"getLocation\" > {# TODO: write javascript function to get current location #}
-                                        <div class=\"checkbox\"></div>
+                                    {#    <div class=\"checkbox\"></div>
                                     </label>
                                 </div>
                             </div>
-                        </div>
+                        </div> #}
                     </li>
-                    <input type=\"hidden\" name=\"longitude\" id=\"longitude\">
-                    <input type=\"hidden\" name=\"latitude\" id=\"latitude\">
-                    {# display longitude #}
-                    {#  <li>
-                         <div class=\"item-content\">
-                             
-                             <div class=\"item-inner\">                            
-                                     <div id=\"longitude\" class=\"list-block-label\"></div>                                                     
-                         </div>
-                     </li> #}
-                    {# <li>
-                         <div class=\"item-content\">
- 
-                             <div class=\"item-inner\">        #}                    
+                    <input type=\"hidden\" name=\"longitude\" id=\"longitude\" value=\"{{v.longitude}}\">
+                    <input type=\"hidden\" name=\"latitude\" id=\"latitude\" {{v.latitude}}>
+                    <input type=\"hidden\" name=\"address\" id=\"address\">
                     <div class=\"list-block-label\"><p id=\"noGeo\"></p></div>                                                     
-                        {#        </div>
-                        </li>  #}
 
-                    {#display latitude #}
-                    {#      <li>
-                             <div class=\"item-content\">
-                                 
-                                 <div class=\"item-inner\">                            
-                                     <div class=\"list-block-label\"><p id=\"latitude\"></p></div>    
-                                     <input type=\"hidden\" name=\"latitude\">
-                             </div>
-                         </li> #}
                     {# image path #}
                     <li>
                         <div class=\"item-content\">
                             <div class=\"item-media\"><i class=\"icon f7-icons\">camera</i></div>
                             <div class=\"item-inner\">
                                 <div class=\"item-input\">
-                                    <input type=\"file\" name=\"storeImage\">
+                                    <input type=\"file\" name=\"storeImage\" value=\"{{v.logoPath}}\">
                                 </div>
                             </div>
                         </div>
                     </li>
 
+                    
                     {# submit #}
                     <li>
                         <div class=\"item-content\">
@@ -315,7 +285,7 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
 </div>
 {% endblock %}
 
-{% block scriptextra %}
+{% block scriptextra %} 
     <script>
         var x = document.getElementById(\"noGeo\");
         function getLocation() {
@@ -331,6 +301,8 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
 
             document.getElementById(\"longitude\").value = long;
             document.getElementById(\"latitude\").value = lat;
+            
+            
         }
 
         function showError(error) {
@@ -349,11 +321,12 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
                     break;
             }
         }
-        \$(\"#getLocation\").change(function () {
+       /* \$(\"#getLocation\").change(function () {
             if (this.checked) {
                 getLocation();
             }
-        });
+        }); */
+           \$(document).ready(getLocation);
     </script>
 {% endblock %}", "stores_addedit.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\stores_addedit.html.twig");
     }
