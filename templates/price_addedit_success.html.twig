@@ -1,0 +1,5 @@
+{% extends "master.html.twig" %}
+{% block title %}Price {% if isEditing %}updated{% else %}added{% endif %}{% endblock %}
+{% block content %}
+<p>Price {% if isEditing %}updated{% else %}added{% endif %}</p>
+{% endblock %}

@@ -1,0 +1,9 @@
+Stores list/ products list use MEDIA LIST VIEW 
+--INCLUDE SEARCH BAR AT TOP OF PAGE WITH AJAX SEARCHING
+
+Prices list use list view WITH collapsible accordion to delete a price
+--INCLUDE SEARCH BAR AT TOP OF PAGE WITH AJAX SEARCHING
+
+product single view, with link to price list by productId
+
+store single view info on the store with map image, with link to product list

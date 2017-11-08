@@ -28,7 +28,7 @@ class __TwigTemplate_966641724b18eeef23c7f372463b3b1b7996b1813140df075d8e9bd402b
     // line 3
     public function block_title($context, array $blocks = array())
     {
-        echo " Product ";
+        echo "Store ";
         if (($context["isEditing"] ?? null)) {
             echo "edited";
         } else {
@@ -40,24 +40,23 @@ class __TwigTemplate_966641724b18eeef23c7f372463b3b1b7996b1813140df075d8e9bd402b
     public function block_content($context, array $blocks = array())
     {
         echo "    
-    <div class=\"list-block\">
-  <ul>
-    <li>
-      <a href=\"#\" class=\"item-link item-content\">
-        <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
-        <div class=\"item-inner\">
-            <div class=\"item-title\">";
-        // line 12
+    <div class=\"content-block-title\">Store Added</div>
+    <div class=\"card\">
+  <div class=\"card-content\">
+    <div class=\"card-content-inner\">";
+        // line 9
         echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "name", array()), "html", null, true);
-        echo "</div>
-          <div class=\"item-after\">See more</div>
-        </div>
-      </a>
-    </li>
-   
-  </ul>
-  <div class=\"list-block-label\">New store added</div>
+        echo " added successfully</div>
+  </div>
+         <div class=\"card-footer\">
+    <a href=\"/stores/list\" class=\"link\">Go to list</a>
+    <a href=\"/stores/view/";
+        // line 13
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "id", array(), "array"), "html", null, true);
+        echo "\" class=\"link\">See store</a>
+  </div>
 </div>
+    
 ";
     }
 
@@ -73,7 +72,7 @@ class __TwigTemplate_966641724b18eeef23c7f372463b3b1b7996b1813140df075d8e9bd402b
 
     public function getDebugInfo()
     {
-        return array (  51 => 12,  40 => 5,  29 => 3,  11 => 1,);
+        return array (  55 => 13,  48 => 9,  40 => 5,  29 => 3,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -88,24 +87,20 @@ class __TwigTemplate_966641724b18eeef23c7f372463b3b1b7996b1813140df075d8e9bd402b
     {
         return new Twig_Source("{% extends \"master.html.twig\" %}
 
-{% block title %} Product {% if isEditing %}edited{% else %}added{% endif %}{% endblock %}
+{% block title %}Store {% if isEditing %}edited{% else %}added{% endif %}{% endblock %}
 
 {% block content %}    
-    <div class=\"list-block\">
-  <ul>
-    <li>
-      <a href=\"#\" class=\"item-link item-content\">
-        <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
-        <div class=\"item-inner\">
-            <div class=\"item-title\">{{v.name}}</div>
-          <div class=\"item-after\">See more</div>
-        </div>
-      </a>
-    </li>
-   
-  </ul>
-  <div class=\"list-block-label\">New store added</div>
+    <div class=\"content-block-title\">Store Added</div>
+    <div class=\"card\">
+  <div class=\"card-content\">
+    <div class=\"card-content-inner\">{{v.name}} added successfully</div>
+  </div>
+         <div class=\"card-footer\">
+    <a href=\"/stores/list\" class=\"link\">Go to list</a>
+    <a href=\"/stores/view/{{v['id']}}\" class=\"link\">See store</a>
+  </div>
 </div>
+    
 {% endblock %}
 
 ", "stores_addedit_success.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\stores_addedit_success.html.twig");

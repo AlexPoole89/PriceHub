@@ -34,3 +34,9 @@ date and name
 1. started writing CRUD script for stores page
 2. work on passing JavaScript geolocation variables to PHP variables
 3. pass variables on checkbox click or on button submit?
+
+
+11/7/2017 -- Alex
+1. completed javaScript geolocation and attached it to doc.ready
+2. continue working on store and product CRUD and UI
+3. how to get see store link to work on store successfully added page

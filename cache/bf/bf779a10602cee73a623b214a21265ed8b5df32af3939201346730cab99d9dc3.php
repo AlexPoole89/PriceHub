@@ -35,12 +35,12 @@ class __TwigTemplate_87a86df006dd2202e643b264156f3e573238b8b43873d89825885252259
         $this->displayBlock('title', $context, $blocks);
         echo "</title>
     <!-- Path to Framework7 iOS CSS theme styles-->
-    <link rel=\"stylesheet\" href=\"css/framework7.ios.min.css\">
+    <link rel=\"stylesheet\" href=\"/css/framework7.ios.min.css\">
     <!-- Path to Framework7 iOS related color styles -->
-    <link rel=\"stylesheet\" href=\"css/framework7.ios.colors.min.css\">
-    <link rel=\"stylesheet\" href=\"css/framework7-icons.css\">
+    <link rel=\"stylesheet\" href=\"/css/framework7.ios.colors.min.css\">
+    <link rel=\"stylesheet\" href=\"/css/framework7-icons.css\">
     <!-- Path to your custom app styles-->
-    <link rel=\"stylesheet\" href=\"css/my-app.css\">
+    <link rel=\"stylesheet\" href=\"/css/my-app.css\">
     
     ";
         // line 19
@@ -109,11 +109,11 @@ class __TwigTemplate_87a86df006dd2202e643b264156f3e573238b8b43873d89825885252259
       </div>
     </div>
     <!-- Path to Framework7 Library JS-->
-    <script type=\"text/javascript\" src=\"js/framework7.min.js\"></script>
+    <script type=\"text/javascript\" src=\"/js/framework7.min.js\"></script>
     <!-- barcode -->
-    <script type=\"text/javascript\" src=\"js/quagga.min.js\"></script>
+    <script type=\"text/javascript\" src=\"/js/quagga.min.js\"></script>
     <!-- Path to your app js-->
-    <script type=\"text/javascript\" src=\"js/my-app.js\"></script>
+    <script type=\"text/javascript\" src=\"/js/my-app.js\"></script>
     <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>
     ";
         // line 91
@@ -191,12 +191,12 @@ class __TwigTemplate_87a86df006dd2202e643b264156f3e573238b8b43873d89825885252259
     <!-- Your app title -->
     <title>{% block title %}Index{% endblock %}</title>
     <!-- Path to Framework7 iOS CSS theme styles-->
-    <link rel=\"stylesheet\" href=\"css/framework7.ios.min.css\">
+    <link rel=\"stylesheet\" href=\"/css/framework7.ios.min.css\">
     <!-- Path to Framework7 iOS related color styles -->
-    <link rel=\"stylesheet\" href=\"css/framework7.ios.colors.min.css\">
-    <link rel=\"stylesheet\" href=\"css/framework7-icons.css\">
+    <link rel=\"stylesheet\" href=\"/css/framework7.ios.colors.min.css\">
+    <link rel=\"stylesheet\" href=\"/css/framework7-icons.css\">
     <!-- Path to your custom app styles-->
-    <link rel=\"stylesheet\" href=\"css/my-app.css\">
+    <link rel=\"stylesheet\" href=\"/css/my-app.css\">
     
     {% block headextra %} {% endblock %}
   </head>
@@ -264,14 +264,14 @@ class __TwigTemplate_87a86df006dd2202e643b264156f3e573238b8b43873d89825885252259
       </div>
     </div>
     <!-- Path to Framework7 Library JS-->
-    <script type=\"text/javascript\" src=\"js/framework7.min.js\"></script>
+    <script type=\"text/javascript\" src=\"/js/framework7.min.js\"></script>
     <!-- barcode -->
-    <script type=\"text/javascript\" src=\"js/quagga.min.js\"></script>
+    <script type=\"text/javascript\" src=\"/js/quagga.min.js\"></script>
     <!-- Path to your app js-->
-    <script type=\"text/javascript\" src=\"js/my-app.js\"></script>
+    <script type=\"text/javascript\" src=\"/js/my-app.js\"></script>
     <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>
     {% block scriptextra %}{% endblock %}
   </body>
-</html>              ", "master.html.twig", "C:\\xampp\\htdocs\\pricehub\\templates\\master.html.twig");
+</html>              ", "master.html.twig", "C:\\xampp\\htdocs\\php-project\\templates\\master.html.twig");
     }
 }

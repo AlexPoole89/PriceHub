@@ -1,0 +1,31 @@
+{% extends "master.html.twig" %}
+{% block title %}{{s.name}} Page{% endblock %}
+{% block content %}
+  {#  {% for s in store %}  #}
+    <div class="content-block-title">{{s.name}}</div>
+ 
+       
+    
+<div class="card demo-card-header-pic">
+  <div style="background-image:{{s.logoPath}}" valign="bottom" class="card-header color-white no-border">{{s.name}}</div>
+  <div class="card-content">
+    <div class="card-content-inner">
+      <p class="color-gray">Posted on January 21, 2015</p>
+      <p>Quisque eget vestibulum nulla...</p>
+    </div>
+  </div>
+  <div class="card-footer">
+    <a href="/stores/list" class="link external">Back</a>
+    <a href="/stores/delete/{{s.id}}" class="link color-red external">Delete</a>
+  </div>
+</div>
+  
+   <div class="card">
+  <div class="card-content">
+    <div class="card-content-inner">gonna put google map with location in here</div>
+  </div>
+</div>  
+    
+   {# {% endfor %}  #}
+    
+    {% endblock %}

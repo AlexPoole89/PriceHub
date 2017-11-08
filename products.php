@@ -81,14 +81,14 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
     }
 //
     if ($errorList) { // 3. failed submission
-        $app->render('todo_addedit.html.twig', array(
+        $app->render('products_addedit.html.twig', array(
             'errorList' => $errorList,
             'v' => $values));
     } else { //2. successful submission
          if($productImage){ //   '[^a-zA-Z0-9_\.-]' 
-       // $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $todoImage['name']);
-        $picPath = 'uploads/' . $productImage['name'];  // $todoImage['name']
-        if (!move_uploaded_file($productImage['tmp_name'], $imagePath)){
+       // $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $productImage['name']);
+        $picPath = 'uploads/' . $productImage['name'];  // $productImage['name']
+        if (!move_uploaded_file($productImage['tmp_name'], $picPath)){
             $log->err(sprintf("Error moving uploaded file: " . print_r($productImage, true)));
             $app->render('error_internal.html.twig');
             return;
@@ -110,7 +110,7 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 //INSERT STATEMENT
             DB::insert('products', array('userId' => $_SESSION['user']['id'], 'name' => $name, 'comment' => $comment, 'picPath' => $picPath));
         }
-        $app->render('todo_addedit_success.html.twig', array('isEditing' => ($id != -1)));
+        $app->render('products_addedit_success.html.twig', array('isEditing' => ($id != -1)));
     }
 })->conditions(array(
     'op' => ('edit|add'),
@@ -128,7 +128,7 @@ $app->get('/products/delete/:id', function($id) use ($app) {
         $app->render('access_denied.html.twig');
         return;
     }
-    if (!$todo) {
+    if (!$product) {
         $app->render('not_found.html.twig');
         return;
     }
@@ -153,7 +153,7 @@ $app->post('/products/delete/:id', function($id) use ($app) {
     if (DB::affectedRows() == 0) {
         $app->render('not_found.html.twig');
     } else {
-        $app->render('todo_delete_success.html.twig');
+        $app->render('product_delete_success.html.twig');
     }
 });
 //
