@@ -1,5 +1,12 @@
 {% extends "master.html.twig" %}
 {% block title %}{{s.name}} Page{% endblock %}
+{% block headextra %}
+    <style>
+        #map{
+            height: 12em;
+        }
+    </style>
+{% endblock %}
 {% block content %}
   {#  {% for s in store %}  #}
     <div class="content-block-title">{{s.name}}</div>
@@ -10,8 +17,7 @@
   <div style="background-image:url({{s.logoPath}})" valign="bottom" class="card-header color-white no-border">{{s.name}}</div>
   <div class="card-content">
     <div class="card-content-inner">
-      <p class="color-gray">Posted on January 21, 2015</p>
-      <p>Quisque eget vestibulum nulla...</p>
+      {# TODO ADD TWO COLUMNS SHOWING PRODUCTS COUNT NUMBER AND PRICES COUNT # LINKING TO LIST OF EACH #}
     </div>
   </div>
   <div class="card-footer">
@@ -23,10 +29,33 @@
   
    <div class="card">
   <div class="card-content">
-    <div class="card-content-inner">gonna put google map with location in here</div>
+      <div class="card-content-inner"><div id="map"></div></div>
   </div>
 </div>  
     
    {# {% endfor %}  #}
     
     {% endblock %}
+
+    {% block scriptextra %} 
+    <script>
+          var map;
+          var lat =  {{s.latitude}};
+          var long = {{s.longitude}};
+          
+        function initMap() {
+        var uluru = /*{lat: -25.363, lng: 131.044};*/{lat: lat, lng: long};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+
+</script>
+<script   async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxl2OsLeKyA3upPOzMaPDpVUq6dNzR48&callback=initMap">
+    </script>
+{% endblock %}

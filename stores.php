@@ -137,24 +137,25 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             $values['logoPath'] = "/" . $logoPath;
             // if updating store with new image then remove the old one
             if ($id != -1) {
-              //  unlink('.' . $values['logoPath']);
-              //  $values['logoPath'] = $logoPath;
+                unlink('.' . $store['logoPath']);
+                $values['logoPath'] = $logoPath;
             }
         }
 //UPDATE
         if ($id != -1) {
 //VERIFY USER MATCHES ORIGINAL STORE ADDER
-            //  if ($store['userId'] == $_SESSION['user']['id']) {
+             if ($store['userId'] == $_SESSION['user']['id']) {
            
             DB::update('stores', $values, "id=%i", $id);
             $values = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
-            //   } else { //access denied
-            //  $app->render('access_denied.html.twig');
-            //   return;
-            //  }
-            //   } else {
+               } else { //access denied
+              $app->render('access_denied.html.twig');
+               return;
+              }
+              } else {
 //INSERT STATEMENT
-            //  DB::insert('stores', array('userId' => 1, 'name' => $name, 'longitude' => $longitude, 'latitude' => $latitude, 'logoPath' => $values['logoPath']));
+              DB::insert('stores', array('userId' => 1, 'name' => $name, 'longitude' => $longitude, 'latitude' => $latitude, 'logoPath' => $values['logoPath']));
+              $values = DB::queryFirstRow("SELECT * FROM stores ORDER BY id DESC");
         }
         $app->render('stores_addedit_success.html.twig', array('v' => $values, 'isEditing' => ($id != -1)));
     }
@@ -215,6 +216,44 @@ $app->get('/stores/list', function() use($app) {
     $storeList = DB::query("SELECT * FROM stores");
     $app->render('stores_list.html.twig', array('list' => $storeList));
 });
+
+//STORE LIST SEARCHBAR
+//$app->post('/storeresult/:word', function($word) use ($app) {
+//      
+//    $rows = DB::query("SELECT * FROM stores WHERE name LIKE '%%s%' ", $word);
+//     if($rows){
+//        foreach($rows as $row){
+//            echo
+//    '<li class="accordion-item"><a href="#" class="item-content item-link">
+//                        <div class="item-inner">
+//                            <div class="item-title">' . $row['name'] . '</div>
+//                        </div></a>
+//                    <div class="accordion-item-content">
+//                        <div class="content-block">    
+//                            <div class="row">
+//                                <div class="col-33">
+//                                    <a href="/stores/view/' . $row['id'] . '" class="external button button-big button-fill button-raised color-cyan">View</a>
+//                                </div>
+//                                <div class="col-33">
+//                                    <a href="/stores/edit/' . $row['id'] . '" class="external button button-big button-fill button-raised color-cyan">Update</a>
+//                                </div>
+//                              
+//                                <div class="col-33"> 
+//                                    <a href="/stores/delete/' . $row['id'] . '" class="button button-big button-fill button-raised color-pink external">Delete</a>
+//                                </div>
+//                                
+//                            </div>
+//                        </div>
+//                    </div>
+//                </li>';
+//        }
+//     } else {
+//         echo '';
+//     }
+//})->conditions(array(
+//    'word' => '\w'
+//));
+
 
 //
 //STORE PROFILE

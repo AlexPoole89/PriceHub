@@ -12,7 +12,9 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'headextra' => array($this, 'block_headextra'),
+            'floater' => array($this, 'block_floater'),
             'overlayTitle' => array($this, 'block_overlayTitle'),
+            'searchbar' => array($this, 'block_searchbar'),
             'content' => array($this, 'block_content'),
             'scriptextra' => array($this, 'block_scriptextra'),
         );
@@ -44,8 +46,8 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
     
     <link rel=\"stylesheet\" href=\"/css/framework7-icons.css\">
     <!-- Path to your custom app styles-->
-    <link rel=\"stylesheet\" href=\"/css/my-app.css\">
-    
+    <link rel=\"stylesheet\" href=\"/css/my-app.css\">   
+    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>
     ";
         // line 23
         $this->displayBlock('headextra', $context, $blocks);
@@ -59,34 +61,48 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
     <!-- Left panel with reveal effect-->
     <div class=\"panel panel-left panel-reveal\">
       <div class=\"content-block\">
+         
           ";
-        // line 33
+        // line 34
         if (($context["userSession"] ?? null)) {
-            // line 34
-            echo "               <li>
+            // line 35
+            echo "              
+               <div class=\"content-block\">      
       <div class=\"item-content\">
         <div class=\"item-inner\">
           <div class=\"item-input\">
-            <a class=\"button button-fill external\" href='/logout'>Log Out</a>Signed in as ";
-            // line 38
+            Signed in as ";
+            // line 40
             echo twig_escape_filter($this->env, $this->getAttribute(($context["userSession"] ?? null), "email", array()), "html", null, true);
-            echo "<a class=\"nav-link\" href=\"/settings\"></a>
+            echo "
           </div>
         </div>
       </div>
-    </li>
+    </div>
+            <div class=\"content-block\">   
+      <div class=\"item-content\">
+        <div class=\"item-inner\">
+          <div class=\"item-input\">
+            <a class=\"button button-fill external\" href='/logout'>Log Out</a>
+          </div>
+        </div>
+      </div>
+    </div>
             
             ";
         } else {
-            // line 45
-            echo "                    <div class=\"item-content\">
+            // line 56
+            echo "               
+             <div class=\"content-block\">
+                    <div class=\"item-content\">
         <div class=\"item-inner\">
           <div class=\"item-input\">
              <a class=\"button button-fill external\" href='/login'>Sign in</a>
           </div>
         </div>
       </div>
-    </li>
+                 </div>
+    <div class=\"content-block\">
                    <div class=\"item-content\">
         <div class=\"item-inner\">
           <div class=\"item-input\">
@@ -94,29 +110,65 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
           </div>
         </div>
       </div>
-    </li>
-    
+    </div>
+   
            
         ";
         }
-        // line 64
-        echo "      </div>
+        // line 78
+        echo "        
+        <!--NAV AREA -->
+        <div class=\"list-block\">
+  <ul>
+    <li>
+      <a href=\"#\" class=\"item-link item-content\">
+        <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
+        <div class=\"item-inner\">
+          <div class=\"item-title\">Products</div>
+          
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href=\"#\" class=\"item-link item-content\">
+        <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
+        <div class=\"item-inner\">
+          <div class=\"item-title\">Stores</div>
+          
+        </div>
+      </a>
+    </li>
+     <li>
+      <a href=\"#\" class=\"item-link item-content\">
+        <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
+        <div class=\"item-inner\">
+          <div class=\"item-title\">Prices</div>
+          
+        </div>
+      </a>
+    </li>
+  </ul>
+  
+</div>
+         
+      </div>
     </div>
     <!-- Views -->
  
     <div class=\"views  layout-white\">
       <!-- Your main view, should have \"view-main\" class -->
       <div class=\"view view-main\">
-              <a href=\"/priceadd\" class=\"floating-button external\">
-    <i class=\"f7-icons\">add</i>
-  </a>
-        <!-- Top Navbar-->
+          ";
+        // line 120
+        $this->displayBlock('floater', $context, $blocks);
+        // line 125
+        echo "        <!-- Top Navbar-->
         <div class=\"navbar\">
           <div class=\"navbar-inner\">
             <!-- We need cool sliding animation on title element, so we have additional \"sliding\" class -->
             
             <div class=\"center sliding\">";
-        // line 79
+        // line 130
         $this->displayBlock('overlayTitle', $context, $blocks);
         echo "</div>
             
@@ -134,12 +186,16 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
           <!-- Page, \"data-page\" contains page name -->
           <div data-page=\"index\" class=\"page\">
             <!-- Scrollable page content -->
-            <div class=\"page-content  layout-white\">
             ";
-        // line 96
+        // line 146
+        $this->displayBlock('searchbar', $context, $blocks);
+        // line 147
+        echo "           <div class=\"page-content  layout-white\"> 
+            ";
+        // line 148
         $this->displayBlock('content', $context, $blocks);
-        // line 105
-        echo "            </div>
+        // line 157
+        echo "           </div> 
           </div>
         </div>
         <!-- Bottom Toolbar-->
@@ -158,11 +214,11 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
     <script type=\"text/javascript\" src=\"/js/quagga.min.js\"></script>
     <!-- Path to your app js-->
     <script type=\"text/javascript\" src=\"/js/my-app.js\"></script>
-    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>
+   
     ";
-        // line 125
+        // line 177
         $this->displayBlock('scriptextra', $context, $blocks);
-        // line 126
+        // line 178
         echo "  </body>
 </html>              ";
     }
@@ -179,16 +235,31 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
         echo " ";
     }
 
-    // line 79
-    public function block_overlayTitle($context, array $blocks = array())
+    // line 120
+    public function block_floater($context, array $blocks = array())
     {
-        echo "Main";
+        // line 121
+        echo "              <a href=\"/price/add\" class=\"floating-button external\">
+    <i class=\"f7-icons\">add</i>
+  </a>
+              ";
     }
 
-    // line 96
+    // line 130
+    public function block_overlayTitle($context, array $blocks = array())
+    {
+        echo "PriceTrack";
+    }
+
+    // line 146
+    public function block_searchbar($context, array $blocks = array())
+    {
+    }
+
+    // line 148
     public function block_content($context, array $blocks = array())
     {
-        // line 97
+        // line 149
         echo "                
             
               <p>Page content goes here</p>
@@ -199,7 +270,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
             ";
     }
 
-    // line 125
+    // line 177
     public function block_scriptextra($context, array $blocks = array())
     {
     }
@@ -216,7 +287,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
 
     public function getDebugInfo()
     {
-        return array (  203 => 125,  192 => 97,  189 => 96,  183 => 79,  177 => 23,  171 => 12,  166 => 126,  164 => 125,  142 => 105,  140 => 96,  120 => 79,  103 => 64,  82 => 45,  72 => 38,  66 => 34,  64 => 33,  53 => 24,  51 => 23,  37 => 12,  24 => 1,);
+        return array (  274 => 177,  263 => 149,  260 => 148,  255 => 146,  249 => 130,  242 => 121,  239 => 120,  233 => 23,  227 => 12,  222 => 178,  220 => 177,  198 => 157,  196 => 148,  193 => 147,  191 => 146,  172 => 130,  165 => 125,  163 => 120,  119 => 78,  95 => 56,  76 => 40,  69 => 35,  67 => 34,  55 => 24,  53 => 23,  39 => 12,  26 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -249,8 +320,8 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
     
     <link rel=\"stylesheet\" href=\"/css/framework7-icons.css\">
     <!-- Path to your custom app styles-->
-    <link rel=\"stylesheet\" href=\"/css/my-app.css\">
-    
+    <link rel=\"stylesheet\" href=\"/css/my-app.css\">   
+    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>
     {% block headextra %} {% endblock %}
   </head>
   <body>
@@ -261,18 +332,31 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
     <!-- Left panel with reveal effect-->
     <div class=\"panel panel-left panel-reveal\">
       <div class=\"content-block\">
+         
           {% if userSession %}
-               <li>
+              
+               <div class=\"content-block\">      
       <div class=\"item-content\">
         <div class=\"item-inner\">
           <div class=\"item-input\">
-            <a class=\"button button-fill external\" href='/logout'>Log Out</a>Signed in as {{userSession.email}}<a class=\"nav-link\" href=\"/settings\"></a>
+            Signed in as {{userSession.email}}
           </div>
         </div>
       </div>
-    </li>
+    </div>
+            <div class=\"content-block\">   
+      <div class=\"item-content\">
+        <div class=\"item-inner\">
+          <div class=\"item-input\">
+            <a class=\"button button-fill external\" href='/logout'>Log Out</a>
+          </div>
+        </div>
+      </div>
+    </div>
             
             {% else %}
+               
+             <div class=\"content-block\">
                     <div class=\"item-content\">
         <div class=\"item-inner\">
           <div class=\"item-input\">
@@ -280,7 +364,8 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
           </div>
         </div>
       </div>
-    </li>
+                 </div>
+    <div class=\"content-block\">
                    <div class=\"item-content\">
         <div class=\"item-inner\">
           <div class=\"item-input\">
@@ -288,10 +373,45 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
           </div>
         </div>
       </div>
-    </li>
-    
+    </div>
+   
            
         {% endif %}
+        
+        <!--NAV AREA -->
+        <div class=\"list-block\">
+  <ul>
+    <li>
+      <a href=\"#\" class=\"item-link item-content\">
+        <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
+        <div class=\"item-inner\">
+          <div class=\"item-title\">Products</div>
+          
+        </div>
+      </a>
+    </li>
+    <li>
+      <a href=\"#\" class=\"item-link item-content\">
+        <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
+        <div class=\"item-inner\">
+          <div class=\"item-title\">Stores</div>
+          
+        </div>
+      </a>
+    </li>
+     <li>
+      <a href=\"#\" class=\"item-link item-content\">
+        <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
+        <div class=\"item-inner\">
+          <div class=\"item-title\">Prices</div>
+          
+        </div>
+      </a>
+    </li>
+  </ul>
+  
+</div>
+         
       </div>
     </div>
     <!-- Views -->
@@ -299,15 +419,17 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
     <div class=\"views  layout-white\">
       <!-- Your main view, should have \"view-main\" class -->
       <div class=\"view view-main\">
-              <a href=\"/priceadd\" class=\"floating-button external\">
+          {% block floater %}
+              <a href=\"/price/add\" class=\"floating-button external\">
     <i class=\"f7-icons\">add</i>
   </a>
+              {% endblock %}
         <!-- Top Navbar-->
         <div class=\"navbar\">
           <div class=\"navbar-inner\">
             <!-- We need cool sliding animation on title element, so we have additional \"sliding\" class -->
             
-            <div class=\"center sliding\">{% block overlayTitle %}Main{% endblock %}</div>
+            <div class=\"center sliding\">{% block overlayTitle %}PriceTrack{% endblock %}</div>
             
             <div class=\"right\">
               <!-- 
@@ -323,7 +445,8 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
           <!-- Page, \"data-page\" contains page name -->
           <div data-page=\"index\" class=\"page\">
             <!-- Scrollable page content -->
-            <div class=\"page-content  layout-white\">
+            {% block searchbar %}{% endblock %}
+           <div class=\"page-content  layout-white\"> 
             {% block content %}
                 
             
@@ -333,7 +456,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
             
                 
             {% endblock %}
-            </div>
+           </div> 
           </div>
         </div>
         <!-- Bottom Toolbar-->
@@ -352,7 +475,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
     <script type=\"text/javascript\" src=\"/js/quagga.min.js\"></script>
     <!-- Path to your app js-->
     <script type=\"text/javascript\" src=\"/js/my-app.js\"></script>
-    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>
+   
     {% block scriptextra %}{% endblock %}
   </body>
 </html>              ", "master.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\master.html.twig");
