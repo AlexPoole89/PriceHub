@@ -17,7 +17,10 @@
   <div style="background-image:url({{s.logoPath}})" valign="bottom" class="card-header color-white no-border">{{s.name}}</div>
   <div class="card-content">
     <div class="card-content-inner">
-      {# TODO ADD TWO COLUMNS SHOWING PRODUCTS COUNT NUMBER AND PRICES COUNT # LINKING TO LIST OF EACH #}
+      {# TODO ADD LINK to prices page WHERE storeId={{s.id}} #}
+      <p class="buttons-row">
+  <a href="#" class="button button-big button-fill">{{price}} {% if price > 1 %}Prices{% else %}Price{% endif %}</a>
+</p>
     </div>
   </div>
   <div class="card-footer">
@@ -32,19 +35,23 @@
       <div class="card-content-inner"><div id="map"></div></div>
   </div>
 </div>  
+
     
    {# {% endfor %}  #}
     
     {% endblock %}
 
     {% block scriptextra %} 
+        <script   async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxl2OsLeKyA3upPOzMaPDpVUq6dNzR48&callback=initMap">
+    </script>
     <script>
           var map;
-          var lat =  {{s.latitude}};
-          var long = {{s.longitude}};
+        //  var lat = ;
+        //  var long = ;
+
           
         function initMap() {
-        var uluru = /*{lat: -25.363, lng: 131.044};*/{lat: lat, lng: long};
+        var uluru = new google.maps.LatLng({{s.latitude}}, {{s.longitude}}); {# {lat: {{s.latitude}}, lng:{{s.longitude}}}; #}
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
           center: uluru
@@ -56,6 +63,5 @@
       }
 
 </script>
-<script   async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxl2OsLeKyA3upPOzMaPDpVUq6dNzR48&callback=initMap">
-    </script>
+
 {% endblock %}

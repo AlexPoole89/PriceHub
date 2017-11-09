@@ -10,6 +10,7 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
         // line 1
         $this->parent = $this->loadTemplate("master.html.twig", "products_addedit.html.twig", 1);
         $this->blocks = array(
+            'title' => array($this, 'block_title'),
             'content' => array($this, 'block_content'),
         );
     }
@@ -24,11 +25,52 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
-    // line 11
+    // line 2
+    public function block_title($context, array $blocks = array())
+    {
+        echo "Products ";
+        if (($context["isEditing"] ?? null)) {
+            echo "Edit";
+        } else {
+            echo "Add";
+        }
+        echo " ";
+    }
+
+    // line 3
     public function block_content($context, array $blocks = array())
     {
-        // line 12
-        echo "
+        // line 4
+        echo "    
+";
+        // line 5
+        if (($context["errorList"] ?? null)) {
+            // line 6
+            echo "    <div class=\"content-block\"> 
+        <ul>
+            ";
+            // line 8
+            $context['_parent'] = $context;
+            $context['_seq'] = twig_ensure_traversable(($context["errorList"] ?? null));
+            foreach ($context['_seq'] as $context["_key"] => $context["error"]) {
+                // line 9
+                echo "                <li>";
+                echo twig_escape_filter($this->env, $context["error"], "html", null, true);
+                echo "</li>
+                ";
+            }
+            $_parent = $context['_parent'];
+            unset($context['_seq'], $context['_iterated'], $context['_key'], $context['error'], $context['_parent'], $context['loop']);
+            $context = array_intersect_key($context, $_parent) + $_parent;
+            // line 11
+            echo "        </ul>
+    </div>
+";
+        }
+        // line 13
+        echo " 
+
+
     <div class=\"content-block\"> 
         <div class=\"content-block-title\">Products</div>
         <form method=\"post\" enctype=\"multipart/form-data\" >
@@ -37,11 +79,11 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
                     <!-- Text inputs -->
                     <li>
                         <div class=\"item-content\">
-                            <div class=\"item-media\"><i class=\"icon f7-icons\">person</i></div>
+                            <div class=\"item-media\"><i class=\"icon f7-icons\">bag</i></div>                            
                             <div class=\"item-inner\">
                                 <div class=\"item-input\">
-                                    <input type=\"text\" placeholder=\"Name\" name=\"name\" value=\"";
-        // line 24
+                                    <input type=\"text\" placeholder=\"Product name\" name=\"name\" value=\"";
+        // line 27
         echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "name", array()), "html", null, true);
         echo "\">
                                 </div>
@@ -50,7 +92,7 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
                     </li>
 
                     ";
-        // line 31
+        // line 34
         echo "                    <li>
                         <div class=\"item-content\">
                             <div class=\"item-media\"><i class=\"icon f7-icons\">camera</i></div>
@@ -63,14 +105,14 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
                     </li>
 
                     ";
-        // line 43
+        // line 46
         echo "                    <li>
                         <div class=\"item-content\">
                             <div class=\"item-media\"><i class=\"icon f7-icons\">compose</i></div>
                             <div class=\"item-inner\">
                                 <div class=\"item-input\">
-                                    <textarea name=\"comment\" class=\"resizable\">";
-        // line 48
+                                    <textarea placeholder=\"Write a comment...\" name=\"comment\" class=\"resizable\">";
+        // line 51
         echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "comment", array()), "html", null, true);
         echo "</textarea>
                                 </div>    
@@ -79,12 +121,12 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
                     </li>
 
                     ";
-        // line 55
+        // line 58
         echo "                    <li>
                         <div class=\"item-content\">
                             <div class=\"item-inner\">
                                 <input type=\"submit\" class=\"button button-big button-fill\" value=\"";
-        // line 58
+        // line 61
         if (($context["isEditing"] ?? null)) {
             echo "Update";
         } else {
@@ -114,7 +156,7 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
 
     public function getDebugInfo()
     {
-        return array (  88 => 58,  83 => 55,  74 => 48,  67 => 43,  54 => 31,  45 => 24,  31 => 12,  28 => 11,  11 => 1,);
+        return array (  130 => 61,  125 => 58,  116 => 51,  109 => 46,  96 => 34,  87 => 27,  71 => 13,  66 => 11,  57 => 9,  53 => 8,  49 => 6,  47 => 5,  44 => 4,  41 => 3,  29 => 2,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -128,16 +170,19 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
     public function getSourceContext()
     {
         return new Twig_Source("{% extends \"master.html.twig\" %}
-
-
-{# {% if errorList %}
-    <ul>
-        {% for error in errorList %}
-            <li>{{error}}</li>
-            {% endfor %}
-    </ul>
-{% endif %} #}
+{% block title %}Products {% if isEditing %}Edit{% else %}Add{% endif %} {% endblock %}
 {% block content %}
+    
+{% if errorList %}
+    <div class=\"content-block\"> 
+        <ul>
+            {% for error in errorList %}
+                <li>{{error}}</li>
+                {% endfor %}
+        </ul>
+    </div>
+{% endif %} 
+
 
     <div class=\"content-block\"> 
         <div class=\"content-block-title\">Products</div>
@@ -147,10 +192,10 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
                     <!-- Text inputs -->
                     <li>
                         <div class=\"item-content\">
-                            <div class=\"item-media\"><i class=\"icon f7-icons\">person</i></div>
+                            <div class=\"item-media\"><i class=\"icon f7-icons\">bag</i></div>                            
                             <div class=\"item-inner\">
                                 <div class=\"item-input\">
-                                    <input type=\"text\" placeholder=\"Name\" name=\"name\" value=\"{{v.name}}\">
+                                    <input type=\"text\" placeholder=\"Product name\" name=\"name\" value=\"{{v.name}}\">
                                 </div>
                             </div>
                         </div>
@@ -174,7 +219,7 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
                             <div class=\"item-media\"><i class=\"icon f7-icons\">compose</i></div>
                             <div class=\"item-inner\">
                                 <div class=\"item-input\">
-                                    <textarea name=\"comment\" class=\"resizable\">{{v.comment}}</textarea>
+                                    <textarea placeholder=\"Write a comment...\" name=\"comment\" class=\"resizable\">{{v.comment}}</textarea>
                                 </div>    
                             </div>
                         </div>

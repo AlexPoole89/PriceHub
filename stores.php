@@ -109,7 +109,9 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             'errorList' => $errorList,
             'v' => $values));
     } else { //2. successful submission        
+        //
         $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
+        //
         if ($storeImage) { //   '[^a-zA-Z0-9_\.-]' 
             // $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $storeImage['name']);
 //            $ext = '';
@@ -136,26 +138,23 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             //TODO: if EDITING and new file is uploaded we should delete the old one in uploads
             $values['logoPath'] = "/" . $logoPath;
             // if updating store with new image then remove the old one
-            if ($id != -1) {
-                unlink('.' . $store['logoPath']);
-                $values['logoPath'] = $logoPath;
-            }
         }
 //UPDATE
         if ($id != -1) {
 //VERIFY USER MATCHES ORIGINAL STORE ADDER
-             if ($store['userId'] == $_SESSION['user']['id']) {
-           
-            DB::update('stores', $values, "id=%i", $id);
-            $values = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
-               } else { //access denied
-              $app->render('access_denied.html.twig');
-               return;
-              }
-              } else {
-//INSERT STATEMENT
-              DB::insert('stores', array('userId' => 1, 'name' => $name, 'longitude' => $longitude, 'latitude' => $latitude, 'logoPath' => $values['logoPath']));
-              $values = DB::queryFirstRow("SELECT * FROM stores ORDER BY id DESC");
+            if ($store['userId'] == $_SESSION['user']['id']) {
+                unlink('.' . $store['logoPath']);
+                $values['logoPath'] = $logoPath;
+                DB::update('stores', $values, "id=%i", $id);
+                $values = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
+            } else { //access denied
+                $app->render('access_denied.html.twig');
+                return;
+            }
+        } else {
+//INSERT STATEMENT            //FOR TESTING, NEED TO CHANGE USERID TO $_SESSION['user']['id']
+            DB::insert('stores', array('userId' => 1, 'name' => $name, 'longitude' => $longitude, 'latitude' => $latitude, 'logoPath' => $values['logoPath']));
+            $values = DB::queryFirstRow("SELECT * FROM stores ORDER BY id DESC");
         }
         $app->render('stores_addedit_success.html.twig', array('v' => $values, 'isEditing' => ($id != -1)));
     }
@@ -253,8 +252,6 @@ $app->get('/stores/list', function() use($app) {
 //})->conditions(array(
 //    'word' => '\w'
 //));
-
-
 //
 //STORE PROFILE
 $app->get('/stores/view/:id', function($id = -1) use($app) {
@@ -262,8 +259,11 @@ $app->get('/stores/view/:id', function($id = -1) use($app) {
 //        $app->render('access_denied.html.twig');
 //        return;
 //    }
+    $pricesCountStore = DB::queryFirstField("SELECT count(id) FROM prices WHERE storeId=%i", $id);
     $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
-    $app->render('stores_view.html.twig', array('s' => $store));
+    $app->render('stores_view.html.twig', array('s' => $store,
+        'price' => $pricesCountStore
+    ));
 })->conditions(array(
     'id' => '\d+'
 ));
