@@ -3,39 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
-            <file>file:/C:/xampp/htdocs/pricehub/templates/passreset_success.html.twig</file>
-            <file>file:/C:/xampp/htdocs/pricehub/templates/register.html.twig</file>
-            <file>file:/C:/xampp/htdocs/pricehub/templates/register_success.html.twig</file>
-            <file>file:/C:/xampp/htdocs/pricehub/templates/price_delete.html.twig</file>
-            <file>file:/C:/xampp/htdocs/pricehub/templates/pricelist.html.twig</file>
-            <file>file:/C:/xampp/htdocs/pricehub/templates/price_addedit_success.html.twig</file>
-            <file>file:/C:/xampp/htdocs/pricehub/templates/index.html.twig</file>
-            <file>file:/C:/xampp/htdocs/pricehub/templates/price_addedit.html.twig</file>
-            <file>file:/C:/xampp/htdocs/pricehub/users.php</file>
-            <file>file:/C:/xampp/htdocs/pricehub/prices.php</file>
-            <file>file:/C:/xampp/htdocs/pricehub/templates/access_denied.html.twig</file>
-            <file>file:/C:/xampp/htdocs/pricehub/pricehub.php</file>
-            <file>file:/C:/xampp/htdocs/pricehub/logs/errors.log</file>
-            <file>file:/C:/xampp/htdocs/pricehub/templates/master.html.twig</file>
-=======
-            <file>file:/C:/xampp/htdocs/php-project/templates/products_addedit.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/passreset_request_success.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/passreset_request.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/products_addedit_success.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/stores_addedit.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/pricehub.php</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/stores_view.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/stores_delete.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/users.php</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/stores_addedit_success.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/products.php</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/stores_delete_success.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/pricelist.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/passreset_success.html.twig</file>
-            <file>file:/C:/xampp/htdocs/php-project/stores.php</file>
-            <file>file:/C:/xampp/htdocs/php-project/templates/stores_list.html.twig</file>
->>>>>>> fcbee65909c27be3863846f28e5bca454fc20096
+            <file>file:/D:/Xampp/htdocs/pricetrack/templates/master.html.twig</file>
+            <file>file:/D:/Xampp/htdocs/pricetrack/templates/price_addedit.html.twig</file>
         </group>
     </open-files>
 </project-private>
