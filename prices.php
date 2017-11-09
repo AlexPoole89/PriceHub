@@ -104,14 +104,16 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             if (!$product) {
                 $product = DB::insert('products', array('name' => $productName, 'userId' => $_SESSION['user']['id']));
             }
-            $productId = $product['id'];
+            $productName = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
+            $productId = $productName['id'];
 
             //check if store exists
             $store = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s', $storeName);
             if (!$store) {
                 $store = DB::insert('stores', array('name' => $storeName, 'userId' => $_SESSION['user']['id'], 'longitude' => $long, 'latitude' => $lat));
             }
-            $storeId = $store['id'];
+             $storeName = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s', $storeName);
+            $storeId = $storeName['id'];
 
 
             DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity,'unit' => $unit, 'userId' => $_SESSION['user']['id']));
