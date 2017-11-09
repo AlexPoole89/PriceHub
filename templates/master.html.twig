@@ -3,6 +3,7 @@
   <head>
     <!-- Required meta tags-->
     <meta charset="utf-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -153,7 +154,7 @@
           <div class="navbar-inner">
             <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
             
-            <div class="center sliding">{% block overlayTitle %}PriceTrack{% endblock %}</div>
+            <div class="center sliding">{% block overlayTitle %} <i class="f7-icons">bolt_fill</i> PriceTrack{% endblock %}</div>
             
             <div class="right">
               <!-- 
@@ -174,9 +175,8 @@
             {% block content %}
                 
             
-              <p>Page content goes here</p>
-              <!-- Link to another page -->
-              <a href="about.html">About app</a>
+              <!-- content goes here -->
+             
             
                 
             {% endblock %}
@@ -187,8 +187,8 @@
         <div class="toolbar">
           <div class="toolbar-inner">
             <!-- Toolbar links -->
-             <!-- <a href="#" class="link">Link 1</a>
-          <a href="#" class="link">Link 2</a> -->
+             <a href="/" class="external"> <i class="f7-icons">home</i></a>
+          <!--<a href="#" class="link">Link 2</a> -->
           </div>
         </div>
       </div>
