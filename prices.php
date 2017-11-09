@@ -13,7 +13,7 @@ $app->get('/price/list', function() use ($app) {
     }
     //
     
-    $productsList = DB::query("SELECT stores.name AS storeName, products.name AS productName, price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
+    $productsList = DB::query("SELECT stores.name AS storeName, products.name AS productName,prices.id as priceId,storeId,productId,quantity,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
     $app->render('pricelist.html.twig', array('list' => $productsList,'storeName'=>$storeName,'productName' =>$productName));
 });
 
@@ -30,7 +30,7 @@ $app->get('/price/:op(/:id)', function($op, $id = -1) use ($app) {
     }
     //
     if ($id != -1) {
-        $values = DB::queryFirstRow('SELECT * FROM prices WHERE id=%i', $id);
+        $values = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,storeId,productId,quantity,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE prices.id=%i", $id);
         if (!$values) {
             echo "NOT FOUND";  // FIXME on Monday - display standard 404 from slim
             return;
@@ -97,8 +97,11 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         // 2. successful submission
 //check if product exists
         if ($id != -1) {
-
-            DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity,'unit' => $unit, 'userId' => $_SESSION['user']['id']), "id=%i", $id);
+    $storeRow = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s',$storeName);
+    $productRow = DB::queryFirstRow('SELECT * FROM products WHERE name=%s',$productName);
+    $storeId = $storeRow['id'];
+    $productId=$productRow['id'];
+            DB::update('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity,'unit' => $unit, 'userId' => $_SESSION['user']['id']), "id=%i", $id);
         } else {
             $product = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
             if (!$product) {
@@ -113,7 +116,7 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
                 $store = DB::insert('stores', array('name' => $storeName, 'userId' => $_SESSION['user']['id'], 'longitude' => $long, 'latitude' => $lat));
             }
              $storeName = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s', $storeName);
-            $storeId = $storeName['id'];
+             $storeId = $storeName['id'];
 
 
             DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity,'unit' => $unit, 'userId' => $_SESSION['user']['id']));

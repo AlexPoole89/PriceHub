@@ -2,6 +2,9 @@
 
 
 {% block headextra %}
+   
+  
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
     <script>
         window.onload = function () {
             var startPos;
@@ -33,7 +36,7 @@
                         <div class="item-inner">
                             <div>
                                 <a href="#" data-popup=".popup-scan" class="open-popup button button-big button-fill">Barcode Scan</a>
-                                
+                                <p id="barcode"></p>
                             </div>
                         </div>
                     </div>
@@ -56,7 +59,7 @@
                         <div class="item-inner">
                             <div class="item-title label">Store</div>
                             <div class="item-input">
-                                <input type="text" placeholder="Store" name="store" value="{{v.store}}">
+                                <input type="text" placeholder="Store" name="store" value="{{v.storeName}}">
                             </div>
                         </div>
                     </div>
@@ -67,7 +70,7 @@
                         <div class="item-inner">
                             <div class="item-title label">Product</div>
                             <div class="item-input">
-                                <input type="text" placeholder="Product name" name="product" value="{{v.product}}">
+                                <input type="text" placeholder="Product name" name="product" value="{{v.productName}}">
                             </div>
                         </div>
                     </div>
@@ -99,15 +102,13 @@
                 </li>
 
 
-
-
                 <div class="row">
                     <div class="col-50">
                         <div class="item-content">
                             <div class="item-inner">
                                 <div class="item-title label">Qty</div>
                                 <div class="item-input">
-                                    <input type="number" name="quantity" placeholder="Qty">
+                                    <input type="number" name="quantity" placeholder="Qty" value="{{v.quantity}}">
                                 </div>
                             </div>
                         </div>
@@ -119,17 +120,16 @@
                                 <div class="item-input">
 
                                     <select name="unit">
-                                        <option {%if v.unit == "unit"%} selected {%endif%} value="unit">unit</option>
-                                        <option value="g">g(grams)</option>
-                                        <option value="kg">kg(kilograms)</option>
-                                        <option  value="ml">ml(mililiters)</option>
-                                        <option  value="l">l(liters)</option> 
+                                        <option {%if v.unit == "unit"%} selected="selected" {%endif%} value="unit">unit</option>
+                                        <option value="g" {% if v.unit == "g" %} selected="selected" {% endif %}>g(grams)</option>
+                                        <option value="kg" {% if v.unit == "kg" %} selected="selected" {% endif %}>kg(kilograms)</option>
+                                        <option  value="ml" {% if v.unit == "ml" %} selected="selected" {% endif %}>ml(mililiters)</option>
+                                        <option  value="l" {% if v.unit == "l" %} selected="selected" {% endif %}>l(liters)</option> 
                                     </select>
                                 </div>
                             </div>
                         </div>                               
                     </div>
-
 
             </ul>
             <div class="content-block">
@@ -155,13 +155,90 @@
         {% endif %}
     </div>
 </div>
-
 <!-- barcode popup  -->
  <div class="popup popup-scan">
     <div class="content-block">
-      <p>About</p>
-      <p><a href="#" class="close-popup">Close popup</a></p>
-      <p>Lorem ipsum dolor ...</p>
+    
+      <section id="container" class="container">
+    <h3>Working with file-input</h3>
+
+    <p>This example let's you select an image from your local filesystem.
+        QuaggaJS then tries to decode the barcode using
+        the preferred method (<strong>Code128</strong> or <strong>EAN</strong>).
+        There is no server interaction needed as the
+        file is simply accessed through the <a
+                href="http://www.w3.org/TR/file-upload/">File API</a>.</p>
+
+    <p>This also works great on a wide range of mobile-phones where the camera
+        access through <code>getUserMedia</code> is still very limited.</p>
+    <p><a href="#" class="close-popup">Close popup</a></p>
+    <div class="controls">
+        <fieldset class="input-group">
+            <input type="file" accept="image/*" capture="camera"/>
+            <button>Rerun</button>
+        </fieldset>
+        <fieldset class="reader-config-group">
+            <label>
+                <span>Barcode-Type</span>
+                <select name="decoder_readers">
+                    <option value="code_128" selected="selected">Code 128</option>
+                    <option value="code_39">Code 39</option>
+                    <option value="code_39_vin">Code 39 VIN</option>
+                    <option value="ean">EAN</option>
+                    <option value="ean_extended">EAN-extended</option>
+                    <option value="ean_8">EAN-8</option>
+                    <option value="upc">UPC</option>
+                    <option value="upc_e">UPC-E</option>
+                    <option value="codabar">Codabar</option>
+                    <option value="i2of5">Interleaved 2 of 5</option>
+                    <option value="2of5">Standard 2 of 5</option>
+                    <option value="code_93">Code 93</option>
+                </select>
+            </label>
+            <label>
+                <span>Resolution (long side)</span>
+                <select name="input-stream_size">
+                    <option value="320">320px</option>
+                    <option value="640">640px</option>
+                    <option selected="selected" value="800">800px</option>
+                    <option value="1280">1280px</option>
+                    <option value="1600">1600px</option>
+                    <option value="1920">1920px</option>
+                </select>
+            </label>
+            <label>
+                <span>Patch-Size</span>
+                <select name="locator_patch-size">
+                    <option value="x-small">x-small</option>
+                    <option value="small">small</option>
+                    <option value="medium">medium</option>
+                    <option selected="selected" value="large">large</option>
+                    <option value="x-large">x-large</option>
+                </select>
+            </label>
+            <label>
+                <span>Half-Sample</span>
+                <input type="checkbox" name="locator_half-sample" />
+            </label>
+            <label>
+                <span>Single Channel</span>
+                <input type="checkbox" name="input-stream_single-channel" />
+            </label>
+            <label>
+                <span>Workers</span>
+                <select name="numOfWorkers">
+                    <option value="0">0</option>
+                    <option selected="selected" value="1">1</option>
+                </select>
+            </label>
+        </fieldset>
+    </div>
+    <div id="result_strip">
+        <ul class="thumbnails"></ul>
+    </div>
+    <div id="interactive" class="viewport"></div>
+    <div id="debug" class="detection"></div>
+</section>
     </div>
   </div>
 
@@ -176,3 +253,11 @@
 
 {% endblock %}
 
+{% block scriptextra %}
+
+    <script src="//webrtc.github.io/adapter/adapter-latest.js" type="text/javascript"></script>
+    <script src="/js/quagga.js" type="text/javascript"></script>
+      <script src="/js/barcode.js" type="text/javascript"></script>
+    <script src="/js/file_input.js" type="text/javascript"></script>
+    
+{% endblock %}
