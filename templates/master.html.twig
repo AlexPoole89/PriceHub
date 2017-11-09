@@ -3,6 +3,7 @@
   <head>
     <!-- Required meta tags-->
     <meta charset="utf-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,8 +19,8 @@
     
     <link rel="stylesheet" href="/css/framework7-icons.css">
     <!-- Path to your custom app styles-->
-    <link rel="stylesheet" href="/css/my-app.css">
-    
+    <link rel="stylesheet" href="/css/my-app.css">   
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     {% block headextra %} {% endblock %}
   </head>
   <body>
@@ -80,7 +81,7 @@
         <div class="list-block">
   <ul>
     <li>
-      <a href="/products/list" class="item-link item-content external">
+<a href="/products/list" class="item-link item-content external">
         <div class="item-media"><i class="icon icon-f7"></i></div>
         <div class="item-inner">
           <div class="item-title">Products</div>
@@ -89,7 +90,7 @@
       </a>
     </li>
     <li>
-      <a href="/stores/list" class="item-link item-content external">
+    	<a href="/stores/list" class="item-link item-content external">
         <div class="item-media"><i class="icon icon-f7"></i></div>
         <div class="item-inner">
           <div class="item-title">Stores</div>
@@ -99,7 +100,7 @@
     </li>
      <li>
       <a href="/price/list" class="item-link item-content external">
-        <div class="item-media"><i class="icon icon-f7 "></i></div>
+        <div class="item-media"><i class="icon icon-f7"></i></div>
         <div class="item-inner">
           <div class="item-title">Prices</div>
           
@@ -118,16 +119,42 @@
       <!-- Your main view, should have "view-main" class -->
       <div class="view view-main">
           {% block floater %}
-              <a href="/price/add" class="floating-button external">
+           {#  <a href="/price/add" class="floating-button external">
     <i class="f7-icons">add</i>
-  </a>
+  </a> #}
+            <!-- Speed Dial Wrap -->
+  <div class="speed-dial">
+    <!-- FAB inside will open Speed Dial actions -->
+    <a href="#" class="floating-button">
+      <!-- First icon is visible when Speed Dial actions are closed -->
+      <i class="icon icon-plus"></i>
+      <!-- Second icon is visible when Speed Dial actions are opened -->
+      <i class="icon icon-close"></i>
+    </a>
+    <!-- Speed Dial Actions -->
+    <div class="speed-dial-buttons">
+      <!-- First Speed Dial button add price -->
+      <a href="/price/add" class="external">
+        <i class="icon f7-icons">money_dollar</i>
+      </a>
+      <!-- Second Speed Dial add product button -->
+      <a href="/products/add" class="external">
+        <i class="icon f7-icons">bag</i>
+      </a>
+      <!-- Third Speed Dial add store button -->
+      <a href="/stores/add" class="external">
+        <i class="icon f7-icons">world</i>
+      </a>
+    </div>
+  </div>
+  <!-- End of Speed Dial -->
               {% endblock %}
         <!-- Top Navbar-->
         <div class="navbar">
           <div class="navbar-inner">
             <!-- We need cool sliding animation on title element, so we have additional "sliding" class -->
             
-            <div class="center sliding">{% block overlayTitle %}PriceTrack{% endblock %}</div>
+            <div class="center sliding">{% block overlayTitle %} <i class="f7-icons">bolt_fill</i> PriceTrack{% endblock %}</div>
             
             <div class="right">
               <!-- 
@@ -143,25 +170,25 @@
           <!-- Page, "data-page" contains page name -->
           <div data-page="index" class="page">
             <!-- Scrollable page content -->
-            <div class="page-content  layout-white">
+            {% block searchbar %}{% endblock %}
+           <div class="page-content  layout-white"> 
             {% block content %}
                 
             
-              <p>Page content goes here</p>
-              <!-- Link to another page -->
-              <a href="about.html">About app</a>
+              <!-- content goes here -->
+             
             
                 
             {% endblock %}
-            </div>
+           </div> 
           </div>
         </div>
         <!-- Bottom Toolbar-->
         <div class="toolbar">
           <div class="toolbar-inner">
             <!-- Toolbar links -->
-             <!-- <a href="#" class="link">Link 1</a>
-          <a href="#" class="link">Link 2</a> -->
+             <a href="/" class="external"> <i class="f7-icons">home</i></a>
+          <!--<a href="#" class="link">Link 2</a> -->
           </div>
         </div>
       </div>
@@ -172,7 +199,7 @@
     <script type="text/javascript" src="/js/quagga.min.js"></script>
     <!-- Path to your app js-->
     <script type="text/javascript" src="/js/my-app.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   
     {% block scriptextra %}{% endblock %}
   </body>
 </html>              

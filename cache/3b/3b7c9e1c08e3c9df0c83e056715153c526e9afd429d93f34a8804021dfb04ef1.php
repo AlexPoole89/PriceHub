@@ -10,6 +10,7 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
         // line 1
         $this->parent = $this->loadTemplate("master.html.twig", "stores_addedit.html.twig", 1);
         $this->blocks = array(
+            'headextra' => array($this, 'block_headextra'),
             'content' => array($this, 'block_content'),
             'scriptextra' => array($this, 'block_scriptextra'),
         );
@@ -26,19 +27,31 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
     }
 
     // line 3
+    public function block_headextra($context, array $blocks = array())
+    {
+        echo " 
+    <style>
+        #map {
+            height: 12em;            
+        }
+    </style>
+";
+    }
+
+    // line 11
     public function block_content($context, array $blocks = array())
     {
-        // line 4
+        // line 12
         echo "    ";
         if (($context["errorList"] ?? null)) {
-            // line 5
+            // line 13
             echo "        <ul>
             ";
-            // line 6
+            // line 14
             $context['_parent'] = $context;
             $context['_seq'] = twig_ensure_traversable(($context["errorList"] ?? null));
             foreach ($context['_seq'] as $context["_key"] => $context["error"]) {
-                // line 7
+                // line 15
                 echo "                <li>";
                 echo twig_escape_filter($this->env, $context["error"], "html", null, true);
                 echo "</li>
@@ -47,138 +60,133 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
             $_parent = $context['_parent'];
             unset($context['_seq'], $context['_iterated'], $context['_key'], $context['error'], $context['_parent'], $context['loop']);
             $context = array_intersect_key($context, $_parent) + $_parent;
-            // line 9
+            // line 17
             echo "        </ul>
     ";
         }
-        // line 10
+        // line 18
         echo " 
-
-
-    <div class=\"content-block\"> 
-        <div class=\"content-block-title\">Stores</div>
-        <form method=\"post\" enctype=\"multipart/form-data\">
-            <div class=\"list-block\">
-                <ul>
-                    <!-- Text inputs -->
-                    <li>
-                        <div class=\"item-content\">
-                            <div class=\"item-media\"><i class=\"icon f7-icons\">info</i></div>
-                            <div class=\"item-inner\">
-                                <div class=\"item-input\">
-                                    <input type=\"text\" placeholder=\"Store Name\" name=\"name\" value=\"";
-        // line 24
+  
+        <div class=\"content-block\"> 
+            <div class=\"content-block-title\">Stores</div>
+            <form method=\"post\" enctype=\"multipart/form-data\">
+                <div class=\"list-block\">
+                    <ul>
+                        <!-- Text inputs -->
+                        <li>
+                            <div class=\"item-content\">
+                                <div class=\"item-media\"><i class=\"icon f7-icons\">info</i></div>
+                                <div class=\"item-inner\">
+                                    <div class=\"item-input\">
+                                        <input type=\"text\" placeholder=\"Store Name\" name=\"name\" value=\"";
+        // line 31
         echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "name", array()), "html", null, true);
         echo "\">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-
-                    ";
-        // line 31
-        echo "                   ";
-        // line 39
-        echo "                                    ";
-        // line 44
-        echo "                    </li>
-                    <input type=\"hidden\" name=\"longitude\" id=\"longitude\" value=\"";
-        // line 45
+                        </li>
+                        <input type=\"hidden\" name=\"longitude\" id=\"longitude\" value=\"";
+        // line 36
         echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "longitude", array()), "html", null, true);
         echo "\">
-                    <input type=\"hidden\" name=\"latitude\" id=\"latitude\" ";
-        // line 46
+                        <input type=\"hidden\" name=\"latitude\" id=\"latitude\" ";
+        // line 37
         echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "latitude", array()), "html", null, true);
-        echo ">
-                    <input type=\"hidden\" name=\"address\" id=\"address\">
-                    <div class=\"list-block-label\"><p id=\"noGeo\"></p></div>                                                     
-
-                    ";
-        // line 51
-        echo "                    <li>
-                        <div class=\"item-content\">
-                            <div class=\"item-media\"><i class=\"icon f7-icons\">camera</i></div>
-                            <div class=\"item-inner\">
-                                <div class=\"item-input\">
-                                    <input type=\"file\" name=\"storeImage\" value=\"";
-        // line 56
+        echo ">                                                     
+                        
+                        ";
+        // line 40
+        echo "                        <li>
+                            <div class=\"item-content\">
+                                <div class=\"item-media\"><i class=\"icon f7-icons\">photos</i></div>
+                                <div class=\"item-inner\">
+                                    <div class=\"item-input\">
+                                        <input type=\"file\" name=\"storeImage\" value=\"";
+        // line 45
         echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "logoPath", array()), "html", null, true);
         echo "\">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
 
-                    
-                    ";
-        // line 64
-        echo "                    <li>
-                        <div class=\"item-content\">
-                            <div class=\"item-inner\">
-                                <input type=\"submit\" class=\"button button-big button-fill\" value=\"";
-        // line 67
+
+                        ";
+        // line 53
+        echo "                        <li>
+                            <div class=\"item-content\">
+                                <div class=\"item-inner\">
+                                    <input type=\"submit\" class=\"button button-big button-fill\" value=\"";
+        // line 56
         if (($context["isEditing"] ?? null)) {
             echo "Update";
         } else {
             echo "Add";
         }
         echo " Store\">
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                    </ul>
+            </form>
+        </div> 
+            <div class=\"card\">
+                <div class=\"card-content\">
+                    <div class=\"card-content-inner\"><div id=\"map\"></div></div>
+                </div>
+            </div>     
+    </div>
 
-        </form>
-    </div> 
-</div>
 ";
     }
 
-    // line 78
+    // line 72
     public function block_scriptextra($context, array $blocks = array())
     {
         echo " 
     <script>
-        var x = document.getElementById(\"noGeo\");
-        function getLocation() {
+          var map, infoWindow;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 15
+            });
+
+            infoWindow = new google.maps.InfoWindow;
+            // Try HTML5 geolocation.
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                        document.getElementById(\"longitude\").value = pos['lng'];
+                        document.getElementById(\"latitude\").value = pos['lat'];
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Location found!');
+                    infoWindow.open(map);
+                    map.setCenter(pos);
+                }, function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
             } else {
-                x.innerHTML = \"Geolocation is not supported by this browser\";
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
             }
-        }
-        function showPosition(position) {
-            var long = position.coords.latitude;
-            var lat = position.coords.longitude;
-
-            document.getElementById(\"longitude\").value = long;
-            document.getElementById(\"latitude\").value = lat;
-            
-            
         }
 
-        function showError(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    x.innerHTML = \"User denied the request for Geolocation.\";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    x.innerHTML = \"Location information is unavailable.\";
-                    break;
-                case error.TIMEOUT:
-                    x.innerHTML = \"The request to get user location timed out.\";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    x.innerHTML = \"An unknown error occurred.\";
-                    break;
-            }
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                    'Error: The Geolocation service failed.' :
+                    'Error: Your browser doesn\\'t support geolocation.');
+            infoWindow.open(map);
         }
-       /* \$(\"#getLocation\").change(function () {
-            if (this.checked) {
-                getLocation();
-            }
-        }); */
-           \$(document).ready(getLocation);
+
+</script>
+<script   async defer src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxl2OsLeKyA3upPOzMaPDpVUq6dNzR48&callback=initMap\">
     </script>
 ";
     }
@@ -195,7 +203,7 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
 
     public function getDebugInfo()
     {
-        return array (  138 => 78,  120 => 67,  115 => 64,  105 => 56,  98 => 51,  91 => 46,  87 => 45,  84 => 44,  82 => 39,  80 => 31,  71 => 24,  55 => 10,  51 => 9,  42 => 7,  38 => 6,  35 => 5,  32 => 4,  29 => 3,  11 => 1,);
+        return array (  145 => 72,  122 => 56,  117 => 53,  107 => 45,  100 => 40,  95 => 37,  91 => 36,  83 => 31,  68 => 18,  64 => 17,  55 => 15,  51 => 14,  48 => 13,  45 => 12,  42 => 11,  30 => 3,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -210,6 +218,14 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
     {
         return new Twig_Source("{% extends \"master.html.twig\" %}
 
+{% block headextra %} 
+    <style>
+        #map {
+            height: 12em;            
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     {% if errorList %}
         <ul>
@@ -218,115 +234,102 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
                 {% endfor %}
         </ul>
     {% endif %} 
-
-
-    <div class=\"content-block\"> 
-        <div class=\"content-block-title\">Stores</div>
-        <form method=\"post\" enctype=\"multipart/form-data\">
-            <div class=\"list-block\">
-                <ul>
-                    <!-- Text inputs -->
-                    <li>
-                        <div class=\"item-content\">
-                            <div class=\"item-media\"><i class=\"icon f7-icons\">info</i></div>
-                            <div class=\"item-inner\">
-                                <div class=\"item-input\">
-                                    <input type=\"text\" placeholder=\"Store Name\" name=\"name\" value=\"{{v.name}}\">
+  
+        <div class=\"content-block\"> 
+            <div class=\"content-block-title\">Stores</div>
+            <form method=\"post\" enctype=\"multipart/form-data\">
+                <div class=\"list-block\">
+                    <ul>
+                        <!-- Text inputs -->
+                        <li>
+                            <div class=\"item-content\">
+                                <div class=\"item-media\"><i class=\"icon f7-icons\">info</i></div>
+                                <div class=\"item-inner\">
+                                    <div class=\"item-input\">
+                                        <input type=\"text\" placeholder=\"Store Name\" name=\"name\" value=\"{{v.name}}\">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-
-                    {# get current location #}
-                   {# <li>
-                        <div class=\"item-content\">
-                            <div class=\"item-media\"><i class=\"icon f7-icons\">world-fill</i></div>
-                            <div class=\"item-inner\">
-                                <div class=\"item-title label\">Get location</div>
-                                <div class=\"item-input\">
-                                    <label class=\"label-switch\">
-                                        <input type=\"checkbox\" id=\"getLocation\" > {# TODO: write javascript function to get current location #}
-                                    {#    <div class=\"checkbox\"></div>
-                                    </label>
+                        </li>
+                        <input type=\"hidden\" name=\"longitude\" id=\"longitude\" value=\"{{v.longitude}}\">
+                        <input type=\"hidden\" name=\"latitude\" id=\"latitude\" {{v.latitude}}>                                                     
+                        
+                        {# image path #}
+                        <li>
+                            <div class=\"item-content\">
+                                <div class=\"item-media\"><i class=\"icon f7-icons\">photos</i></div>
+                                <div class=\"item-inner\">
+                                    <div class=\"item-input\">
+                                        <input type=\"file\" name=\"storeImage\" value=\"{{v.logoPath}}\">
+                                    </div>
                                 </div>
                             </div>
-                        </div> #}
-                    </li>
-                    <input type=\"hidden\" name=\"longitude\" id=\"longitude\" value=\"{{v.longitude}}\">
-                    <input type=\"hidden\" name=\"latitude\" id=\"latitude\" {{v.latitude}}>
-                    <input type=\"hidden\" name=\"address\" id=\"address\">
-                    <div class=\"list-block-label\"><p id=\"noGeo\"></p></div>                                                     
+                        </li>
 
-                    {# image path #}
-                    <li>
-                        <div class=\"item-content\">
-                            <div class=\"item-media\"><i class=\"icon f7-icons\">camera</i></div>
-                            <div class=\"item-inner\">
-                                <div class=\"item-input\">
-                                    <input type=\"file\" name=\"storeImage\" value=\"{{v.logoPath}}\">
+
+                        {# submit #}
+                        <li>
+                            <div class=\"item-content\">
+                                <div class=\"item-inner\">
+                                    <input type=\"submit\" class=\"button button-big button-fill\" value=\"{% if isEditing %}Update{% else %}Add{% endif %} Store\">
                                 </div>
                             </div>
-                        </div>
-                    </li>
+                        </li>
+                    </ul>
+            </form>
+        </div> 
+            <div class=\"card\">
+                <div class=\"card-content\">
+                    <div class=\"card-content-inner\"><div id=\"map\"></div></div>
+                </div>
+            </div>     
+    </div>
 
-                    
-                    {# submit #}
-                    <li>
-                        <div class=\"item-content\">
-                            <div class=\"item-inner\">
-                                <input type=\"submit\" class=\"button button-big button-fill\" value=\"{% if isEditing %}Update{% else %}Add{% endif %} Store\">
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-
-        </form>
-    </div> 
-</div>
 {% endblock %}
 
 {% block scriptextra %} 
     <script>
-        var x = document.getElementById(\"noGeo\");
-        function getLocation() {
+          var map, infoWindow;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: -34.397, lng: 150.644},
+                zoom: 15
+            });
+
+            infoWindow = new google.maps.InfoWindow;
+            // Try HTML5 geolocation.
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                        document.getElementById(\"longitude\").value = pos['lng'];
+                        document.getElementById(\"latitude\").value = pos['lat'];
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('Location found!');
+                    infoWindow.open(map);
+                    map.setCenter(pos);
+                }, function () {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
             } else {
-                x.innerHTML = \"Geolocation is not supported by this browser\";
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
             }
-        }
-        function showPosition(position) {
-            var long = position.coords.latitude;
-            var lat = position.coords.longitude;
-
-            document.getElementById(\"longitude\").value = long;
-            document.getElementById(\"latitude\").value = lat;
-            
-            
         }
 
-        function showError(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    x.innerHTML = \"User denied the request for Geolocation.\";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    x.innerHTML = \"Location information is unavailable.\";
-                    break;
-                case error.TIMEOUT:
-                    x.innerHTML = \"The request to get user location timed out.\";
-                    break;
-                case error.UNKNOWN_ERROR:
-                    x.innerHTML = \"An unknown error occurred.\";
-                    break;
-            }
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                    'Error: The Geolocation service failed.' :
+                    'Error: Your browser doesn\\'t support geolocation.');
+            infoWindow.open(map);
         }
-       /* \$(\"#getLocation\").change(function () {
-            if (this.checked) {
-                getLocation();
-            }
-        }); */
-           \$(document).ready(getLocation);
+
+</script>
+<script   async defer src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxl2OsLeKyA3upPOzMaPDpVUq6dNzR48&callback=initMap\">
     </script>
 {% endblock %}", "stores_addedit.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\stores_addedit.html.twig");
     }

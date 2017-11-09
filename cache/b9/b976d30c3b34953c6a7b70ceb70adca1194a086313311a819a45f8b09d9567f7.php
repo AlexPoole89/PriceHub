@@ -40,20 +40,33 @@ class __TwigTemplate_966641724b18eeef23c7f372463b3b1b7996b1813140df075d8e9bd402b
     public function block_content($context, array $blocks = array())
     {
         echo "    
-    <div class=\"content-block-title\">Store Added</div>
+    <div class=\"content-block-title\">Store ";
+        // line 6
+        if (($context["isEditing"] ?? null)) {
+            echo "Edited";
+        } else {
+            echo "Added";
+        }
+        echo "</div>
     <div class=\"card\">
   <div class=\"card-content\">
     <div class=\"card-content-inner\">";
         // line 9
         echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "name", array()), "html", null, true);
-        echo " added successfully</div>
+        echo " ";
+        if (($context["isEditing"] ?? null)) {
+            echo "edited";
+        } else {
+            echo "added";
+        }
+        echo " successfully</div>
   </div>
          <div class=\"card-footer\">
-    <a href=\"/stores/list\" class=\"link\">Go to list</a>
+    <a href=\"/stores/list\" class=\"external\">Go to list</a>
     <a href=\"/stores/view/";
         // line 13
-        echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "id", array(), "array"), "html", null, true);
-        echo "\" class=\"link\">See store</a>
+        echo twig_escape_filter($this->env, $this->getAttribute(($context["v"] ?? null), "id", array()), "html", null, true);
+        echo "\" class=\"external\">See store</a>
   </div>
 </div>
     
@@ -72,7 +85,7 @@ class __TwigTemplate_966641724b18eeef23c7f372463b3b1b7996b1813140df075d8e9bd402b
 
     public function getDebugInfo()
     {
-        return array (  55 => 13,  48 => 9,  40 => 5,  29 => 3,  11 => 1,);
+        return array (  68 => 13,  55 => 9,  45 => 6,  40 => 5,  29 => 3,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -90,14 +103,14 @@ class __TwigTemplate_966641724b18eeef23c7f372463b3b1b7996b1813140df075d8e9bd402b
 {% block title %}Store {% if isEditing %}edited{% else %}added{% endif %}{% endblock %}
 
 {% block content %}    
-    <div class=\"content-block-title\">Store Added</div>
+    <div class=\"content-block-title\">Store {% if isEditing %}Edited{% else %}Added{% endif %}</div>
     <div class=\"card\">
   <div class=\"card-content\">
-    <div class=\"card-content-inner\">{{v.name}} added successfully</div>
+    <div class=\"card-content-inner\">{{v.name}} {% if isEditing %}edited{% else %}added{% endif %} successfully</div>
   </div>
          <div class=\"card-footer\">
-    <a href=\"/stores/list\" class=\"link\">Go to list</a>
-    <a href=\"/stores/view/{{v['id']}}\" class=\"link\">See store</a>
+    <a href=\"/stores/list\" class=\"external\">Go to list</a>
+    <a href=\"/stores/view/{{v.id}}\" class=\"external\">See store</a>
   </div>
 </div>
     

@@ -1,39 +1,76 @@
 {% extends "master.html.twig" %}
- {% block title %}Store List{% endblock %}
-{% block content %}
-                                                          
-<!-- List View -->
-<div class="content-block-title">Store List</div>
-<div class="list-block accordion-list">
-  <ul>
-      {% for l in list %}
-    <li class="accordion-item"><a href="#" class="item-content item-link">
-        <div class="item-inner">
-          <div class="item-title">{{l.name}}</div>
-        </div></a>
-      <div class="accordion-item-content">
-        <div class="content-block">    
-            <div class="row">
-                <div class="col-33">
-                   <a href="/stores/view/{{l.id}}" class="external button button-big button-fill button-raised color-cyan">View</a>
-                </div>
-                 <div class="col-33">
-                   <a href="/stores/edit/{{l.id}}" class="external button button-big button-fill button-raised color-cyan">Update</a>
-                </div>
-            {# <form method="post"  action="/stores/delete/{{l.id}}" >
-                <input type="hidden" name="confirmed" value="true"> #}
-                <div class="col-33"> 
-                    <a href="/stores/delete/{{l.id}}" class="button button-big button-fill button-raised color-pink external">Delete</a>
-               </div>
-           {# </form> #}
-            </div>
+{% block title %}Store List{% endblock %}
+{% block headextra %}
+   {# <script>
+        $(document).ready(function () {
+        // respond to all events that may change the value of input
+        $('input[name=searchbar]').bind('propertychange change keyup input paste', function () {
+            var searchInput = $('input[name=searchbar]').val();
+            $('#searchList').load('/storeresult/' + searchInput);
+        });
+    });
+    </script> #}
+{% endblock %}
+{% block searchbar %}
+    <!-- Search Bar with "searchbar-init" class for auto initialization -->
+    <form class="searchbar searchbar-init" data-search-list=".list-block-search" data-search-in=".item-title" data-found=".searchbar-found" data-not-found=".searchbar-not-found">
+        <div class="searchbar-input">
+            <input type="search" placeholder="Search">
+            <a href="#" class="searchbar-clear"></a>
         </div>
-      </div>
-    </li>
-    {% else %}
-                            
-                        {% endfor %}
-  </ul>
-</div>
-          
+        <a href="#" class="searchbar-cancel">Cancel</a>
+    </form>
+    
+    <div class="searchbar-overlay"></div>
+    
+    <div class="page-content">
+        <div class="content-block searchbar-not-found">
+                Nothing found
+        </div>
+ 
+        <div class="list-block list-block-search searchbar-found">
+            <ul>
+                <!-- List View -->
+    <div class="content-block-title">Store List</div>
+    <div class="list-block accordion-list">
+        <ul>
+            <div id="searchList">
+            {% for l in list %}
+                <li class="accordion-item"><a href="#" class="item-content item-link">
+                        <div class="item-inner">
+                            <div class="item-title">{{l.name}}</div>
+                        </div></a>
+                    <div class="accordion-item-content">
+                        <div class="content-block">    
+                            <div class="row">
+                                <div class="col-33">
+                                    <a href="/stores/view/{{l.id}}" class="external button button-big button-fill button-raised color-cyan">View</a>
+                                </div>
+                                <div class="col-33">
+                                    <a href="/stores/edit/{{l.id}}" class="external button button-big button-fill button-raised color-cyan">Update</a>
+                                </div>
+                                <div class="col-33"> 
+                                    <a href="/stores/delete/{{l.id}}" class="button button-big button-fill button-raised color-pink external">Delete</a>
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% else %}
+
+            {% endfor %}
+            </div>
+        </ul>
+    </div>
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block content %}
+
+       
+
 {% endblock %}
