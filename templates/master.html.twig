@@ -118,9 +118,35 @@
       <!-- Your main view, should have "view-main" class -->
       <div class="view view-main">
           {% block floater %}
-              <a href="/price/add" class="floating-button external">
+           {#  <a href="/price/add" class="floating-button external">
     <i class="f7-icons">add</i>
-  </a>
+  </a> #}
+            <!-- Speed Dial Wrap -->
+  <div class="speed-dial">
+    <!-- FAB inside will open Speed Dial actions -->
+    <a href="#" class="floating-button">
+      <!-- First icon is visible when Speed Dial actions are closed -->
+      <i class="icon icon-plus"></i>
+      <!-- Second icon is visible when Speed Dial actions are opened -->
+      <i class="icon icon-close"></i>
+    </a>
+    <!-- Speed Dial Actions -->
+    <div class="speed-dial-buttons">
+      <!-- First Speed Dial button add price -->
+      <a href="/price/add" class="external">
+        <i class="icon f7-icons">money_dollar</i>
+      </a>
+      <!-- Second Speed Dial add product button -->
+      <a href="/products/add" class="external">
+        <i class="icon f7-icons">bag</i>
+      </a>
+      <!-- Third Speed Dial add store button -->
+      <a href="/stores/add" class="external">
+        <i class="icon f7-icons">world</i>
+      </a>
+    </div>
+  </div>
+  <!-- End of Speed Dial -->
               {% endblock %}
         <!-- Top Navbar-->
         <div class="navbar">
