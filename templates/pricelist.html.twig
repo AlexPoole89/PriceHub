@@ -1,15 +1,15 @@
 {% extends "master.html.twig" %}
 
 {% block headextra %}
-   {# <script>
-        $(document).ready(function () {
-        // respond to all events that may change the value of input
-        $('input[name=searchbar]').bind('propertychange change keyup input paste', function () {
-            var searchInput = $('input[name=searchbar]').val();
-            $('#searchList').load('/storeresult/' + searchInput);
-        });
-    });
-    </script> #}
+    {# <script>
+         $(document).ready(function () {
+         // respond to all events that may change the value of input
+         $('input[name=searchbar]').bind('propertychange change keyup input paste', function () {
+             var searchInput = $('input[name=searchbar]').val();
+             $('#searchList').load('/storeresult/' + searchInput);
+         });
+     });
+     </script> #}
 {% endblock %}
 {% block searchbar %}
     <!-- Search Bar with "searchbar-init" class for auto initialization -->
@@ -18,55 +18,53 @@
             <input type="search" placeholder="Search">
             <a href="#" class="searchbar-clear"></a>
         </div>
-        <a href="#" class="searchbar-cancel">Cancel</a>
+
     </form>
-    
+
     <div class="searchbar-overlay"></div>
-    
+
     <div class="page-content">
         <div class="content-block searchbar-not-found">
-                Nothing found
+            Nothing found
         </div>
- 
+
         <div class="list-block list-block-search searchbar-found">
+            <!-- List View -->
+            <div class="content-block-title">Price List</div>
             <ul>
-                <!-- List View -->
-    <div class="content-block-title">Price List</div>
-    <div class="list-block accordion-list">
-        <ul>
-            <div id="searchList">
-                 {% for p in list %}
-                    
-                    <li class="accordion-item">
-                        <a href="#" class="item-content item-link">
-                            <div class="item-inner">
-                                <div class="item-title">{{p.productName}}</div>
-                                <div class="item-after">${{p.price}} /{{p.quantity}} {{p.unit}}&nbsp</div>
-                                <div class="item-subtitle">{{p.storeName}}</div>
-                              
-                            </div>
-                        </a>
-                        <div class="accordion-item-content">
-                            <div class="content-block">
+                <div class="list-block accordion-list">
+                    {% for p in list %}
+
+                        <li class="accordion-item">
+                            <a href="#" class="item-content item-link">
+                                <div class="item-inner">
+                                    <div class="item-title">{{p.productName}}</div>
+                                    <div class="item-after">${{p.price}} /{{p.quantity}} {{p.unit}}&nbsp</div>
+                                    <div class="item-subtitle">{{p.storeName}}</div>
+
+                                </div>
+                            </a>
+                            <div class="accordion-item-content">
                                 <div class="content-block">
-                                    <div class="row">
-                                        <div class="col-50">
-                                            <a href="/price/edit/{{p.priceId}}" class="button button-fill button-big button-green external"><i class="f7-icons">compose</i></a>
-                                        </div>
-                                        <div class="col-50">
-                                            <a href="/price/delete/{{p.priceId}}" class="button button-fill button-big button-red external"><i class="f7-icons">trash</i></a>
-                                        </div>
-                                    </div>  
+                                    <div class="content-block">
+                                        <div class="row">
+                                            <div class="col-50">
+                                                <a href="/price/edit/{{p.priceId}}" class="button button-fill button-big button-green external"><i class="f7-icons">compose</i></a>
+                                            </div>
+                                            <div class="col-50">
+                                                <a href="/price/delete/{{p.priceId}}" class="button button-fill button-big button-red external"><i class="f7-icons">trash</i></a>
+                                            </div>
+                                        </div>  
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                {% endfor %}
-            </div>
-        </ul>
-    </div>
+                        </li>
+                    {% endfor %}
+                </div>
             </ul>
         </div>
+        {# creates white space at bottom of screen #}
+        <div class="content-block">&nbsp;</div>
     </div>
 
 {% endblock %}
@@ -74,6 +72,6 @@
 
 {% block content %}
 
-       
+
 
 {% endblock %}

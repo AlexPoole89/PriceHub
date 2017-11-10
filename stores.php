@@ -1,9 +1,10 @@
 <?php
 
-// fake $app, $log so that Netbeans can provide suggestions while typing code
 if (false) {
-    $app = new \Slim\Slim();
-    $log = new Logger('main');
+// fake $app, $log so that Netbeans can provide suggestions while typing code
+    require_once 'vendor/autoload.php';
+    $app = new \Slim\Slim();   
+    $log = new Monolog\Logger('main');
 }
 
 $app->get('/stores/add', function() use($app, $log) {
@@ -129,6 +130,7 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 //                    $ext = '.bmp';
 //                    break;
 //            }
+            $log->info("In /stores pic info: " . print_r($info, true));
             $logoPath = 'uploads/' . $storeImage['name'];  //  write new file name with function getUniqueFileNameForExtension('uploads/', $ext)
             if (!move_uploaded_file($storeImage['tmp_name'], $logoPath)) {
                 $log->err(sprintf("Error moving uploaded file: " . print_r($storeImage, true)));

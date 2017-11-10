@@ -8,11 +8,11 @@ if (false) {
 
 //products add/edit first show
 $app->get('/products/:op(/:id)', function($op, $id = -1) use ($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
-//
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+
     if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
         $app->render('error_internal.html.twig');
         return;
@@ -38,10 +38,10 @@ $app->get('/products/:op(/:id)', function($op, $id = -1) use ($app) {
 //
 // PRODUCTS ADD/EDIT SUBMISSION
 $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
     if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
         $app->render('error_internal.html.twig');
         return;
@@ -154,7 +154,7 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             }
         } else {
 //INSERT STATEMENT             // 1 FOR TESTING CHANGE BACK TO $_SESSION['user']['id']
-            DB::insert('products', array('userId' => 1, 'name' => $name, 'comment' => $comment, 'picPath' => $values['picPath']));
+            DB::insert('products', array('userId' => $_SESSION['user']['id'], 'name' => $name, 'comment' => $comment, 'picPath' => $values['picPath']));
             $values = DB::queryFirstRow("SELECT * FROM products ORDER BY id DESC");
         }
         $app->render('products_addedit_success.html.twig', array('v' => $values, 'isEditing' => ($id != -1)));
@@ -171,10 +171,10 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 $app->get('/products/delete/:id', function($id) use ($app) {
 //VERIFY USER MATCHES ORIGINAL product adder
     $product = DB::queryFirstRow("SELECT * FROM products WHERE id=%i", $id);
-//    if (!$_SESSION['user'] || $product['userId'] != $_SESSION['user']['id']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
+    if (!$_SESSION['user'] || $product['userId'] != $_SESSION['user']['id']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
     if (!$product) {
         $app->render('not_found.html.twig');
         return;
@@ -187,16 +187,17 @@ $app->get('/products/delete/:id', function($id) use ($app) {
 $app->post('/products/delete/:id', function($id) use ($app) {
 //VERIFY USER MATCHES ORIGINAL TO-DO WRITER
     $row = DB::queryFirstRow("SELECT * FROM products WHERE id=%i", $id);
-//    if (!$_SESSION['user'] || $_SESSION['user']['id'] != $row['userId']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
+    if (!$_SESSION['user'] || $_SESSION['user']['id'] != $row['userId']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
     $confirmed = $app->request()->post('confirmed');
     if ($confirmed != 'true') {
         $app->render('not_found.html.twig');
         return;
     }
     DB::delete('products', "id=%i", $id);
+    DB::delete('prices', 'productId=%i', $id);
     if (DB::affectedRows() == 0) {
         $app->render('not_found.html.twig');
     } else {
@@ -207,10 +208,10 @@ $app->post('/products/delete/:id', function($id) use ($app) {
 //
 //LIST ALL PRODUCTS
 $app->get('/products/list', function() use($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }                                               //  WHERE products.userId=users.id
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }                                               //  WHERE products.userId=users.id
     $productsList = DB::query("SELECT * FROM products");
     $app->render('products_list.html.twig', array('list' => $productsList));
 });
@@ -218,12 +219,13 @@ $app->get('/products/list', function() use($app) {
 
 //PRODUCT PROFILE
 $app->get('/products/view/:id', function($id = -1) use($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
     $pricesCountProduct = DB::queryFirstField("SELECT count(id) FROM prices WHERE productId=%i", $id);
-    $product = DB::queryFirstRow("SELECT * FROM products WHERE id=%i", $id);
+    $product = DB::queryFirstRow("SELECT products.name as prodName, products.id as id, users.name as username, products.barcode as barcode,"
+            . " products.comment as comment, products.picPath as picPath FROM products, users WHERE products.userId=users.id AND products.id=%i", $id);
     $app->render('products_view.html.twig', array('p' => $product,
         'price' => $pricesCountProduct
     ));

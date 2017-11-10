@@ -27,14 +27,19 @@ $app->get('/register', function() use ($app) {
 
 $app->post('/register', function() use ($app) {
 
+    $name = $app->request()->post('name');
     $email = $app->request()->post('email');
     $pass1 = $app->request()->post('pass1');
     $pass2 = $app->request()->post('pass2');
 
-    $values = array('email' => $email);
+    $values = array('email' => $email, 'name' => $name);
     $errorList = array();
 
 
+    if(strlen($name) < 2 || strlen($name) > 50){
+        array_push($errorList, "Name must be between 2 and 50 characters.");
+        $values['name'] = '';
+    }
 
     if (filter_var($email, FILTER_VALIDATE_EMAIL) == false) {
         array_push($errorList, "Invalid email");
@@ -64,8 +69,8 @@ $app->post('/register', function() use ($app) {
 
         // 2. successful submission
         $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
-        DB::insert('users', array('email' => $email, 'password' => $passEnc));
-        $app->render('register_success.html.twig', array('email' => $email));
+        DB::insert('users', array('name' => $name, 'email' => $email, 'password' => $passEnc));
+        $app->render('register_success.html.twig', array('name' => $name, 'email' => $email));
     }
 });
 
@@ -100,7 +105,7 @@ $app->post('/login', function() use ($app) {
         //success
         unset($row['password']);
         $_SESSION['user'] = $row;
-        $app->render('login_success.html.twig', array('userSession' => $_SESSION['user']));
+        $app->render('index.html.twig');
     }
 });
 

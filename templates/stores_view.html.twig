@@ -14,12 +14,13 @@
        
     
 <div class="card">
-  <div style="background-image:url({{s.logoPath}})" valign="bottom" class="card-header color-white no-border">{{s.name}}</div>
+  {#<div style="background-image:url({{s.logoPath}})" valign="bottom" class="card-header color-white no-border">{{s.name}}</div>#}
+  <img src="{{s.logoPath}}" style="width:100%; height:100%;">
   <div class="card-content">
     <div class="card-content-inner">
       {# TODO ADD LINK to prices page WHERE storeId={{s.id}} #}
       <p class="buttons-row">
-  <a href="#" class="button button-big button-fill">{{price}} {% if price > 1 %}Prices{% else %}Price{% endif %}</a>
+  <a href="#" class="button button-big ripple-yellow button-fill">{{price}} {% if price > 1 %}Prices{% elseif price < 1 %}Prices{% else %}Price{% endif %}</a>
 </p>
     </div>
   </div>
@@ -36,7 +37,7 @@
   </div>
 </div>  
 
-    
+    <div class="content-block">&nbsp;</div>
    {# {% endfor %}  #}
     
     {% endblock %}

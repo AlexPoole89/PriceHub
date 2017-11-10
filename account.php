@@ -32,9 +32,9 @@ $app->map('/passreset/request', function() use ($app, $log) {
         DB:: insertUpdate('passresets', array(
             'userId' => $user['id'],
             'secretToken' => $secretToken,
-            'expiryDateTime' => date("Y-m-d H:i:s", strtotime("+5 minutes"))
+            'expiryDateTime' => date("Y-m-d H:i:s", strtotime("+1 day"))
         ));
-        $url = 'http://' . $_SERVER['SERVER_NAME'] . '/passreset/token/' . $secretToken;
+        $url = 'https://' . $_SERVER['SERVER_NAME'] . '/passreset/token/' . $secretToken;
         $emailBody = $app->view()->render('passreset_email.html.twig', array(
             'name' => $user['name'],
             'url' => $url

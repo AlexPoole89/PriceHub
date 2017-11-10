@@ -3,24 +3,28 @@
 {% block title %}Access Denied{% endblock %}
 
 {% block content %}
-    <div class="list-block">
-    <br>
-  <ul>
-      
-      <li>
-        <div class="item-content">
-             <div class="item-inner">
-       <a href="/login" class='external'>Login</a>
-             </div>
+    <div class="card">
+        <div class="card-header">Access Denied</div>
+        <div class="card-content"> 
+            <div class="list-block">
+                <ul>
+
+                    <li> 
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <a href="/login" class='button button-raised button-fill color-blue ripple-indigo external'>Login</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li> 
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <a href="/register" class='button button-raised button-fill color-blue ripple-indigo external'>Or create an account</a>
+                            </div>
+                        </div>
+                    </li>  
+                </ul> 
+            </div>
         </div>
-       </li>
-       <li>
-        <div class="item-content">
-             <div class="item-inner">
-                 <a href="/register" class='external'>Or create an account</a>
-             </div>
-        </div>
-            </li>
-  
-  </ul>
+    </div>
 {% endblock %}

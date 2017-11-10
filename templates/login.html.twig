@@ -37,23 +37,25 @@
     <li>
         <div class="item-content">
              <div class="item-inner">
-        <input type="submit" value="Login" class="button button-big color-blue"/>
+        <input type="submit" value="Login" class="button button-raised big-button button-fill color-blue"/>
              </div>
         </div>
        </li>
        <li>
-        <div class="item-content">
-             <div class="item-inner">
-                 <a href="/pricehub/register" class='external'>Or create an account</a>
-             </div>
-        </div>
+           <div class="content-block">           
+            <a href="/register" class='external button button-raised big-button button-fill color-blue'>Create an account</a>
+           </div>
             </li>
-  
+            <li>
+            <div class="content-block">           
+             <a href="/passreset/request" class='external button button-raised big-button button-fill color-orange'>Forgot you password?</a>
+           </div>
+            </li>
   </ul>
     
     <div class="content-block">
         {% if error %}
-    <p>Login failed, try again or <a href="/pricehub/register">register</a></p>
+    <p>Login failed, try again or <a href="/register">register</a></p>
 {% endif %}
     </div>
     

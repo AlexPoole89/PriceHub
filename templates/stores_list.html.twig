@@ -1,15 +1,15 @@
 {% extends "master.html.twig" %}
 {% block title %}Store List{% endblock %}
 {% block headextra %}
-   {# <script>
-        $(document).ready(function () {
-        // respond to all events that may change the value of input
-        $('input[name=searchbar]').bind('propertychange change keyup input paste', function () {
-            var searchInput = $('input[name=searchbar]').val();
-            $('#searchList').load('/storeresult/' + searchInput);
-        });
-    });
-    </script> #}
+    {# <script>
+         $(document).ready(function () {
+         // respond to all events that may change the value of input
+         $('input[name=searchbar]').bind('propertychange change keyup input paste', function () {
+             var searchInput = $('input[name=searchbar]').val();
+             $('#searchList').load('/storeresult/' + searchInput);
+         });
+     });
+     </script> #}
 {% endblock %}
 {% block searchbar %}
     <!-- Search Bar with "searchbar-init" class for auto initialization -->
@@ -20,51 +20,52 @@
         </div>
         <a href="#" class="searchbar-cancel">Cancel</a>
     </form>
-    
+
     <div class="searchbar-overlay"></div>
     <div class="page-content">
         <div class="content-block searchbar-not-found">
-                Nothing found
+            Nothing found
         </div>
- 
-        <div class="list-block list-block-search searchbar-found">
-            <ul>
-                <!-- List View -->
-    <div class="content-block-title">Store List</div>
-    <div class="list-block accordion-list">
-        <ul>
-            <div id="searchList">
-            {% for l in list %}
-                <li class="accordion-item"><a href="#" class="item-content item-link">
-                        <div class="item-inner">
-                            <div class="item-title">{{l.name}}</div>
-                        </div></a>
-                    <div class="accordion-item-content">
-                        <div class="content-block">    
-                            <div class="row">
-                                <div class="col-33">
-                                    <a href="/stores/view/{{l.id}}" class="external button button-big button-fill button-raised color-cyan">View</a>
-                                </div>
-                                <div class="col-33">
-                                    <a href="/stores/edit/{{l.id}}" class="external button button-big button-fill button-raised color-cyan">Update</a>
-                                </div>
-                                <div class="col-33"> 
-                                    <a href="/stores/delete/{{l.id}}" class="button button-big button-fill button-raised color-pink external">Delete</a>
-                                </div>                               
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            {% else %}
 
-            {% endfor %}
-            </div>
-        </ul>
-    </div>
+        <div class="list-block list-block-search searchbar-found">
+            <!-- List View -->
+            <div class="content-block-title">Store List</div>
+            <ul>               
+                <div class="list-block accordion-list">
+
+                    {% for l in list %}
+                        <li class="accordion-item"><a href="#" class="item-content item-link">
+                                <div class="item-media"><img src="{{l.logoPath}}" width="50"></div>
+                                <div class="item-inner">
+                                    <div class="item-title">{{l.name}}</div>
+                                </div></a>
+                            <div class="accordion-item-content ">
+                                <div class="content-block">    
+                                    <div class="row">
+                                        <div class="col-33">
+                                            <a href="/stores/view/{{l.id}}" class="external button button-fill button-raised color-cyan">View</a>
+                                        </div>
+                                        <div class="col-33">
+                                            <a href="/stores/edit/{{l.id}}" class="external button button-fill button-raised color-cyan">Update</a>
+                                        </div>
+                                        <div class="col-33"> 
+                                            <a href="/stores/delete/{{l.id}}" class="button button-fill button-raised color-pink external">Delete</a>
+                                        </div>                               
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {% else %}
+
+                    {% endfor %}
+
+                </div>
             </ul>
         </div>
+{# creates white space at bottom of screen #}
+    <div class="content-block">&nbsp;</div>
     </div>
-
+    
 {% endblock %}
 
 
