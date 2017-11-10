@@ -86,3 +86,12 @@ date and name
 2.continue on barcode
 3.using ajax to autpocomplete form?
 
+
+11/10/2017 -- Alex
+1. -Google Maps API working in store add page with moveable marker
+-Google maps displays saved location on store view page
+-fast action speed dial button
+2. -fix product delete URL (add delete prices WHERE productId=id query)
+- get getuniquefileextension function to work
+- //TODO: if EDITING and new file is uploaded we should delete the old one in uploads
+3. how to recognize if new file is uploaded and delete the old one
