@@ -18,6 +18,13 @@ $app->get('/price/list', function() use ($app) {
     $app->render('pricelist.html.twig', array('list' => $productsList,'storeName'=>$storeName,'productName' =>$productName));
 });
 
+//JQuery check for email
+$app->get('/isbarcoderegistered/:barcode', function($email) use ($app) {
+    $row = DB::queryFirstRow("SELECT * FROM products where barcode=%s", $barcode);
+    echo!$row ? "" : ' <input type="number" step="0.01" placeholder="0.00" name="price" id="price" value="{{v.price}}">';
+});
+
+
 //add/edit a price
 
 $app->get('/price/:op(/:id)', function($op, $id = -1) use ($app) {
@@ -67,9 +74,11 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
     $lat = $app->request()->post('lat');
     $long = $app->request()->post('long');
     $barcode = $app->request()->post('barcode');
+    
     $values = array('barcode'=>$barcode,'store' => $storeName, 'product' => $productName, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity, 'unit' => $unit, 'lat' => $lat, 'long' => $long);
     $errorList = array();
 
+    
     if (isset($onSpecial)) {
         $onSpecial = 1; //true
     } else {
@@ -89,6 +98,35 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         array_push($errorList, "Product must be between 2 and 50 characters");
     }
 
+     $productImage = array();
+    if ($_FILES['productImage']['error']!= UPLOAD_ERR_NO_FILE) {
+        $productImage = $_FILES['productImage'];
+        if ($productImage['error'] != 0) {
+            array_push($errorList, "Error uploading file");
+            $log->err("Error uploading file: " . print_r($productImage, true));
+        } else {
+            if (strstr($productImage['name'], '..')) {
+                array_push($errorList, "Invalid file name");
+                $log->warn("Uploaded file name with .. in it (possible attack): " . print_r($productImage, true));
+            }
+            // TODO: check if file already exists, check maximum size of the file, dimensions of the image etc.
+            $info = getimagesize($productImage["tmp_name"]);
+            if ($info == FALSE) {
+                array_push($errorList, "File doesn't look like a valid image");
+            } else {
+                if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/gif' || $info['mime'] == 'image/png') {
+                    // image type is valid - all good
+                } else {
+                    array_push($errorList, "Image must be a JPG, GIF, or PNG only.");
+                }
+            }
+        }
+    } else { // no file uploaded
+        if ($op == 'add') {
+            array_push($errorList, "Image is required when creating new product");
+        }
+    }
+    
     if ($errorList) {
         // 3. failed submission
         $app->render('price_addedit.html.twig', array(
@@ -96,8 +134,21 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             'v' => $values));
     } else {
         // 2. successful submission
+       if ($productImage) {
+            $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $productImage['name']);
+            $picPath = 'uploads/' . $sanitizedFileName;
+            if (!move_uploaded_file($productImage['tmp_name'], $picPath)) {
+                $log->err("Error moving uploaded file: " . print_r($productImage, true));
+                $app->render('internal_error.html.twig');
+                return;
+            }
+            // TODO: if EDITING and new file is uploaded we should delete the old one in uploads
+            $values['picPath'] = "/" . $picPath;
+              } 
 //check if product exists
         if ($id != -1) {
+            // if ($store['userId'] == $_SESSION['user']['id']) {
+    
     $storeRow = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s',$storeName);
     $productRow = DB::queryFirstRow('SELECT * FROM products WHERE name=%s',$productName);
     $storeId = $storeRow['id'];
@@ -106,7 +157,7 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         } else {
             $product = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
             if (!$product) {
-                $product = DB::insert('products', array('name' => $productName,'barcode'=>$barcode,'userId' => $_SESSION['user']['id']));
+                $product = DB::insert('products', array(picPath=> "/" . $picPath,'name' => $productName,'barcode'=>$barcode,'userId' => $_SESSION['user']['id']));
             }
             $productName = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
             $productId = $productName['id'];

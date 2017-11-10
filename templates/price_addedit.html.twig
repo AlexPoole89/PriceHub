@@ -5,7 +5,7 @@
 
     <script src="/js/quagga.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
-    
+ 
     <script>
         window.onload = function () {
             var startPos;
@@ -23,7 +23,7 @@
 {% block content %}
     <div class="content-block-title">{% if isEditing %}Update{% else %}Add{% endif %} Price</div>
 
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="lat" id="lat" value="">
         <input type="hidden" name="long" id="long" value="">
         <div class="list-block">
@@ -54,6 +54,17 @@
 
             <ul>
             
+                 <li>
+                        <div class="item-content">
+                            <div class="item-media"><i class="icon f7-icons">camera</i></div>
+                            <div class="item-inner">
+                                <div class="item-input">
+                                    <input type="file" id="pic" placeholder="Product Image" name="productImage">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                
                 <li>
                     <div class="item-content">
                         <div class="item-inner">
@@ -151,7 +162,7 @@
                 </div>
 
             </div>
-    </form>
+   
     
     {% if errorList %}
         <br>
@@ -166,19 +177,22 @@
         {% endif %}
     </div>
 </div>
+     </form>
 <!-- barcode popup  -->
  <div class="popup popup-scan">
     <div class="content-block">
-
+&nbsp;
          <div class="content-block"><div id="scanner-container"></div></div>
-         <div class="content-block"> <a href="#" class="close-popup button button-fill">Close popup</a></div>
+         <div class="content-block"> <a href="#" onclick="closeScanner();" class="close-popup button button-fill">Close popup</a></div>
 
     <!-- Include the image-diff library -->
     
 
     <script>
         var _scannerIsRunning = false;
-
+function closeScanner(){
+    Quagga.close();
+}
         function startScanner() {
             Quagga.init({
                 inputStream: {
@@ -272,6 +286,11 @@ if (err/countDecodedCodes < 0.1) {
     document.getElementById("barcode").value = result.codeResult.code;
                  Quagga.stop();
                  document.getElementById('pop').click();
+                    $.ajax({
+            type: "POST",
+            url: '/isbarcoderegistered/code',
+            data: { upc: code }
+          });
 } else {
     // probably wrong code
 }
