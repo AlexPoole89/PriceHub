@@ -1,0 +1,35 @@
+{% extends "master.html.twig" %}
+{% block title %}{{s.name}} Page{% endblock %}
+{% block headextra %}
+    <style>
+        #map{
+            height: 12em;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+  {#  {% for s in store %}  #}
+    <div class="content-block-title">{{p.name}}</div>
+ 
+       
+    
+<div class="card">
+  <div style="background-image:url({{p.picPath}})" valign="bottom" class="card-header color-white no-border">{{s.name}}</div>
+  <div class="card-content">
+    <div class="card-content-inner">
+      {# TODO ADD link to prices page WHERE productId={{p.id}} #}
+      <p class="buttons-row">
+  <a href="#" class="button button-big button-fill">{{price}} {% if price > 1 %}Prices{% else %}Price{% endif %}</a>
+</p>
+    </div>
+  </div>
+  <div class="card-footer">
+    <a href="/products/list" class="link external">Store list</a>
+    <a href="/products/edit/{{s.id}}" class="link external">Update</a>
+    <a href="/products/delete/{{s.id}}" class="link  external">Delete</a>
+  </div>
+</div>
+
+   {# {% endfor %}  #}
+    
+    {% endblock %}

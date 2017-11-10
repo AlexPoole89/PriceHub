@@ -28,6 +28,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
   <head>
     <!-- Required meta tags-->
     <meta charset=\"utf-8\">
+    
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui\">
     <meta name=\"apple-mobile-web-app-capable\" content=\"yes\">
     <meta name=\"mobile-web-app-capable\" content=\"yes\">
@@ -35,7 +36,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
     <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\">
     <!-- Your app title -->
     <title>";
-        // line 12
+        // line 13
         $this->displayBlock('title', $context, $blocks);
         echo "</title>
     <!-- Path to Framework7 iOS CSS theme styles-->
@@ -49,9 +50,9 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
     <link rel=\"stylesheet\" href=\"/css/my-app.css\">   
     <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>
     ";
-        // line 23
-        $this->displayBlock('headextra', $context, $blocks);
         // line 24
+        $this->displayBlock('headextra', $context, $blocks);
+        // line 25
         echo "  </head>
   <body>
     <!-- Status bar overlay for full screen mode (PhoneGap) -->
@@ -63,16 +64,16 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
       <div class=\"content-block\">
          
           ";
-        // line 34
+        // line 35
         if (($context["userSession"] ?? null)) {
-            // line 35
+            // line 36
             echo "              
                <div class=\"content-block\">      
       <div class=\"item-content\">
         <div class=\"item-inner\">
           <div class=\"item-input\">
             Signed in as ";
-            // line 40
+            // line 41
             echo twig_escape_filter($this->env, $this->getAttribute(($context["userSession"] ?? null), "email", array()), "html", null, true);
             echo "
           </div>
@@ -91,7 +92,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
             
             ";
         } else {
-            // line 56
+            // line 57
             echo "               
              <div class=\"content-block\">
                     <div class=\"item-content\">
@@ -115,13 +116,13 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
            
         ";
         }
-        // line 78
+        // line 79
         echo "        
         <!--NAV AREA -->
         <div class=\"list-block\">
   <ul>
     <li>
-      <a href=\"#\" class=\"item-link item-content\">
+<a href=\"/products/list\" class=\"item-link item-content external\">
         <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
         <div class=\"item-inner\">
           <div class=\"item-title\">Products</div>
@@ -130,7 +131,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
       </a>
     </li>
     <li>
-      <a href=\"#\" class=\"item-link item-content\">
+    \t<a href=\"/stores/list\" class=\"item-link item-content external\">
         <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
         <div class=\"item-inner\">
           <div class=\"item-title\">Stores</div>
@@ -139,7 +140,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
       </a>
     </li>
      <li>
-      <a href=\"#\" class=\"item-link item-content\">
+      <a href=\"/price/list\" class=\"item-link item-content external\">
         <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
         <div class=\"item-inner\">
           <div class=\"item-title\">Prices</div>
@@ -159,16 +160,16 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
       <!-- Your main view, should have \"view-main\" class -->
       <div class=\"view view-main\">
           ";
-        // line 120
+        // line 121
         $this->displayBlock('floater', $context, $blocks);
-        // line 125
+        // line 152
         echo "        <!-- Top Navbar-->
         <div class=\"navbar\">
           <div class=\"navbar-inner\">
             <!-- We need cool sliding animation on title element, so we have additional \"sliding\" class -->
             
             <div class=\"center sliding\">";
-        // line 130
+        // line 157
         $this->displayBlock('overlayTitle', $context, $blocks);
         echo "</div>
             
@@ -187,14 +188,14 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
           <div data-page=\"index\" class=\"page\">
             <!-- Scrollable page content -->
             ";
-        // line 146
+        // line 173
         $this->displayBlock('searchbar', $context, $blocks);
-        // line 147
+        // line 174
         echo "           <div class=\"page-content  layout-white\"> 
             ";
-        // line 148
+        // line 175
         $this->displayBlock('content', $context, $blocks);
-        // line 157
+        // line 183
         echo "           </div> 
           </div>
         </div>
@@ -202,8 +203,8 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
         <div class=\"toolbar\">
           <div class=\"toolbar-inner\">
             <!-- Toolbar links -->
-             <!-- <a href=\"#\" class=\"link\">Link 1</a>
-          <a href=\"#\" class=\"link\">Link 2</a> -->
+             <a href=\"/\" class=\"external\"> <i class=\"f7-icons\">home</i></a>
+          <!--<a href=\"#\" class=\"link\">Link 2</a> -->
           </div>
         </div>
       </div>
@@ -216,61 +217,85 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
     <script type=\"text/javascript\" src=\"/js/my-app.js\"></script>
    
     ";
-        // line 177
+        // line 203
         $this->displayBlock('scriptextra', $context, $blocks);
-        // line 178
+        // line 204
         echo "  </body>
 </html>              ";
     }
 
-    // line 12
+    // line 13
     public function block_title($context, array $blocks = array())
     {
         echo "Index";
     }
 
-    // line 23
+    // line 24
     public function block_headextra($context, array $blocks = array())
     {
         echo " ";
     }
 
-    // line 120
+    // line 121
     public function block_floater($context, array $blocks = array())
     {
-        // line 121
-        echo "              <a href=\"/price/add\" class=\"floating-button external\">
-    <i class=\"f7-icons\">add</i>
-  </a>
+        // line 122
+        echo "           ";
+        // line 125
+        echo "            <!-- Speed Dial Wrap -->
+  <div class=\"speed-dial\">
+    <!-- FAB inside will open Speed Dial actions -->
+    <a href=\"#\" class=\"floating-button\">
+      <!-- First icon is visible when Speed Dial actions are closed -->
+      <i class=\"icon icon-plus\"></i>
+      <!-- Second icon is visible when Speed Dial actions are opened -->
+      <i class=\"icon icon-close\"></i>
+    </a>
+    <!-- Speed Dial Actions -->
+    <div class=\"speed-dial-buttons\">
+      <!-- First Speed Dial button add price -->
+      <a href=\"/price/add\" class=\"external\">
+        <i class=\"icon f7-icons\">money_dollar</i>
+      </a>
+      <!-- Second Speed Dial add product button -->
+      <a href=\"/products/add\" class=\"external\">
+        <i class=\"icon f7-icons\">bag</i>
+      </a>
+      <!-- Third Speed Dial add store button -->
+      <a href=\"/stores/add\" class=\"external\">
+        <i class=\"icon f7-icons\">world</i>
+      </a>
+    </div>
+  </div>
+  <!-- End of Speed Dial -->
               ";
     }
 
-    // line 130
+    // line 157
     public function block_overlayTitle($context, array $blocks = array())
     {
-        echo "PriceTrack";
+        echo " <i class=\"f7-icons\">bolt_fill</i> PriceTrack";
     }
 
-    // line 146
+    // line 173
     public function block_searchbar($context, array $blocks = array())
     {
     }
 
-    // line 148
+    // line 175
     public function block_content($context, array $blocks = array())
     {
-        // line 149
+        // line 176
         echo "                
             
-              <p>Page content goes here</p>
-              <!-- Link to another page -->
-              <a href=\"about.html\">About app</a>
+              <!-- content goes here -->
+             
             
                 
             ";
     }
 
-    // line 177
+    // line 203
     public function block_scriptextra($context, array $blocks = array())
     {
     }
@@ -287,7 +312,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
 
     public function getDebugInfo()
     {
-        return array (  274 => 177,  263 => 149,  260 => 148,  255 => 146,  249 => 130,  242 => 121,  239 => 120,  233 => 23,  227 => 12,  222 => 178,  220 => 177,  198 => 157,  196 => 148,  193 => 147,  191 => 146,  172 => 130,  165 => 125,  163 => 120,  119 => 78,  95 => 56,  76 => 40,  69 => 35,  67 => 34,  55 => 24,  53 => 23,  39 => 12,  26 => 1,);
+        return array (  299 => 203,  289 => 176,  286 => 175,  281 => 173,  275 => 157,  245 => 125,  243 => 122,  240 => 121,  234 => 24,  228 => 13,  223 => 204,  221 => 203,  199 => 183,  197 => 175,  194 => 174,  192 => 173,  173 => 157,  166 => 152,  164 => 121,  120 => 79,  96 => 57,  77 => 41,  70 => 36,  68 => 35,  56 => 25,  54 => 24,  40 => 13,  26 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -305,6 +330,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
   <head>
     <!-- Required meta tags-->
     <meta charset=\"utf-8\">
+    
     <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui\">
     <meta name=\"apple-mobile-web-app-capable\" content=\"yes\">
     <meta name=\"mobile-web-app-capable\" content=\"yes\">
@@ -382,7 +408,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
         <div class=\"list-block\">
   <ul>
     <li>
-      <a href=\"#\" class=\"item-link item-content\">
+<a href=\"/products/list\" class=\"item-link item-content external\">
         <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
         <div class=\"item-inner\">
           <div class=\"item-title\">Products</div>
@@ -391,7 +417,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
       </a>
     </li>
     <li>
-      <a href=\"#\" class=\"item-link item-content\">
+    \t<a href=\"/stores/list\" class=\"item-link item-content external\">
         <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
         <div class=\"item-inner\">
           <div class=\"item-title\">Stores</div>
@@ -400,7 +426,7 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
       </a>
     </li>
      <li>
-      <a href=\"#\" class=\"item-link item-content\">
+      <a href=\"/price/list\" class=\"item-link item-content external\">
         <div class=\"item-media\"><i class=\"icon icon-f7\"></i></div>
         <div class=\"item-inner\">
           <div class=\"item-title\">Prices</div>
@@ -420,16 +446,42 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
       <!-- Your main view, should have \"view-main\" class -->
       <div class=\"view view-main\">
           {% block floater %}
-              <a href=\"/price/add\" class=\"floating-button external\">
+           {#  <a href=\"/price/add\" class=\"floating-button external\">
     <i class=\"f7-icons\">add</i>
-  </a>
+  </a> #}
+            <!-- Speed Dial Wrap -->
+  <div class=\"speed-dial\">
+    <!-- FAB inside will open Speed Dial actions -->
+    <a href=\"#\" class=\"floating-button\">
+      <!-- First icon is visible when Speed Dial actions are closed -->
+      <i class=\"icon icon-plus\"></i>
+      <!-- Second icon is visible when Speed Dial actions are opened -->
+      <i class=\"icon icon-close\"></i>
+    </a>
+    <!-- Speed Dial Actions -->
+    <div class=\"speed-dial-buttons\">
+      <!-- First Speed Dial button add price -->
+      <a href=\"/price/add\" class=\"external\">
+        <i class=\"icon f7-icons\">money_dollar</i>
+      </a>
+      <!-- Second Speed Dial add product button -->
+      <a href=\"/products/add\" class=\"external\">
+        <i class=\"icon f7-icons\">bag</i>
+      </a>
+      <!-- Third Speed Dial add store button -->
+      <a href=\"/stores/add\" class=\"external\">
+        <i class=\"icon f7-icons\">world</i>
+      </a>
+    </div>
+  </div>
+  <!-- End of Speed Dial -->
               {% endblock %}
         <!-- Top Navbar-->
         <div class=\"navbar\">
           <div class=\"navbar-inner\">
             <!-- We need cool sliding animation on title element, so we have additional \"sliding\" class -->
             
-            <div class=\"center sliding\">{% block overlayTitle %}PriceTrack{% endblock %}</div>
+            <div class=\"center sliding\">{% block overlayTitle %} <i class=\"f7-icons\">bolt_fill</i> PriceTrack{% endblock %}</div>
             
             <div class=\"right\">
               <!-- 
@@ -450,9 +502,8 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
             {% block content %}
                 
             
-              <p>Page content goes here</p>
-              <!-- Link to another page -->
-              <a href=\"about.html\">About app</a>
+              <!-- content goes here -->
+             
             
                 
             {% endblock %}
@@ -463,8 +514,8 @@ class __TwigTemplate_00c8b13873e5ffcab63f19c339c6109e5a631d51d6c5ae928fb64f80e65
         <div class=\"toolbar\">
           <div class=\"toolbar-inner\">
             <!-- Toolbar links -->
-             <!-- <a href=\"#\" class=\"link\">Link 1</a>
-          <a href=\"#\" class=\"link\">Link 2</a> -->
+             <a href=\"/\" class=\"external\"> <i class=\"f7-icons\">home</i></a>
+          <!--<a href=\"#\" class=\"link\">Link 2</a> -->
           </div>
         </div>
       </div>

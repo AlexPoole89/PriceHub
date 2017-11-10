@@ -52,3 +52,16 @@ date and name
 -- work on showing google map in store add page showing users location
 --if it works, implement google map in store view page also
 3. how to make unique file name function work
+
+11/8/2017 -- Alex
+1. -Search Bar added to stores list page. 
+-Google Maps API integrated in Store add page
+2. - change fast action button to 3 button speed dial for access to all adding pages
+- implement searchbar and full CRUD functionality into products page
+3. - how to get location from database to display on map in stores view page
+
+
+
+
+
+

@@ -6,6 +6,7 @@ if (false) {
     $log = new Logger('main');
 }
 
+
 $app->get('/price/list', function() use ($app) {
      if (!$_SESSION['user']) {
         $app->render('access_denied.html.twig');
@@ -30,7 +31,7 @@ $app->get('/price/:op(/:id)', function($op, $id = -1) use ($app) {
     }
     //
     if ($id != -1) {
-        $values = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,storeId,productId,quantity,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE prices.id=%i", $id);
+        $values = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,products.barcode AS barcode,storeId,productId,quantity,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE prices.id=%i", $id);
         if (!$values) {
             echo "NOT FOUND";  // FIXME on Monday - display standard 404 from slim
             return;
@@ -65,8 +66,8 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
     $unit = $app->request()->post('unit');
     $lat = $app->request()->post('lat');
     $long = $app->request()->post('long');
-
-    $values = array('store' => $storeName, 'product' => $productName, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity, 'unit' => $unit, 'lat' => $lat, 'long' => $long);
+    $barcode = $app->request()->post('barcode');
+    $values = array('barcode'=>$barcode,'store' => $storeName, 'product' => $productName, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity, 'unit' => $unit, 'lat' => $lat, 'long' => $long);
     $errorList = array();
 
     if (isset($onSpecial)) {
@@ -105,7 +106,7 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         } else {
             $product = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
             if (!$product) {
-                $product = DB::insert('products', array('name' => $productName, 'userId' => $_SESSION['user']['id']));
+                $product = DB::insert('products', array('name' => $productName,'barcode'=>$barcode,'userId' => $_SESSION['user']['id']));
             }
             $productName = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
             $productId = $productName['id'];

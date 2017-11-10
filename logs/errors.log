@@ -41,3 +41,6 @@
 [2017-11-09 04:50:04] main.ERROR: Query: SELECT * FROM stores WHERE name LIKE '%'r'%' [] []
 [2017-11-09 04:50:07] main.ERROR: Error: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'r'%'' at line 1 [] []
 [2017-11-09 04:50:07] main.ERROR: Query: SELECT * FROM stores WHERE name LIKE '%'r'%' [] []
+[2017-11-09 19:37:48] main.ERROR: Error: Unknown column 'storeId' in 'where clause' [] []
+[2017-11-09 19:37:48] main.ERROR: Query: SELECT count(*) FROM products WHERE storeId=10 [] []
+[2017-11-09 22:57:59] main.ERROR: Error: Unable to connect to MySQL server! Error: Access denied for user 'cp4809_pricehub'@'localhost' (using password: YES) [] []
