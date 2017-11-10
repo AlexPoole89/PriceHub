@@ -1,17 +1,16 @@
 <?php
 
-/* stores_list.html.twig */
-class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289e200b extends Twig_Template
+/* products_list.html.twig */
+class __TwigTemplate_56b5ec46e301ea571cf7d71ae583dbc89af276242749912214a6fb7c18ef21ff extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
         parent::__construct($env);
 
         // line 1
-        $this->parent = $this->loadTemplate("master.html.twig", "stores_list.html.twig", 1);
+        $this->parent = $this->loadTemplate("master.html.twig", "products_list.html.twig", 1);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
-            'headextra' => array($this, 'block_headextra'),
             'searchbar' => array($this, 'block_searchbar'),
             'content' => array($this, 'block_content'),
         );
@@ -30,20 +29,13 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
     // line 2
     public function block_title($context, array $blocks = array())
     {
-        echo "Store List";
+        echo "Product List";
     }
 
-    // line 3
-    public function block_headextra($context, array $blocks = array())
-    {
-        // line 4
-        echo "   ";
-    }
-
-    // line 14
+    // line 4
     public function block_searchbar($context, array $blocks = array())
     {
-        // line 15
+        // line 5
         echo "    <!-- Search Bar with \"searchbar-init\" class for auto initialization -->
     <form class=\"searchbar searchbar-init\" data-search-list=\".list-block-search\" data-search-in=\".item-title\" data-found=\".searchbar-found\" data-not-found=\".searchbar-not-found\">
         <div class=\"searchbar-input\">
@@ -62,21 +54,21 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
         <div class=\"list-block list-block-search searchbar-found\">
             <ul>
                 <!-- List View -->
-    <div class=\"content-block-title\">Store List</div>
+    <div class=\"content-block-title\">Product List</div>
     <div class=\"list-block accordion-list\">
         <ul>
             <div id=\"searchList\">
             ";
-        // line 37
+        // line 27
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["list"] ?? null));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["l"]) {
-            // line 38
+            // line 28
             echo "                <li class=\"accordion-item\"><a href=\"#\" class=\"item-content item-link\">
                         <div class=\"item-inner\">
                             <div class=\"item-title\">";
-            // line 40
+            // line 30
             echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "name", array()), "html", null, true);
             echo "</div>
                         </div></a>
@@ -84,20 +76,20 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
                         <div class=\"content-block\">    
                             <div class=\"row\">
                                 <div class=\"col-33\">
-                                    <a href=\"/stores/view/";
-            // line 46
+                                    <a href=\"/products/view/";
+            // line 36
             echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "id", array()), "html", null, true);
             echo "\" class=\"external button button-big button-fill button-raised color-cyan\">View</a>
                                 </div>
                                 <div class=\"col-33\">
-                                    <a href=\"/stores/edit/";
-            // line 49
+                                    <a href=\"/products/edit/";
+            // line 39
             echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "id", array()), "html", null, true);
             echo "\" class=\"external button button-big button-fill button-raised color-cyan\">Update</a>
                                 </div>
                                 <div class=\"col-33\"> 
-                                    <a href=\"/stores/delete/";
-            // line 52
+                                    <a href=\"/products/delete/";
+            // line 42
             echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "id", array()), "html", null, true);
             echo "\" class=\"button button-big button-fill button-raised color-pink external\">Delete</a>
                                 </div>                               
@@ -109,14 +101,14 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 59
+            // line 49
             echo "
             ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['l'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 61
+        // line 51
         echo "            </div>
         </ul>
     </div>
@@ -127,10 +119,10 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
 ";
     }
 
-    // line 71
+    // line 61
     public function block_content($context, array $blocks = array())
     {
-        // line 72
+        // line 62
         echo "
 
 ";
@@ -138,7 +130,7 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
 
     public function getTemplateName()
     {
-        return "stores_list.html.twig";
+        return "products_list.html.twig";
     }
 
     public function isTraitable()
@@ -148,7 +140,7 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
 
     public function getDebugInfo()
     {
-        return array (  134 => 72,  131 => 71,  120 => 61,  113 => 59,  101 => 52,  95 => 49,  89 => 46,  80 => 40,  76 => 38,  71 => 37,  47 => 15,  44 => 14,  40 => 4,  37 => 3,  31 => 2,  11 => 1,);
+        return array (  126 => 62,  123 => 61,  112 => 51,  105 => 49,  93 => 42,  87 => 39,  81 => 36,  72 => 30,  68 => 28,  63 => 27,  39 => 5,  36 => 4,  30 => 2,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -162,18 +154,8 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
     public function getSourceContext()
     {
         return new Twig_Source("{% extends \"master.html.twig\" %}
-{% block title %}Store List{% endblock %}
-{% block headextra %}
-   {# <script>
-        \$(document).ready(function () {
-        // respond to all events that may change the value of input
-        \$('input[name=searchbar]').bind('propertychange change keyup input paste', function () {
-            var searchInput = \$('input[name=searchbar]').val();
-            \$('#searchList').load('/storeresult/' + searchInput);
-        });
-    });
-    </script> #}
-{% endblock %}
+{% block title %}Product List{% endblock %}
+
 {% block searchbar %}
     <!-- Search Bar with \"searchbar-init\" class for auto initialization -->
     <form class=\"searchbar searchbar-init\" data-search-list=\".list-block-search\" data-search-in=\".item-title\" data-found=\".searchbar-found\" data-not-found=\".searchbar-not-found\">
@@ -193,7 +175,7 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
         <div class=\"list-block list-block-search searchbar-found\">
             <ul>
                 <!-- List View -->
-    <div class=\"content-block-title\">Store List</div>
+    <div class=\"content-block-title\">Product List</div>
     <div class=\"list-block accordion-list\">
         <ul>
             <div id=\"searchList\">
@@ -206,13 +188,13 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
                         <div class=\"content-block\">    
                             <div class=\"row\">
                                 <div class=\"col-33\">
-                                    <a href=\"/stores/view/{{l.id}}\" class=\"external button button-big button-fill button-raised color-cyan\">View</a>
+                                    <a href=\"/products/view/{{l.id}}\" class=\"external button button-big button-fill button-raised color-cyan\">View</a>
                                 </div>
                                 <div class=\"col-33\">
-                                    <a href=\"/stores/edit/{{l.id}}\" class=\"external button button-big button-fill button-raised color-cyan\">Update</a>
+                                    <a href=\"/products/edit/{{l.id}}\" class=\"external button button-big button-fill button-raised color-cyan\">Update</a>
                                 </div>
                                 <div class=\"col-33\"> 
-                                    <a href=\"/stores/delete/{{l.id}}\" class=\"button button-big button-fill button-raised color-pink external\">Delete</a>
+                                    <a href=\"/products/delete/{{l.id}}\" class=\"button button-big button-fill button-raised color-pink external\">Delete</a>
                                 </div>                               
                             </div>
                         </div>
@@ -234,6 +216,6 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
 {% block content %}
 
 
-{% endblock %}", "stores_list.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\stores_list.html.twig");
+{% endblock %}", "products_list.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\products_list.html.twig");
     }
 }
