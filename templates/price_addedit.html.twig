@@ -16,12 +16,11 @@
       dataType: 'json',
       success: function(data)          
       {
-          
-
-   var productName = data["productName"];
-    var price = data["price"];
-     var quantity = data["quantity"];
-      var unit = data["unit"];
+        
+   var productName = data.result[0];
+    var price = data[1];
+     var quantity = data[2];
+      var unit = data[3];
        document.getElementById('productName').value = productName;
       document.getElementById('price').value = price;
       document.getElementById('quantity').value = quantity;

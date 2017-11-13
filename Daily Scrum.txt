@@ -95,3 +95,13 @@ date and name
 - get getuniquefileextension function to work
 - //TODO: if EDITING and new file is uploaded we should delete the old one in uploads
 3. how to recognize if new file is uploaded and delete the old one
+
+11/12/2017 Derek
+1.barcode reader
+2.ajax response for the barcode reader
+3.parsing the json response
+
+11/13/2017
+1.tried getting the ajax to fill out the form once a barcode is scanned
+2.continue wokring on the ajax call
+3.getting the ajax call fully functional
