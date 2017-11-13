@@ -6,6 +6,15 @@ if (false) {
     $log = new Logger('main');
 }
 
+//JQuery check for barcode
+$app->post('/isbarcoderegistered/:barcode', function($barcode) use ($app) {
+  
+     $values = DB::query("SELECT products.name AS productName,prices.id as priceId,productId,quantity,price,unit,onSpecial FROM prices LEFT JOIN products ON prices.productId = products.id WHERE products.barcode=%s",$barcode);
+     if($values){
+      echo json_encode($values);
+    }
+   
+});
 
 $app->get('/price/list', function() use ($app) {
      if (!$_SESSION['user']) {
@@ -19,10 +28,7 @@ $app->get('/price/list', function() use ($app) {
 });
 
 //JQuery check for email
-$app->get('/isbarcoderegistered/:barcode', function($email) use ($app) {
-    $row = DB::queryFirstRow("SELECT * FROM products where barcode=%s", $barcode);
-    echo!$row ? "" : ' <input type="number" step="0.01" placeholder="0.00" name="price" id="price" value="{{v.price}}">';
-});
+
 
 
 //add/edit a price
@@ -40,7 +46,7 @@ $app->get('/price/:op(/:id)', function($op, $id = -1) use ($app) {
     if ($id != -1) {
         $values = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,products.barcode AS barcode,storeId,productId,quantity,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE prices.id=%i", $id);
         if (!$values) {
-            echo "NOT FOUND";  // FIXME on Monday - display standard 404 from slim
+            echo "NOT FOUND";  // FIXME
             return;
         }
     } else { // nothing to load from database - adding

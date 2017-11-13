@@ -5,7 +5,41 @@
 
     <script src="/js/quagga.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
+<script type="text/javascript">
+ $(document).ready(function() {
+               $('input[name=barcode]').bind("propertychange change click keyup input paste", function () {
+               
+                  barcode = $('#barcode').val();
+    $.ajax({                                      
+      url: '/isbarcoderegistered/' + barcode,  
+      method:"POST",
+      dataType: 'json',
+      success: function(data)          
+      {
+          
+
+   var productName = data["productName"];
+    var price = data["price"];
+     var quantity = data["quantity"];
+      var unit = data["unit"];
+       document.getElementById('productName').value = productName;
+      document.getElementById('price').value = price;
+      document.getElementById('quantity').value = quantity;
+      document.getElementById('unit').value = unit;
+       
+   
+      } 
+    });
+     
+               
+                });
+            });       
+
+  
  
+
+
+</script>
     <script>
         window.onload = function () {
             var startPos;
@@ -23,11 +57,11 @@
 {% block content %}
     <div class="content-block-title">{% if isEditing %}Update{% else %}Add{% endif %} Price</div>
 
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="form">
         <input type="hidden" name="lat" id="lat" value="">
         <input type="hidden" name="long" id="long" value="">
         <div class="list-block">
-            
+           
             <!-- Text inputs -->
             <div class="row">
                 <div class="col-50">
@@ -59,7 +93,7 @@
                             <div class="item-media"><i class="icon f7-icons">camera</i></div>
                             <div class="item-inner">
                                 <div class="item-input">
-                                    <input type="file" id="pic" placeholder="Product Image" name="productImage">
+                                    <input type="file" id="picPath" placeholder="Product Image" name="productImage" value="{{v.picPath}}">
                                 </div>
                             </div>
                         </div>
@@ -71,6 +105,7 @@
                             <div class="item-title label">Barcode</div>
                             <div class="item-input">
                                 <input type="text" placeholder="Barcode" name="barcode" id="barcode" value="{{v.barcode}}">
+                                
                             </div>
                         </div>
                     </div>
@@ -92,7 +127,7 @@
                         <div class="item-inner">
                             <div class="item-title label">Product</div>
                             <div class="item-input">
-                                <input type="text" placeholder="Product name" name="product" id="product" value="{{v.productName}}">
+                                <input type="text" placeholder="Product name" name="product" id="productName" value="{{v.productName}}">
                             </div>
                         </div>
                     </div>
