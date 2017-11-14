@@ -51,11 +51,12 @@
             
         };
     </script>
+
 {% endblock %}
 {% block floater %}{% endblock %}
 {% block content %}
     <div class="content-block-title">{% if isEditing %}Update{% else %}Add{% endif %} Price</div>
-
+   
     <form method="post" enctype="multipart/form-data" id="form">
         <input type="hidden" name="lat" id="lat" value="">
         <input type="hidden" name="long" id="long" value="">
