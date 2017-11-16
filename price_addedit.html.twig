@@ -12,18 +12,21 @@
                   barcode = $('#barcode').val();
     $.ajax({                                      
       url: '/isbarcoderegistered/' + barcode,  
-      method:"POST",
-       contentType: "application/json; charset=utf-8",
-    dataType: "json",
+      type:"POST",
+      async:false,
+      dataType: 'json',
       success: function(data)          
       {
-         
-         
+   $('#productName').html(data[0]);
+   
+    var price = data.price;
+     var quantity = data.quantity;
+      var unit = data.unit;
+       document.getElementById('productName').value = productName;
+      document.getElementById('price').value = price;
+      document.getElementById('quantity').value = quantity;
+      document.getElementById('unit').value = unit;
       
-      document.getElementById('productName').value = data[3];
-      document.getElementById('price').value = data.price;
-      document.getElementById('quantity').value = data.quantity;
-      document.getElementById('unit').value = data.unit;
        
    
       } 
@@ -50,12 +53,11 @@
             
         };
     </script>
-
 {% endblock %}
 {% block floater %}{% endblock %}
 {% block content %}
     <div class="content-block-title">{% if isEditing %}Update{% else %}Add{% endif %} Price</div>
-   
+
     <form method="post" enctype="multipart/form-data" id="form">
         <input type="hidden" name="lat" id="lat" value="">
         <input type="hidden" name="long" id="long" value="">
