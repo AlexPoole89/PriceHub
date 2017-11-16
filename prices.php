@@ -8,29 +8,26 @@ if (false) {
 
 //JQuery check for barcode
 $app->post('/isbarcoderegistered/:barcode', function($barcode) use ($app) {
-  
-     $values = DB::query("SELECT products.name AS productName,prices.id as priceId,productId,quantity,price,unit,onSpecial FROM prices LEFT JOIN products ON prices.productId = products.id WHERE products.barcode=%s",$barcode);
-     if($values){
-      echo json_encode($values);
+
+    $values = DB::queryFirstRow("SELECT products.name AS productName,prices.id as priceId,productId,quantity,price,unit,onSpecial FROM prices LEFT JOIN products ON prices.productId = products.id WHERE products.barcode=%s", $barcode);
+    if ($values) {
+        header("Content-type: application/json");
+        echo json_encode($values);
     }
-   
 });
 
 $app->get('/price/list', function() use ($app) {
-     if (!$_SESSION['user']) {
+    if (!$_SESSION['user']) {
         $app->render('access_denied.html.twig');
         return;
     }
     //
-    
+
     $productsList = DB::query("SELECT stores.name AS storeName, products.name AS productName,prices.id as priceId,storeId,productId,quantity,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
-    $app->render('pricelist.html.twig', array('list' => $productsList,'storeName'=>$storeName,'productName' =>$productName));
+    $app->render('pricelist.html.twig', array('list' => $productsList, 'storeName' => $storeName, 'productName' => $productName));
 });
 
 //JQuery check for email
-
-
-
 //add/edit a price
 
 $app->get('/price/:op(/:id)', function($op, $id = -1) use ($app) {
@@ -80,11 +77,11 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
     $lat = $app->request()->post('lat');
     $long = $app->request()->post('long');
     $barcode = $app->request()->post('barcode');
-    
-    $values = array('barcode'=>$barcode,'store' => $storeName, 'product' => $productName, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity, 'unit' => $unit, 'lat' => $lat, 'long' => $long);
+
+    $values = array('barcode' => $barcode, 'store' => $storeName, 'product' => $productName, 'price' => $price, 'onSpecial' => $onSpecial, 'quantity' => $quantity, 'unit' => $unit, 'lat' => $lat, 'long' => $long);
     $errorList = array();
 
-    
+
     if (isset($onSpecial)) {
         $onSpecial = 1; //true
     } else {
@@ -104,8 +101,8 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         array_push($errorList, "Product must be between 2 and 50 characters");
     }
 
-     $productImage = array();
-    if ($_FILES['productImage']['error']!= UPLOAD_ERR_NO_FILE) {
+    $productImage = array();
+    if ($_FILES['productImage']['error'] != UPLOAD_ERR_NO_FILE) {
         $productImage = $_FILES['productImage'];
         if ($productImage['error'] != 0) {
             array_push($errorList, "Error uploading file");
@@ -132,7 +129,7 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             array_push($errorList, "Image is required when creating new product");
         }
     }
-    
+
     if ($errorList) {
         // 3. failed submission
         $app->render('price_addedit.html.twig', array(
@@ -140,7 +137,7 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             'v' => $values));
     } else {
         // 2. successful submission
-       if ($productImage) {
+        if ($productImage) {
             $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $productImage['name']);
             $picPath = 'uploads/' . $sanitizedFileName;
             if (!move_uploaded_file($productImage['tmp_name'], $picPath)) {
@@ -150,20 +147,20 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             }
             // TODO: if EDITING and new file is uploaded we should delete the old one in uploads
             $values['picPath'] = "/" . $picPath;
-              } 
+        }
 //check if product exists
         if ($id != -1) {
             // if ($store['userId'] == $_SESSION['user']['id']) {
-    
-    $storeRow = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s',$storeName);
-    $productRow = DB::queryFirstRow('SELECT * FROM products WHERE name=%s',$productName);
-    $storeId = $storeRow['id'];
-    $productId=$productRow['id'];
-            DB::update('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity,'unit' => $unit, 'userId' => $_SESSION['user']['id']), "id=%i", $id);
+
+            $storeRow = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s', $storeName);
+            $productRow = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
+            $storeId = $storeRow['id'];
+            $productId = $productRow['id'];
+            DB::update('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial, 'quantity' => $quantity, 'unit' => $unit, 'userId' => $_SESSION['user']['id']), "id=%i", $id);
         } else {
             $product = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
             if (!$product) {
-                $product = DB::insert('products', array(picPath=> "/" . $picPath,'name' => $productName,'barcode'=>$barcode,'userId' => $_SESSION['user']['id']));
+                $product = DB::insert('products', array(picPath => "/" . $picPath, 'name' => $productName, 'barcode' => $barcode, 'userId' => $_SESSION['user']['id']));
             }
             $productName = DB::queryFirstRow('SELECT * FROM products WHERE name=%s', $productName);
             $productId = $productName['id'];
@@ -173,11 +170,11 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             if (!$store) {
                 $store = DB::insert('stores', array('name' => $storeName, 'userId' => $_SESSION['user']['id'], 'longitude' => $long, 'latitude' => $lat));
             }
-             $storeName = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s', $storeName);
-             $storeId = $storeName['id'];
+            $storeName = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s', $storeName);
+            $storeId = $storeName['id'];
 
 
-            DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial,'quantity'=>$quantity,'unit' => $unit, 'userId' => $_SESSION['user']['id']));
+            DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial, 'quantity' => $quantity, 'unit' => $unit, 'userId' => $_SESSION['user']['id']));
         }
         $app->render('price_addedit_success.html.twig', array('isEditing' => ($id != -1)));
     }
@@ -189,12 +186,12 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 //delete a price
 
 $app->get('/price/delete/:id', function($id) use ($app) {
-     $priceDelete = DB::queryFirstRow("SELECT * FROM prices WHERE id=%i", $id);
+    $priceDelete = DB::queryFirstRow("SELECT * FROM prices WHERE id=%i", $id);
     if (!$_SESSION['user'] || $_SESSION['user']['id'] != $priceDelete['userId']) {
         $app->render('access_denied.html.twig');
         return;
-    } 
-        
+    }
+
     $price = DB::queryFirstRow('SELECT * FROM prices WHERE id=%d', $id);
     if (!$price) {
         $app->render('admin_not_found.html.twig');
