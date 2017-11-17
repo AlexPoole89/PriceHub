@@ -23,8 +23,8 @@ $app->get('/price/list', function() use ($app) {
     }
     //
 
-    $productsList = DB::query("SELECT stores.name AS storeName, products.name AS productName,prices.id as priceId,storeId,productId,quantity,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
-    $app->render('pricelist.html.twig', array('list' => $productsList, 'storeName' => $storeName, 'productName' => $productName));
+    $productsList = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
+    $app->render('pricelist.html.twig', array('list' => $productsList));
 });
 
 //JQuery check for email
@@ -217,3 +217,19 @@ $app->post('/price/delete/:id', function($id) use ($app) {
         $app->render('price_delete_success.html.twig');
     }
 });
+
+$app->get('/price/view/:id', function($id = -1) use($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+    
+
+    
+    $priceview = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,products.barcode as productBarcode,products.picPath as productImage,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE prices.id = %i",$id);
+    $allprices = DB::query("SELECT stores.name AS storeName,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i ORDER BY dateRegistered DESC",$priceview['productId']); 
+    $app->render('price_view.html.twig', array('list' => $priceview,'allprices'=>$allprices));
+    
+})->conditions(array(
+    'id' => '\d+'
+));

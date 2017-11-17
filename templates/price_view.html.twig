@@ -1,0 +1,52 @@
+{% extends "master.html.twig" %}
+
+
+{% block content %}
+
+    <div class="card">
+        <div class="card-header">{{list.productName}}</div>
+        <img src="{{list.productImage}}" style="width:100%; height:100%;">
+        <div class="card-content">
+            <div class="card-content-inner">
+                <p>Product: <a href="/products/view/{{list.productId}}">{{list.productName}}</a></p>
+                <p>Barcode: {{list.productBarcode}}</p>
+                <p>Store:<a href="/stores/view/{{list.storeId}}"> {{list.storeName}}</a></p>
+                <p>Modified: {{list.dateRegistered}}</p>
+                {# TODO ADD link to prices page WHERE productId={{list.id}} #}
+
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="/price/list" class="link external button button-fill">Price list</a>
+            <a href="/price/edit/{{list.priceId}}" class="link external button button-fill">Update</a>
+            <a href="/price/delete/{{list.priceId}}" class="link external button button-fill">Delete</a>
+        </div>
+    </div>
+
+    <div class="card">
+         <div class="card-header">Price History</div>
+        <div class="card-content">
+            <div class="card-content-inner">
+                <div class="list-block">
+                <ul>
+                {% for p in allprices %}
+
+                    <li {% if p.onSpecial == 1 %}style="background-color:#90EE90;" {% endif %} >
+                            
+                                <div class="item-inner">
+                                    
+                                    <div class="item-title">${{p.price}} /{{p.quantity}} {{p.unit}}</div>
+                                    <div class="item-after"> {{p.dateRegistered}}&nbsp;</div>
+                                    <div class="item-subtitle">{{p.storeName}}</div>
+
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

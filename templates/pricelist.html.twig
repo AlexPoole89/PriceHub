@@ -32,35 +32,20 @@
             <!-- List View -->
             <div class="content-block-title">Price List</div>
             <ul>
-                <div class="list-block accordion-list">
+                <div class="list-block">
                     {% for p in list %}
 
-                        <li class="accordion-item">
-                            <a href="#" class="item-content item-link">
+                        <li>
+                             <a href="/price/view/{{p.priceId}}" class="external">
+                            
                                 <div class="item-inner">
-                                    <div class="item-title">{{p.productName}}</div>
+                                    
+                                    <div class="item-title">&nbsp;{{p.productName}}</div>
                                     <div class="item-after">${{p.price}} /{{p.quantity}} {{p.unit}}&nbsp</div>
                                     <div class="item-subtitle">{{p.storeName}}</div>
 
                                 </div>
                             </a>
-                            <div class="accordion-item-content">
-                                <div class="content-block">
-                                    <div class="content-block">
-                                        <div class="row">
-                                            <div class="col-33">
-                                                <a href="/price/edit/{{p.priceId}}" class="button button-fill button-big button-green external"><i class="f7-icons">compose</i></a>
-                                            </div>
-                                            <div class="col-33">
-                                                <a href="/price/delete/{{p.priceId}}" class="button button-fill button-big button-red external"><i class="f7-icons">trash</i></a>
-                                            </div>
-                                              <div class="col-33">
-                                                <a href="/price/view/{{p.priceId}}" class="button button-fill button-big button-red external"><i class="f7-icons">graph_square</i></a>
-                                            </div>
-                                        </div>  
-                                    </div>
-                                </div>
-                            </div>
                         </li>
                     {% endfor %}
                 </div>
