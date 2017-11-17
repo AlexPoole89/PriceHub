@@ -1,0 +1,10 @@
+SELECT nearby stores in one query
+
+SELECT prices join with stores from previous query using IN ''
+make sure you find only the latest price from each store
+
+STABILIZATION!!!!!!!!!!!!!!!!!!!
+
+instead of pagination use "infinite page"
+by using AJAX and detecting when user scrolled to the bottom of page
+
