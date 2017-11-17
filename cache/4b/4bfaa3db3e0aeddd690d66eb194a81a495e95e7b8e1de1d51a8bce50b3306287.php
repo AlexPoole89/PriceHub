@@ -59,22 +59,23 @@ class __TwigTemplate_a61888a9149862e8515898977ba16ccbc588cd85c91da2e2bccd6564472
        
     
 <div class=\"card\">
-  <div style=\"background-image:url(";
-        // line 17
+  ";
+        // line 18
+        echo "  <img src=\"";
         echo twig_escape_filter($this->env, $this->getAttribute(($context["s"] ?? null), "logoPath", array()), "html", null, true);
-        echo ")\" valign=\"bottom\" class=\"card-header color-white no-border\">";
-        echo twig_escape_filter($this->env, $this->getAttribute(($context["s"] ?? null), "name", array()), "html", null, true);
-        echo "</div>
+        echo "\" style=\"width:100%; height:100%;\">
   <div class=\"card-content\">
     <div class=\"card-content-inner\">
       ";
-        // line 21
-        echo "      <p class=\"buttons-row\">
-  <a href=\"#\" class=\"button button-big button-fill\">";
         // line 22
+        echo "      <p class=\"buttons-row\">
+  <a href=\"#\" class=\"button button-big ripple-yellow button-fill\">";
+        // line 23
         echo twig_escape_filter($this->env, ($context["price"] ?? null), "html", null, true);
         echo " ";
         if ((($context["price"] ?? null) > 1)) {
+            echo "Prices";
+        } elseif ((($context["price"] ?? null) < 1)) {
             echo "Prices";
         } else {
             echo "Price";
@@ -86,11 +87,11 @@ class __TwigTemplate_a61888a9149862e8515898977ba16ccbc588cd85c91da2e2bccd6564472
   <div class=\"card-footer\">
     <a href=\"/stores/list\" class=\"link external\">Store list</a>
     <a href=\"/stores/edit/";
-        // line 28
+        // line 29
         echo twig_escape_filter($this->env, $this->getAttribute(($context["s"] ?? null), "id", array()), "html", null, true);
         echo "\" class=\"link external\">Update</a>
     <a href=\"/stores/delete/";
-        // line 29
+        // line 30
         echo twig_escape_filter($this->env, $this->getAttribute(($context["s"] ?? null), "id", array()), "html", null, true);
         echo "\" class=\"link  external\">Delete</a>
   </div>
@@ -102,14 +103,14 @@ class __TwigTemplate_a61888a9149862e8515898977ba16ccbc588cd85c91da2e2bccd6564472
   </div>
 </div>  
 
-    
+    <div class=\"content-block\">&nbsp;</div>
    ";
-        // line 41
+        // line 42
         echo "    
     ";
     }
 
-    // line 44
+    // line 45
     public function block_scriptextra($context, array $blocks = array())
     {
         echo " 
@@ -122,14 +123,14 @@ class __TwigTemplate_a61888a9149862e8515898977ba16ccbc588cd85c91da2e2bccd6564472
 
           
         function initMap() {
-        var uluru = ";
-        // line 54
-        echo "{lat: ";
+        var uluru = new google.maps.LatLng(";
+        // line 55
         echo twig_escape_filter($this->env, $this->getAttribute(($context["s"] ?? null), "latitude", array()), "html", null, true);
-        echo ", lng:";
+        echo ", ";
         echo twig_escape_filter($this->env, $this->getAttribute(($context["s"] ?? null), "longitude", array()), "html", null, true);
-        echo "};
-        var map = new google.maps.Map(document.getElementById('map'), {
+        echo "); ";
+        // line 56
+        echo "        var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
           center: uluru
         });
@@ -156,7 +157,7 @@ class __TwigTemplate_a61888a9149862e8515898977ba16ccbc588cd85c91da2e2bccd6564472
 
     public function getDebugInfo()
     {
-        return array (  127 => 54,  113 => 44,  108 => 41,  94 => 29,  90 => 28,  75 => 22,  72 => 21,  64 => 17,  55 => 12,  53 => 11,  50 => 10,  41 => 4,  38 => 3,  31 => 2,  11 => 1,);
+        return array (  133 => 56,  128 => 55,  114 => 45,  109 => 42,  95 => 30,  91 => 29,  74 => 23,  71 => 22,  64 => 18,  55 => 12,  53 => 11,  50 => 10,  41 => 4,  38 => 3,  31 => 2,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -185,12 +186,13 @@ class __TwigTemplate_a61888a9149862e8515898977ba16ccbc588cd85c91da2e2bccd6564472
        
     
 <div class=\"card\">
-  <div style=\"background-image:url({{s.logoPath}})\" valign=\"bottom\" class=\"card-header color-white no-border\">{{s.name}}</div>
+  {#<div style=\"background-image:url({{s.logoPath}})\" valign=\"bottom\" class=\"card-header color-white no-border\">{{s.name}}</div>#}
+  <img src=\"{{s.logoPath}}\" style=\"width:100%; height:100%;\">
   <div class=\"card-content\">
     <div class=\"card-content-inner\">
       {# TODO ADD LINK to prices page WHERE storeId={{s.id}} #}
       <p class=\"buttons-row\">
-  <a href=\"#\" class=\"button button-big button-fill\">{{price}} {% if price > 1 %}Prices{% else %}Price{% endif %}</a>
+  <a href=\"#\" class=\"button button-big ripple-yellow button-fill\">{{price}} {% if price > 1 %}Prices{% elseif price < 1 %}Prices{% else %}Price{% endif %}</a>
 </p>
     </div>
   </div>
@@ -207,7 +209,7 @@ class __TwigTemplate_a61888a9149862e8515898977ba16ccbc588cd85c91da2e2bccd6564472
   </div>
 </div>  
 
-    
+    <div class=\"content-block\">&nbsp;</div>
    {# {% endfor %}  #}
     
     {% endblock %}
@@ -222,7 +224,7 @@ class __TwigTemplate_a61888a9149862e8515898977ba16ccbc588cd85c91da2e2bccd6564472
 
           
         function initMap() {
-        var uluru = {#new google.maps.LatLng({{s.latitude}}, {{s.longitude}}); #}{lat: {{s.latitude}}, lng:{{s.longitude}}};
+        var uluru = new google.maps.LatLng({{s.latitude}}, {{s.longitude}}); {# {lat: {{s.latitude}}, lng:{{s.longitude}}}; #}
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
           center: uluru

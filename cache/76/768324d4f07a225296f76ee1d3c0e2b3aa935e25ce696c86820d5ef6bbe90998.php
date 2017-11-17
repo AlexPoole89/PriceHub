@@ -1,14 +1,14 @@
 <?php
 
-/* error_internal.html.twig */
-class __TwigTemplate_5b813b3e504f7e440ca8ea625a44862d39c0a85b8a5a40d46b8578552a057b57 extends Twig_Template
+/* register_success.html.twig */
+class __TwigTemplate_34b01a4b296215eaa968781f694b1e2432af84c3da2d3b86fd3fbb68b896e51b extends Twig_Template
 {
     public function __construct(Twig_Environment $env)
     {
         parent::__construct($env);
 
         // line 1
-        $this->parent = $this->loadTemplate("master.html.twig", "error_internal.html.twig", 1);
+        $this->parent = $this->loadTemplate("master.html.twig", "register_success.html.twig", 1);
         $this->blocks = array(
             'title' => array($this, 'block_title'),
             'content' => array($this, 'block_content'),
@@ -25,33 +25,29 @@ class __TwigTemplate_5b813b3e504f7e440ca8ea625a44862d39c0a85b8a5a40d46b8578552a0
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
-    // line 3
+    // line 2
     public function block_title($context, array $blocks = array())
     {
-        echo "Internal Error";
+        echo "Registered";
     }
 
-    // line 5
+    // line 3
     public function block_content($context, array $blocks = array())
     {
-        echo "    
-    <div class=\"card\">
-  <div class=\"card-header\">Internal Error</div>
-   <img src=\"/images/code_ninja.png\" style=\"width:100%; height:100%;\">
+        // line 4
+        echo "<div class=\"card\">
+  <div class=\"card-header\">Successfully registered</div>
   <div class=\"card-content\">
     <div class=\"card-content-inner\"></div>
-     <p>Internal error occurred, we're very sorry.
-    Our team of coding ninjas has been notified and is already working on the problem.</p>
   </div>
-  <div class=\"card-footer\"><a class=\"link external\" href=\"/login\">Go home</a></div>
+  <div class=\"card-footer\"><a class=\"link external\" href=\"/login\">Login</a></div>
 </div>
-
 ";
     }
 
     public function getTemplateName()
     {
-        return "error_internal.html.twig";
+        return "register_success.html.twig";
     }
 
     public function isTraitable()
@@ -61,7 +57,7 @@ class __TwigTemplate_5b813b3e504f7e440ca8ea625a44862d39c0a85b8a5a40d46b8578552a0
 
     public function getDebugInfo()
     {
-        return array (  35 => 5,  29 => 3,  11 => 1,);
+        return array (  38 => 4,  35 => 3,  29 => 2,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -75,21 +71,15 @@ class __TwigTemplate_5b813b3e504f7e440ca8ea625a44862d39c0a85b8a5a40d46b8578552a0
     public function getSourceContext()
     {
         return new Twig_Source("{% extends \"master.html.twig\" %}
-
-{% block title %}Internal Error{% endblock %}
-
-{% block content %}    
-    <div class=\"card\">
-  <div class=\"card-header\">Internal Error</div>
-   <img src=\"/images/code_ninja.png\" style=\"width:100%; height:100%;\">
+{% block title %}Registered{% endblock %}
+{% block content %}
+<div class=\"card\">
+  <div class=\"card-header\">Successfully registered</div>
   <div class=\"card-content\">
     <div class=\"card-content-inner\"></div>
-     <p>Internal error occurred, we're very sorry.
-    Our team of coding ninjas has been notified and is already working on the problem.</p>
   </div>
-  <div class=\"card-footer\"><a class=\"link external\" href=\"/login\">Go home</a></div>
+  <div class=\"card-footer\"><a class=\"link external\" href=\"/login\">Login</a></div>
 </div>
-
-{% endblock %}", "error_internal.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\error_internal.html.twig");
+{% endblock %}", "register_success.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\register_success.html.twig");
     }
 }

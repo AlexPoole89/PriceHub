@@ -44,85 +44,73 @@ class __TwigTemplate_56b5ec46e301ea571cf7d71ae583dbc89af276242749912214a6fb7c18e
         </div>
         <a href=\"#\" class=\"searchbar-cancel\">Cancel</a>
     </form>
-    
+
     <div class=\"searchbar-overlay\"></div>
     <div class=\"page-content\">
         <div class=\"content-block searchbar-not-found\">
-                Nothing found
+            Nothing found
         </div>
- 
-        <div class=\"list-block list-block-search searchbar-found\">
+
+        <div class=\"list-block list-block-search searchbar-found\">          
+            <!-- List View -->
+            <div class=\"content-block-title\">Product List</div>
             <ul>
-                <!-- List View -->
-    <div class=\"content-block-title\">Product List</div>
-    <div class=\"list-block accordion-list\">
-        <ul>
-            <div id=\"searchList\">
-            ";
+                <div class=\"list-block accordion-list\">
+
+
+                    ";
         // line 27
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["list"] ?? null));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["l"]) {
             // line 28
-            echo "                <li class=\"accordion-item\"><a href=\"#\" class=\"item-content item-link\">
-                        <div class=\"item-inner\">
-                            <div class=\"item-title\">";
+            echo "                         <li>
+                            <a href=\"/products/view/";
+            // line 29
+            echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "id", array()), "html", null, true);
+            echo "\" class=\"item-link item-content external\">
+                                <div class=\"item-media\"><img src=\"";
             // line 30
+            echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "picPath", array()), "html", null, true);
+            echo "\" width=\"44\" height=\"44\"></div>
+                                <div class=\"item-inner\">
+                                    <div class=\"item-title-row\">
+                                        <div class=\"item-title\">";
+            // line 33
             echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "name", array()), "html", null, true);
             echo "</div>
-                        </div></a>
-                    <div class=\"accordion-item-content\">
-                        <div class=\"content-block\">    
-                            <div class=\"row\">
-                                <div class=\"col-33\">
-                                    <a href=\"/products/view/";
-            // line 36
-            echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "id", array()), "html", null, true);
-            echo "\" class=\"external button button-big button-fill button-raised color-cyan\">View</a>
+                                    </div>
                                 </div>
-                                <div class=\"col-33\">
-                                    <a href=\"/products/edit/";
-            // line 39
-            echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "id", array()), "html", null, true);
-            echo "\" class=\"external button button-big button-fill button-raised color-cyan\">Update</a>
-                                </div>
-                                <div class=\"col-33\"> 
-                                    <a href=\"/products/delete/";
-            // line 42
-            echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "id", array()), "html", null, true);
-            echo "\" class=\"button button-big button-fill button-raised color-pink external\">Delete</a>
-                                </div>                               
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            ";
+                            </a>
+                        </li>                       
+                    ";
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 49
+            // line 39
             echo "
-            ";
+                    ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['l'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 51
-        echo "            </div>
-        </ul>
-    </div>
+        // line 40
+        echo "     
+                </div>
             </ul>
         </div>
+       ";
+        // line 45
+        echo "    <div class=\"content-block\">&nbsp;</div>
     </div>
-
 ";
     }
 
-    // line 61
+    // line 50
     public function block_content($context, array $blocks = array())
     {
-        // line 62
+        // line 51
         echo "
 
 ";
@@ -140,7 +128,7 @@ class __TwigTemplate_56b5ec46e301ea571cf7d71ae583dbc89af276242749912214a6fb7c18e
 
     public function getDebugInfo()
     {
-        return array (  126 => 62,  123 => 61,  112 => 51,  105 => 49,  93 => 42,  87 => 39,  81 => 36,  72 => 30,  68 => 28,  63 => 27,  39 => 5,  36 => 4,  30 => 2,  11 => 1,);
+        return array (  114 => 51,  111 => 50,  105 => 45,  99 => 40,  92 => 39,  81 => 33,  75 => 30,  71 => 29,  68 => 28,  63 => 27,  39 => 5,  36 => 4,  30 => 2,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -165,51 +153,40 @@ class __TwigTemplate_56b5ec46e301ea571cf7d71ae583dbc89af276242749912214a6fb7c18e
         </div>
         <a href=\"#\" class=\"searchbar-cancel\">Cancel</a>
     </form>
-    
+
     <div class=\"searchbar-overlay\"></div>
     <div class=\"page-content\">
         <div class=\"content-block searchbar-not-found\">
-                Nothing found
+            Nothing found
         </div>
- 
-        <div class=\"list-block list-block-search searchbar-found\">
-            <ul>
-                <!-- List View -->
-    <div class=\"content-block-title\">Product List</div>
-    <div class=\"list-block accordion-list\">
-        <ul>
-            <div id=\"searchList\">
-            {% for l in list %}
-                <li class=\"accordion-item\"><a href=\"#\" class=\"item-content item-link\">
-                        <div class=\"item-inner\">
-                            <div class=\"item-title\">{{l.name}}</div>
-                        </div></a>
-                    <div class=\"accordion-item-content\">
-                        <div class=\"content-block\">    
-                            <div class=\"row\">
-                                <div class=\"col-33\">
-                                    <a href=\"/products/view/{{l.id}}\" class=\"external button button-big button-fill button-raised color-cyan\">View</a>
-                                </div>
-                                <div class=\"col-33\">
-                                    <a href=\"/products/edit/{{l.id}}\" class=\"external button button-big button-fill button-raised color-cyan\">Update</a>
-                                </div>
-                                <div class=\"col-33\"> 
-                                    <a href=\"/products/delete/{{l.id}}\" class=\"button button-big button-fill button-raised color-pink external\">Delete</a>
-                                </div>                               
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            {% else %}
 
-            {% endfor %}
-            </div>
-        </ul>
-    </div>
+        <div class=\"list-block list-block-search searchbar-found\">          
+            <!-- List View -->
+            <div class=\"content-block-title\">Product List</div>
+            <ul>
+                <div class=\"list-block accordion-list\">
+
+
+                    {% for l in list %}
+                         <li>
+                            <a href=\"/products/view/{{l.id}}\" class=\"item-link item-content external\">
+                                <div class=\"item-media\"><img src=\"{{l.picPath}}\" width=\"44\" height=\"44\"></div>
+                                <div class=\"item-inner\">
+                                    <div class=\"item-title-row\">
+                                        <div class=\"item-title\">{{l.name}}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>                       
+                    {% else %}
+
+                    {% endfor %}     
+                </div>
             </ul>
         </div>
+       {# creates white space at bottom of screen #}
+    <div class=\"content-block\">&nbsp;</div>
     </div>
-
 {% endblock %}
 
 

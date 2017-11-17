@@ -132,7 +132,7 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
         } else {
             echo "Add";
         }
-        echo "Product\">
+        echo " Product\">
                             </div>
                         </div>
                     </li>
@@ -141,6 +141,7 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
         </form>
     </div> 
 </div>
+<div class=\"content-block\">&nbsp;</div>
 ";
     }
 
@@ -229,7 +230,7 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
                     <li>
                         <div class=\"item-content\">
                             <div class=\"item-inner\">
-                                <input type=\"submit\" class=\"button button-big button-fill\" value=\"{% if isEditing %}Update{% else %}Add{% endif %}Product\">
+                                <input type=\"submit\" class=\"button button-big button-fill\" value=\"{% if isEditing %}Update{% else %}Add{% endif %} Product\">
                             </div>
                         </div>
                     </li>
@@ -238,6 +239,7 @@ class __TwigTemplate_6437509f241a219f65690c03bc1fa763a32356539532112117509ab2d02
         </form>
     </div> 
 </div>
+<div class=\"content-block\">&nbsp;</div>
 {% endblock %}
 
 ", "products_addedit.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\products_addedit.html.twig");

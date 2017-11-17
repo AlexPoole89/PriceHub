@@ -52,7 +52,7 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
     $productImage = "";
     $comment = $app->request()->post('comment');
 //
-    $values = array('name' => $name, 'picPath' => $picPath, 'comment' => $comment);
+    $values = array('name' => $name, 'comment' => $comment);
     $errorList = array();
 //
     if (strlen($name) < 1 || strlen($name) > 100) {
@@ -85,13 +85,13 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
                 array_push($errorList, "File doesn't look like a valid image.");
             } else {
                 //CHECK IMAGE SIZE, 
-                if (filesize($profileImage["tmp_name"]) > 200000) {
-                    array_push($errorList, "Image must be smaller than 20kb.");
+                if (filesize($productImage["tmp_name"]) > 400000) {
+                    array_push($errorList, "Image must be smaller than 40kb.");
                 }
                 //CHECK IMAGE DIMENSIONS
-//                if ($info[0] > 300 || $info[1] > 300) {
-//                    array_push($errorList, "Image must not be bigger than 300x300 pixels.");
-//                }
+                if ($info[0] > 300 || $info[1] > 300) {
+                    array_push($errorList, "Image must not be bigger than 300x300 pixels.");
+                }
                 //check valid file type
                 if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/png' || $info['mime'] == 'image/gif') {
                     //image type is valid- all good
@@ -114,24 +114,23 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         //
          $product = DB::queryFirstRow("SELECT * FROM products WHERE id=%i", $id);
         //
-        if ($productImage) { //   '[^a-zA-Z0-9_\.-]' 
-            // $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $productImage['name']);
-            //     $ext = '';
-//            switch ($info['mime']) {
-//                case "image/gif":
-//                    $ext = '.gif';
-//                    break;
-//                case "image/jpeg":
-//                    $ext = '.jpg';
-//                    break;
-//                case "image/png":
-//                    $ext = '.png';
-//                    break;
-//                case "image/bmp":
-//                    $ext = '.bmp';
-//                    break;
-//            }
-            $picPath = 'uploads/' . $productImage['name'];  //  write new file name with function getUniqueFileNameForExtension('uploads/', $ext)
+        if ($productImage) {
+            $ext = '';
+            switch ($info['mime']) {
+                case "image/gif":
+                    $ext = '.gif';
+                    break;
+                case "image/jpeg":
+                    $ext = '.jpg';
+                    break;
+                case "image/png":
+                    $ext = '.png';
+                    break;
+                case "image/bmp":
+                    $ext = '.bmp';
+                    break;
+            }
+            $picPath = getUniqueFileNameForExtension('uploads/', $ext);  // 'uploads/' . $productImage['name'] write new file name with function 
             if (!move_uploaded_file($productImage['tmp_name'], $picPath)) {
                 $log->err(sprintf("Error moving uploaded file: " . print_r($productImage, true)));
                 $app->render('error_internal.html.twig');
@@ -145,8 +144,8 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 //VERIFY USER MATCHES ORIGINAL TO-DO WRITER
 
             if ($product['userId'] == $_SESSION['user']['id']) {
-                //  unlink('.' . $product['picPath']);
-                //  $values['picPath'] = $picPath;
+                unlink('.' . $product['picPath']);
+                $values['picPath'] = "/" . $picPath;
                 DB::update('products', $values, "id=%i", $id);
             } else { //access denied
                 $app->render('access_denied.html.twig');
@@ -225,9 +224,40 @@ $app->get('/products/view/:id', function($id = -1) use($app) {
     }
     $pricesCountProduct = DB::queryFirstField("SELECT count(id) FROM prices WHERE productId=%i", $id);
     $product = DB::queryFirstRow("SELECT products.name as prodName, products.id as id, users.name as username, products.barcode as barcode,"
-            . " products.comment as comment, products.picPath as picPath FROM products, users WHERE products.userId=users.id AND products.id=%i", $id);
+                    . " products.comment as comment, products.picPath as picPath FROM products, users WHERE products.userId=users.id AND products.id=%i", $id);
+
+    //get user's location to search for nearest stores
+    $long = $app->request()->post('long');
+    $lat = $app->request()->post('lat');
+    $nearbyStores = DB::query("SELECT name,
+    latitude, longitude, distance
+    FROM (
+    SELECT z.name,
+    z.latitude, z.longitude,
+    p.radius,
+    p.distance_unit
+    * DEGREES(ACOS(COS(RADIANS(p.latpoint))
+    * COS(RADIANS(z.latitude))
+    * COS(RADIANS(p.longpoint - z.longitude))
+    + SIN(RADIANS(p.latpoint))
+    * SIN(RADIANS(z.latitude)))) AS distance
+    FROM stores AS z
+    JOIN (
+    SELECT 45.447277 AS latpoint, -73.617004 AS longpoint,
+    15.0 AS radius, 69.0 AS distance_unit
+    ) AS p ON 1 = 1
+    WHERE z.latitude
+    BETWEEN p.latpoint - (p.radius / p.distance_unit)
+    AND p.latpoint + (p.radius / p.distance_unit)
+    AND z.longitude
+    BETWEEN p.longpoint - (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
+    AND p.longpoint + (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
+    ) AS d
+    WHERE distance <= radius
+    ORDER BY distance
+    LIMIT 15");
     $app->render('products_view.html.twig', array('p' => $product,
-        'price' => $pricesCountProduct
+        'price' => $pricesCountProduct, 'nearbyStores' => $nearbyStores
     ));
 })->conditions(array(
     'id' => '\d+'

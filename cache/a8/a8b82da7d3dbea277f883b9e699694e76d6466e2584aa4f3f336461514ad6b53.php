@@ -35,26 +35,30 @@ class __TwigTemplate_89c509f0d18a1d2180929fef1162c9caaeaf93ec47751b0836d387afabf
     public function block_content($context, array $blocks = array())
     {
         // line 6
-        echo "    <div class=\"list-block\">
-    <br>
-  <ul>
-      
-      <li>
-        <div class=\"item-content\">
-             <div class=\"item-inner\">
-       <a href=\"/login\" class='external'>Login</a>
-             </div>
+        echo "    <div class=\"card\">
+        <div class=\"card-header\">Access Denied</div>
+        <div class=\"card-content\"> 
+            <div class=\"list-block\">
+                <ul>
+
+                    <li> 
+                        <div class=\"item-content\">
+                            <div class=\"item-inner\">
+                                <a href=\"/login\" class='button button-raised button-fill color-blue ripple-indigo external'>Login</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li> 
+                        <div class=\"item-content\">
+                            <div class=\"item-inner\">
+                                <a href=\"/register\" class='button button-raised button-fill color-blue ripple-indigo external'>Or create an account</a>
+                            </div>
+                        </div>
+                    </li>  
+                </ul> 
+            </div>
         </div>
-       </li>
-       <li>
-        <div class=\"item-content\">
-             <div class=\"item-inner\">
-                 <a href=\"/register\" class='external'>Or create an account</a>
-             </div>
-        </div>
-            </li>
-  
-  </ul>
+    </div>
 ";
     }
 
@@ -88,26 +92,30 @@ class __TwigTemplate_89c509f0d18a1d2180929fef1162c9caaeaf93ec47751b0836d387afabf
 {% block title %}Access Denied{% endblock %}
 
 {% block content %}
-    <div class=\"list-block\">
-    <br>
-  <ul>
-      
-      <li>
-        <div class=\"item-content\">
-             <div class=\"item-inner\">
-       <a href=\"/login\" class='external'>Login</a>
-             </div>
+    <div class=\"card\">
+        <div class=\"card-header\">Access Denied</div>
+        <div class=\"card-content\"> 
+            <div class=\"list-block\">
+                <ul>
+
+                    <li> 
+                        <div class=\"item-content\">
+                            <div class=\"item-inner\">
+                                <a href=\"/login\" class='button button-raised button-fill color-blue ripple-indigo external'>Login</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li> 
+                        <div class=\"item-content\">
+                            <div class=\"item-inner\">
+                                <a href=\"/register\" class='button button-raised button-fill color-blue ripple-indigo external'>Or create an account</a>
+                            </div>
+                        </div>
+                    </li>  
+                </ul> 
+            </div>
         </div>
-       </li>
-       <li>
-        <div class=\"item-content\">
-             <div class=\"item-inner\">
-                 <a href=\"/register\" class='external'>Or create an account</a>
-             </div>
-        </div>
-            </li>
-  
-  </ul>
+    </div>
 {% endblock %}", "access_denied.html.twig", "D:\\XAMPP\\htdocs\\php-project\\templates\\access_denied.html.twig");
     }
 }

@@ -10,7 +10,6 @@ class __TwigTemplate_b1d9f4be629dbc67fbada3827432ce4c43329a984ff316c15ec432d75ab
         // line 1
         $this->parent = $this->loadTemplate("master.html.twig", "index.html.twig", 1);
         $this->blocks = array(
-            'overlayTitle' => array($this, 'block_overlayTitle'),
             'content' => array($this, 'block_content'),
         );
     }
@@ -25,31 +24,22 @@ class __TwigTemplate_b1d9f4be629dbc67fbada3827432ce4c43329a984ff316c15ec432d75ab
         $this->parent->display($context, array_merge($this->blocks, $blocks));
     }
 
-    // line 3
-    public function block_overlayTitle($context, array $blocks = array())
-    {
-        echo "Main";
-    }
-
     // line 5
     public function block_content($context, array $blocks = array())
     {
         // line 6
         echo "
     <div class=\"content-block\">
-   
-    <a href=\"#\" class=\"button button-fill button-big button-blue\">Add Product</a> 
+    <a href=\"/price/add\" class=\"external button button-fill button-big button-blue\">Add Price</a> 
     </div>
-    
     <div class=\"content-block\">
-<div class=\"row\">
-  <div class=\"col-50\">
-    <a href=\"#\" class=\"button button-fill button-big button-blue\">Stores</a>
-  </div>
-  <div class=\"col-50\">
-    <a href=\"#\" class=\"button button-fill button-big button-blue\">Products</a>
-  </div>
-</div>  
+    <a href=\"/stores/list\" class=\"external button button-fill button-big button-blue\">Stores</a>
+    </div>
+   <div class=\"content-block\">
+    <a href=\"/products/list\" class=\"external button button-fill button-big button-blue\">Products</a>
+    </div>  
+     <div class=\"content-block\">
+    <a href=\"/price/list\" class=\"external button button-fill button-big button-blue\">Prices</a> 
     </div>
 ";
     }
@@ -66,7 +56,7 @@ class __TwigTemplate_b1d9f4be629dbc67fbada3827432ce4c43329a984ff316c15ec432d75ab
 
     public function getDebugInfo()
     {
-        return array (  38 => 6,  35 => 5,  29 => 3,  11 => 1,);
+        return array (  31 => 6,  28 => 5,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -81,24 +71,21 @@ class __TwigTemplate_b1d9f4be629dbc67fbada3827432ce4c43329a984ff316c15ec432d75ab
     {
         return new Twig_Source("{% extends \"master.html.twig\" %}
 
-{% block overlayTitle %}Main{% endblock %}
+
 
 {% block content %}
 
     <div class=\"content-block\">
-   
-    <a href=\"#\" class=\"button button-fill button-big button-blue\">Add Product</a> 
+    <a href=\"/price/add\" class=\"external button button-fill button-big button-blue\">Add Price</a> 
     </div>
-    
     <div class=\"content-block\">
-<div class=\"row\">
-  <div class=\"col-50\">
-    <a href=\"#\" class=\"button button-fill button-big button-blue\">Stores</a>
-  </div>
-  <div class=\"col-50\">
-    <a href=\"#\" class=\"button button-fill button-big button-blue\">Products</a>
-  </div>
-</div>  
+    <a href=\"/stores/list\" class=\"external button button-fill button-big button-blue\">Stores</a>
+    </div>
+   <div class=\"content-block\">
+    <a href=\"/products/list\" class=\"external button button-fill button-big button-blue\">Products</a>
+    </div>  
+     <div class=\"content-block\">
+    <a href=\"/price/list\" class=\"external button button-fill button-big button-blue\">Prices</a> 
     </div>
 {% endblock %}
 

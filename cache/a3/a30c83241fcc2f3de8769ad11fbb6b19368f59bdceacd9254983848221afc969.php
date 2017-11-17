@@ -37,7 +37,7 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
     public function block_headextra($context, array $blocks = array())
     {
         // line 4
-        echo "   ";
+        echo "    ";
     }
 
     // line 14
@@ -52,85 +52,73 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
         </div>
         <a href=\"#\" class=\"searchbar-cancel\">Cancel</a>
     </form>
-    
+
     <div class=\"searchbar-overlay\"></div>
     <div class=\"page-content\">
         <div class=\"content-block searchbar-not-found\">
-                Nothing found
+            Nothing found
         </div>
- 
+
         <div class=\"list-block list-block-search searchbar-found\">
-            <ul>
-                <!-- List View -->
-    <div class=\"content-block-title\">Store List</div>
-    <div class=\"list-block accordion-list\">
-        <ul>
-            <div id=\"searchList\">
-            ";
-        // line 37
+            <!-- List View -->
+            <div class=\"content-block-title\">Store List</div>
+            <ul>               
+                <div class=\"list-block accordion-list\">
+
+                    ";
+        // line 36
         $context['_parent'] = $context;
         $context['_seq'] = twig_ensure_traversable(($context["list"] ?? null));
         $context['_iterated'] = false;
         foreach ($context['_seq'] as $context["_key"] => $context["l"]) {
+            // line 37
+            echo "                        <li>
+                            <a href=\"/stores/view/";
             // line 38
-            echo "                <li class=\"accordion-item\"><a href=\"#\" class=\"item-content item-link\">
-                        <div class=\"item-inner\">
-                            <div class=\"item-title\">";
-            // line 40
+            echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "id", array()), "html", null, true);
+            echo "\" class=\"item-link item-content external\">
+                                <div class=\"item-media\"><img src=\"";
+            // line 39
+            echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "logoPath", array()), "html", null, true);
+            echo "\" width=\"44\" height=\"44\"></div>
+                                <div class=\"item-inner\">
+                                    <div class=\"item-title-row\">
+                                        <div class=\"item-title\">";
+            // line 42
             echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "name", array()), "html", null, true);
             echo "</div>
-                        </div></a>
-                    <div class=\"accordion-item-content\">
-                        <div class=\"content-block\">    
-                            <div class=\"row\">
-                                <div class=\"col-33\">
-                                    <a href=\"/stores/view/";
-            // line 46
-            echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "id", array()), "html", null, true);
-            echo "\" class=\"external button button-big button-fill button-raised color-cyan\">View</a>
+                                    </div>
                                 </div>
-                                <div class=\"col-33\">
-                                    <a href=\"/stores/edit/";
-            // line 49
-            echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "id", array()), "html", null, true);
-            echo "\" class=\"external button button-big button-fill button-raised color-cyan\">Update</a>
-                                </div>
-                                <div class=\"col-33\"> 
-                                    <a href=\"/stores/delete/";
-            // line 52
-            echo twig_escape_filter($this->env, $this->getAttribute($context["l"], "id", array()), "html", null, true);
-            echo "\" class=\"button button-big button-fill button-raised color-pink external\">Delete</a>
-                                </div>                               
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            ";
+                            </a>
+                        </li>
+                    ";
             $context['_iterated'] = true;
         }
         if (!$context['_iterated']) {
-            // line 59
+            // line 48
             echo "
-            ";
+                    ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['l'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 61
-        echo "            </div>
-        </ul>
-    </div>
+        // line 50
+        echo "
+                </div>
             </ul>
         </div>
+        ";
+        // line 55
+        echo "        <div class=\"content-block\">&nbsp;</div>
     </div>
 
 ";
     }
 
-    // line 71
+    // line 61
     public function block_content($context, array $blocks = array())
     {
-        // line 72
+        // line 62
         echo "
 
 ";
@@ -148,7 +136,7 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
 
     public function getDebugInfo()
     {
-        return array (  134 => 72,  131 => 71,  120 => 61,  113 => 59,  101 => 52,  95 => 49,  89 => 46,  80 => 40,  76 => 38,  71 => 37,  47 => 15,  44 => 14,  40 => 4,  37 => 3,  31 => 2,  11 => 1,);
+        return array (  122 => 62,  119 => 61,  112 => 55,  106 => 50,  99 => 48,  88 => 42,  82 => 39,  78 => 38,  75 => 37,  70 => 36,  47 => 15,  44 => 14,  40 => 4,  37 => 3,  31 => 2,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -164,15 +152,15 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
         return new Twig_Source("{% extends \"master.html.twig\" %}
 {% block title %}Store List{% endblock %}
 {% block headextra %}
-   {# <script>
-        \$(document).ready(function () {
-        // respond to all events that may change the value of input
-        \$('input[name=searchbar]').bind('propertychange change keyup input paste', function () {
-            var searchInput = \$('input[name=searchbar]').val();
-            \$('#searchList').load('/storeresult/' + searchInput);
-        });
-    });
-    </script> #}
+    {# <script>
+         \$(document).ready(function () {
+         // respond to all events that may change the value of input
+         \$('input[name=searchbar]').bind('propertychange change keyup input paste', function () {
+             var searchInput = \$('input[name=searchbar]').val();
+             \$('#searchList').load('/storeresult/' + searchInput);
+         });
+     });
+     </script> #}
 {% endblock %}
 {% block searchbar %}
     <!-- Search Bar with \"searchbar-init\" class for auto initialization -->
@@ -183,49 +171,39 @@ class __TwigTemplate_5ed2b921d4af368b54eedce9966459bb156ce949088d96c0712aefee289
         </div>
         <a href=\"#\" class=\"searchbar-cancel\">Cancel</a>
     </form>
-    
+
     <div class=\"searchbar-overlay\"></div>
     <div class=\"page-content\">
         <div class=\"content-block searchbar-not-found\">
-                Nothing found
+            Nothing found
         </div>
- 
-        <div class=\"list-block list-block-search searchbar-found\">
-            <ul>
-                <!-- List View -->
-    <div class=\"content-block-title\">Store List</div>
-    <div class=\"list-block accordion-list\">
-        <ul>
-            <div id=\"searchList\">
-            {% for l in list %}
-                <li class=\"accordion-item\"><a href=\"#\" class=\"item-content item-link\">
-                        <div class=\"item-inner\">
-                            <div class=\"item-title\">{{l.name}}</div>
-                        </div></a>
-                    <div class=\"accordion-item-content\">
-                        <div class=\"content-block\">    
-                            <div class=\"row\">
-                                <div class=\"col-33\">
-                                    <a href=\"/stores/view/{{l.id}}\" class=\"external button button-big button-fill button-raised color-cyan\">View</a>
-                                </div>
-                                <div class=\"col-33\">
-                                    <a href=\"/stores/edit/{{l.id}}\" class=\"external button button-big button-fill button-raised color-cyan\">Update</a>
-                                </div>
-                                <div class=\"col-33\"> 
-                                    <a href=\"/stores/delete/{{l.id}}\" class=\"button button-big button-fill button-raised color-pink external\">Delete</a>
-                                </div>                               
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            {% else %}
 
-            {% endfor %}
-            </div>
-        </ul>
-    </div>
+        <div class=\"list-block list-block-search searchbar-found\">
+            <!-- List View -->
+            <div class=\"content-block-title\">Store List</div>
+            <ul>               
+                <div class=\"list-block accordion-list\">
+
+                    {% for l in list %}
+                        <li>
+                            <a href=\"/stores/view/{{l.id}}\" class=\"item-link item-content external\">
+                                <div class=\"item-media\"><img src=\"{{l.logoPath}}\" width=\"44\" height=\"44\"></div>
+                                <div class=\"item-inner\">
+                                    <div class=\"item-title-row\">
+                                        <div class=\"item-title\">{{l.name}}</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    {% else %}
+
+                    {% endfor %}
+
+                </div>
             </ul>
         </div>
+        {# creates white space at bottom of screen #}
+        <div class=\"content-block\">&nbsp;</div>
     </div>
 
 {% endblock %}

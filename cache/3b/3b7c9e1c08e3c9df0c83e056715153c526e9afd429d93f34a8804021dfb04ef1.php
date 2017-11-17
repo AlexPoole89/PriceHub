@@ -145,9 +145,10 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
     public function block_scriptextra($context, array $blocks = array())
     {
         echo " 
-    <script   async defer src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxl2OsLeKyA3upPOzMaPDpVUq6dNzR48\">
+    <script    src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxl2OsLeKyA3upPOzMaPDpVUq6dNzR48\">
     </script>
     <script>
+        
    function initialize() {
       var map;
       var position = new google.maps.LatLng(50.45, 4.45);    // set your own default location.
@@ -297,9 +298,10 @@ class __TwigTemplate_48562b532b27761969df24aa41647af5b78e78c707880162144f84271a0
 {% endblock %}
 
 {% block scriptextra %} 
-    <script   async defer src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxl2OsLeKyA3upPOzMaPDpVUq6dNzR48\">
+    <script    src=\"https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxl2OsLeKyA3upPOzMaPDpVUq6dNzR48\">
     </script>
     <script>
+        
    function initialize() {
       var map;
       var position = new google.maps.LatLng(50.45, 4.45);    // set your own default location.
