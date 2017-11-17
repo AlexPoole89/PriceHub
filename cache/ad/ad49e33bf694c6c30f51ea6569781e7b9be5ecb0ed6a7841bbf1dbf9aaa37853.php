@@ -174,7 +174,7 @@ class __TwigTemplate_9daf38a375b4d827a9ab0d509b2849e0f093e9f1f6ccf6531e378177b6b
         var map;
                 var position = new google.maps.LatLng(50.45, 4.45); // set your own default location.
                 var myOptions = {
-                zoom: 15,
+                zoom: 13,
                         center: position
                 };
                 var map = new google.maps.Map(document.getElementById(\"map\"), myOptions);
@@ -209,29 +209,26 @@ class __TwigTemplate_9daf38a375b4d827a9ab0d509b2849e0f093e9f1f6ccf6531e378177b6b
                     var marker = new google.maps.Marker({
                     position: uluru,
                     map: map,
-                    tooltip: \"<strong>";
+                    title: \"";
             // line 104
             echo twig_escape_filter($this->env, $this->getAttribute($context["s"], "name", array()), "html", null, true);
-            echo "</strong>\"          
+            echo "\"
+                    ";
+            // line 105
+            echo "   
                  }); 
-                 
-        ";
+          
+";
+            // line 120
+            echo "        ";
         }
         $_parent = $context['_parent'];
         unset($context['_seq'], $context['_iterated'], $context['_key'], $context['s'], $context['_parent'], $context['loop']);
         $context = array_intersect_key($context, $_parent) + $_parent;
-        // line 108
+        // line 121
         echo "        
-         var tooltip = new Tooltip({map: map}, marker);
-        tooltip.bindTo(\"text\", marker, \"tooltip\");
-        google.maps.event.addListener(marker, 'mouseover', function() {
-            tooltip.addTip();
-            tooltip.getPos2(marker.getPosition());
-        });
-  \t
-        google.maps.event.addListener(marker, 'mouseout', function() {
-            tooltip.removeTip();
-        });
+         
+        
             function locationNotFound() {
                 // location not found, you might want to do something here
             }
@@ -261,7 +258,7 @@ class __TwigTemplate_9daf38a375b4d827a9ab0d509b2849e0f093e9f1f6ccf6531e378177b6b
 
     public function getDebugInfo()
     {
-        return array (  224 => 108,  214 => 104,  205 => 100,  202 => 99,  198 => 98,  167 => 71,  162 => 68,  152 => 59,  145 => 57,  137 => 55,  132 => 54,  119 => 44,  115 => 43,  98 => 37,  95 => 36,  91 => 34,  87 => 33,  83 => 32,  77 => 29,  73 => 28,  66 => 23,  64 => 22,  61 => 21,  41 => 4,  38 => 3,  31 => 2,  11 => 1,);
+        return array (  229 => 121,  223 => 120,  218 => 105,  214 => 104,  205 => 100,  202 => 99,  198 => 98,  167 => 71,  162 => 68,  152 => 59,  145 => 57,  137 => 55,  132 => 54,  119 => 44,  115 => 43,  98 => 37,  95 => 36,  91 => 34,  87 => 33,  83 => 32,  77 => 29,  73 => 28,  66 => 23,  64 => 22,  61 => 21,  41 => 4,  38 => 3,  31 => 2,  11 => 1,);
     }
 
     /** @deprecated since 1.27 (to be removed in 2.0). Use getSourceContext() instead */
@@ -352,7 +349,7 @@ class __TwigTemplate_9daf38a375b4d827a9ab0d509b2849e0f093e9f1f6ccf6531e378177b6b
         var map;
                 var position = new google.maps.LatLng(50.45, 4.45); // set your own default location.
                 var myOptions = {
-                zoom: 15,
+                zoom: 13,
                         center: position
                 };
                 var map = new google.maps.Map(document.getElementById(\"map\"), myOptions);
@@ -377,13 +374,13 @@ class __TwigTemplate_9daf38a375b4d827a9ab0d509b2849e0f093e9f1f6ccf6531e378177b6b
                     var marker = new google.maps.Marker({
                     position: uluru,
                     map: map,
-                    tooltip: \"<strong>{{s.name}}</strong>\"          
+                    title: \"{{s.name}}\"
+                    {#  tooltip: \"<strong>{{s.name}}</strong>\"       #}   
                  }); 
+          
+{#        var tooltip = new Tooltip({map: map}, marker);
                  
-        {% endfor %}
-        
-         var tooltip = new Tooltip({map: map}, marker);
-        tooltip.bindTo(\"text\", marker, \"tooltip\");
+                 tooltip.bindTo(\"text\", marker, \"tooltip\");
         google.maps.event.addListener(marker, 'mouseover', function() {
             tooltip.addTip();
             tooltip.getPos2(marker.getPosition());
@@ -392,6 +389,11 @@ class __TwigTemplate_9daf38a375b4d827a9ab0d509b2849e0f093e9f1f6ccf6531e378177b6b
         google.maps.event.addListener(marker, 'mouseout', function() {
             tooltip.removeTip();
         });
+ #}
+        {% endfor %}
+        
+         
+        
             function locationNotFound() {
                 // location not found, you might want to do something here
             }

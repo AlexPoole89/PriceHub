@@ -76,7 +76,7 @@
         var map;
                 var position = new google.maps.LatLng(50.45, 4.45); // set your own default location.
                 var myOptions = {
-                zoom: 15,
+                zoom: 13,
                         center: position
                 };
                 var map = new google.maps.Map(document.getElementById("map"), myOptions);
@@ -101,13 +101,13 @@
                     var marker = new google.maps.Marker({
                     position: uluru,
                     map: map,
-                    tooltip: "<strong>{{s.name}}</strong>"          
+                    title: "{{s.name}}"
+                    {#  tooltip: "<strong>{{s.name}}</strong>"       #}   
                  }); 
+          
+{#        var tooltip = new Tooltip({map: map}, marker);
                  
-        {% endfor %}
-        
-         var tooltip = new Tooltip({map: map}, marker);
-        tooltip.bindTo("text", marker, "tooltip");
+                 tooltip.bindTo("text", marker, "tooltip");
         google.maps.event.addListener(marker, 'mouseover', function() {
             tooltip.addTip();
             tooltip.getPos2(marker.getPosition());
@@ -116,6 +116,11 @@
         google.maps.event.addListener(marker, 'mouseout', function() {
             tooltip.removeTip();
         });
+ #}
+        {% endfor %}
+        
+         
+        
             function locationNotFound() {
                 // location not found, you might want to do something here
             }

@@ -244,7 +244,7 @@ $app->get('/products/view/:id', function($id = -1) use($app) {
     FROM stores AS z
     JOIN (
     SELECT 45.447277 AS latpoint, -73.617004 AS longpoint,
-    15.0 AS radius, 69.0 AS distance_unit
+    5.0 AS radius, 111.045 AS distance_unit
     ) AS p ON 1 = 1
     WHERE z.latitude
     BETWEEN p.latpoint - (p.radius / p.distance_unit)
