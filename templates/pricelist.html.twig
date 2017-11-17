@@ -1,38 +1,33 @@
 {% extends "master.html.twig" %}
 
 {% block headextra %}
-    {# <script>
-         $(document).ready(function () {
-         // respond to all events that may change the value of input
-         $('input[name=searchbar]').bind('propertychange change keyup input paste', function () {
-             var searchInput = $('input[name=searchbar]').val();
-             $('#searchList').load('/storeresult/' + searchInput);
-         });
-     });
-     </script> #}
+   <script>
+        
+
+    </script>
+
 {% endblock %}
 {% block searchbar %}
     <!-- Search Bar with "searchbar-init" class for auto initialization -->
-    <form class="searchbar searchbar-init" data-search-list=".list-block-search" data-search-in=".item-title" data-found=".searchbar-found" data-not-found=".searchbar-not-found">
+    <form class="searchbar">
         <div class="searchbar-input">
-            <input type="search" placeholder="Search">
+                 <input type="text" name="term" id="search_text" placeholder="Search by Customer Details" class="form-control" />
             <a href="#" class="searchbar-clear"></a>
         </div>
-
     </form>
 
-    <div class="searchbar-overlay"></div>
+    
 
-    <div class="page-content">
-        <div class="content-block searchbar-not-found">
+    <div class="page-content" id="result">
+        <div class="content-block">
             Nothing found
         </div>
 
-        <div class="list-block list-block-search searchbar-found">
+        <div class="list-block">
             <!-- List View -->
             <div class="content-block-title">Price List</div>
             <ul>
-                <div class="list-block">
+                <div class="list-block" id="itemsView">
                     {% for p in list %}
 
                         <li>
@@ -60,6 +55,16 @@
 
 {% block content %}
 
-
-
 {% endblock %}
+
+{% block scriptextra %}
+    <script>
+            $(document).ready(function() {
+                $('input[name=term]').bind("propertychange change click keyup input paste", function() {
+                    // AJAX request
+                    var term = $('input[name=term]').val();
+                    $('#result').load('/price/search/' + term);
+                });
+            });
+        </script>
+    {% endblock %}

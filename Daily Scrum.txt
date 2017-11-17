@@ -101,7 +101,14 @@ date and name
 2.ajax response for the barcode reader
 3.parsing the json response
 
-11/13/2017
+11/13/2017 Derek
 1.tried getting the ajax to fill out the form once a barcode is scanned
 2.continue wokring on the ajax call
 3.getting the ajax call fully functional
+
+11/17/2017 Derek
+1.
+- barcode fully function
+-did the price views page with history
+2.continue price view add charts
+3.

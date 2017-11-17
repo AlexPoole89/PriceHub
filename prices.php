@@ -5,6 +5,24 @@ if (false) {
     $app = new \Slim\Slim();
     $log = new Logger('main');
 }
+//search
+$app->post('/price/search/:term', function($term) use ($app) {
+
+if(isset($_POST["term"]))
+{
+
+ $priceList = DB::query("SELECT stores.name AS storeName, products.name AS productName,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE MATCH(products.name, stores.name) AGAINST('%s' IN NATURAL LANGUAGE MODE)",$term);
+    
+}
+else
+{
+$priceList = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
+
+}
+$app->render('pricelist.html.twig', array(
+        "list" => $priceList,
+        ));
+});
 
 //JQuery check for barcode
 $app->post('/isbarcoderegistered/:barcode', function($barcode) use ($app) {
@@ -81,6 +99,33 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
     $values = array('barcode' => $barcode, 'store' => $storeName, 'product' => $productName, 'price' => $price, 'onSpecial' => $onSpecial, 'quantity' => $quantity, 'unit' => $unit, 'lat' => $lat, 'long' => $long);
     $errorList = array();
 
+       $nearbyStores = DB::query("SELECT name,
+    latitude, longitude, distance
+    FROM (
+    SELECT z.name,
+    z.latitude, z.longitude,
+    p.radius,
+    p.distance_unit
+    * DEGREES(ACOS(COS(RADIANS(p.latpoint))
+    * COS(RADIANS(z.latitude))
+    * COS(RADIANS(p.longpoint - z.longitude))
+    + SIN(RADIANS(p.latpoint))
+    * SIN(RADIANS(z.latitude)))) AS distance
+    FROM stores AS z
+    JOIN (
+    SELECT 45.447277 AS latpoint, -73.617004 AS longpoint,
+    5.0 AS radius, 111.045 AS distance_unit
+    ) AS p ON 1 = 1
+    WHERE z.latitude
+    BETWEEN p.latpoint - (p.radius / p.distance_unit)
+    AND p.latpoint + (p.radius / p.distance_unit)
+    AND z.longitude
+    BETWEEN p.longpoint - (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
+    AND p.longpoint + (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
+    ) AS d
+    WHERE distance <= radius
+    ORDER BY distance
+    LIMIT 15");
 
     if (isset($onSpecial)) {
         $onSpecial = 1; //true

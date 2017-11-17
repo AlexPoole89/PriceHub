@@ -49,4 +49,40 @@
         </div>
     </div>
 
+                    <div class="card">
+        <div class="card-content">
+            <div class="card-content-inner">
+               <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+                    
 {% endblock %}
+
+{% block scriptextra %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+    <script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: [{% for p in allprices %} {% if loop.first %}"{{p.dateRegistered|date("m/d/Y")}}" {% else %},"{{p.dateRegistered|date("m/d/Y")}}"{% endif %} {% endfor %}],
+        datasets: [{
+            label: 'History',
+            data: [{% for p in allprices %}{% if loop.first %}{{p.price}}{% else %},{{p.price}}{% endif %}{% endfor %}],
+            borderColor: 'rgb(255,127,80)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+</script>
+    {% endblock %}
