@@ -227,13 +227,24 @@ $app->get('/products/view/:id', function($id = -1) use($app) {
                     . " products.comment as comment, products.picPath as picPath FROM products, users WHERE products.userId=users.id AND products.id=%i", $id);
 
     //get user's location to search for nearest stores
-    $long = $app->request()->post('long');
-    $lat = $app->request()->post('lat');
-    $nearbyStores = DB::query("SELECT name,
-    latitude, longitude, distance
+//    $long = $app->request()->post('long');
+//    $lat = $app->request()->post('lat');
+//    
+   
+    $app->render('products_view.html.twig', array('p' => $product,
+        'price' => $pricesCountProduct
+    ));
+})->conditions(array(
+    'id' => '\d+'
+));
+
+$app->get('/nearbystores/:lat/:long', function($lat, $long) use ($app) {
+    
+    $nearbyStores = DB::query("SELECT id, name,
+    latitude, longitude, logoPath, distance
     FROM (
-    SELECT z.name,
-    z.latitude, z.longitude,
+    SELECT z.id, z.name,
+    z.latitude, z.longitude, z.logoPath,
     p.radius,
     p.distance_unit
     * DEGREES(ACOS(COS(RADIANS(p.latpoint))
@@ -241,9 +252,9 @@ $app->get('/products/view/:id', function($id = -1) use($app) {
     * COS(RADIANS(p.longpoint - z.longitude))
     + SIN(RADIANS(p.latpoint))
     * SIN(RADIANS(z.latitude)))) AS distance
-    FROM stores AS z
+    FROM stores AS z    
     JOIN (
-    SELECT 45.447277 AS latpoint, -73.617004 AS longpoint,
+    SELECT %d AS latpoint, %d AS longpoint,
     5.0 AS radius, 111.045 AS distance_unit
     ) AS p ON 1 = 1
     WHERE z.latitude
@@ -255,10 +266,11 @@ $app->get('/products/view/:id', function($id = -1) use($app) {
     ) AS d
     WHERE distance <= radius
     ORDER BY distance
-    LIMIT 15");
-    $app->render('products_view.html.twig', array('p' => $product,
-        'price' => $pricesCountProduct, 'nearbyStores' => $nearbyStores
-    ));
-})->conditions(array(
-    'id' => '\d+'
-));
+    LIMIT 15", $lat, $long);
+    echo json_encode($nearbyStores);
+    /*
+    if ($nearbyStores) {
+      //  header("Content-type: application/json");
+        echo array('nearbyStores' => $nearbyStores);
+    } */
+});

@@ -12,11 +12,11 @@ $app->get('/stores/add', function() use($app, $log) {
 });
 
 $app->get('/stores/:op(/:id)', function($op, $id = -1) use ($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
-//
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+
     if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
         $app->render('error_internal.html.twig');
         return;
@@ -42,10 +42,10 @@ $app->get('/stores/:op(/:id)', function($op, $id = -1) use ($app) {
 
 // ADD/EDIT SUBMISSION
 $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
     if (($op == 'add' && $id != -1) || ($op == 'edit' && $id == -1)) {
         $app->render('error_internal.html.twig');
         return;
@@ -113,8 +113,7 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         //
         $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
         //
-        if ($storeImage) { //   '[^a-zA-Z0-9_\.-]' 
-            // $sanitizedFileName = preg_replace('[^a-zA-Z0-9_\.-]', '_', $storeImage['name']);
+        if ($storeImage) { 
 //            $ext = '';
 //            switch ($info['mime']) {
 //                case "image/gif":
@@ -257,16 +256,16 @@ $app->get('/stores/list', function() use($app) {
 //
 //STORE PROFILE
 $app->get('/stores/view/:id', function($id = -1) use($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
     $pricesCountStore = DB::queryFirstField("SELECT count(id) FROM prices WHERE storeId=%i", $id);
     $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
     $app->render('stores_view.html.twig', array('s' => $store,
         'price' => $pricesCountStore
     ));
 })->conditions(array(
-    'id' => '\d+'
+    'id' => '(\d+|\w+)'
 ));
 

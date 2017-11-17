@@ -1,11 +1,11 @@
 <?php
 
-//if(empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off"){
-//    $redirect = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-//    header('HTTP/1.1 302 Moved Temporarily');
-//    header('Location: ' . $redirect);
-//    exit();
-//}
+if(empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off"){
+    $redirect = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    header('HTTP/1.1 302 Moved Temporarily');
+    header('Location: ' . $redirect);
+    exit();
+}
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
@@ -14,14 +14,14 @@ session_start();
 
 require_once 'vendor/autoload.php';
 //remote db password yNF3tRC[p3eC
-//DB::$user = 'cp4809_pricehub';
-//DB::$password = 'yNF3tRC[p3eC';
-//DB::$dbName = 'cp4809_pricehub';
-//DB::$encoding = 'utf8';
-DB::$user = 'root';
-DB::$password = '';
-DB::$dbName = 'test';
+DB::$user = 'cp4809_pricehub';
+DB::$password = 'yNF3tRC[p3eC';
+DB::$dbName = 'cp4809_pricehub';
 DB::$encoding = 'utf8';
+//DB::$user = 'root';
+//DB::$password = '';
+//DB::$dbName = 'test';
+//DB::$encoding = 'utf8';
 
 //DB ERROR HANDLING
 DB::$error_handler = 'sql_error_handler';
