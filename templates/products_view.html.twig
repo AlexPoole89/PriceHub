@@ -65,22 +65,8 @@
     <div class="content-block-title">Nearby stores list</div>
 
     <div class="list-block">
-        <ul>
-
-            {% for s in nearbyStores %}
-                <li>
-                    <a href="/stores/view/{{s.id}}" class="item-link item-content external">
-                        <div class="item-media"><img src="{{s.logoPath}}" width="44" height="44"></div>
-                        <div class="item-inner">
-                            <div class="item-title-row">
-                                <div class="item-title">{{s.name}} is {{s.distance |round(2, 'floor')}}km away</div>
-                            </div>
-                        </div>
-                    </a>
-                </li>                       
-            {% else %}
-                <li>no data </li>
-                {% endfor %}    
+        <ul id="nearbyStores">
+            <!-- javascript stores list goes here -->
         </ul>
     </div>
 
@@ -91,7 +77,6 @@
         </div>
     </div>  
 
-    {# {% endfor %}  #}
 
 {% endblock %}
 
@@ -122,9 +107,10 @@
 
                 lat = $('#lat').val();
                 long = $('#long').val();
-                console.log("here1");
-                $.get('/nearbystores/' + lat + '/' + long, function (data) {
+                                                                //extra parameter added
+                $.get('/nearbystores/' + lat + '/' + long + '/' + {{p.id}}, function (data) {
                     data = JSON.parse(data);
+                    var storeText = "";
                     // add new markers
                     for (var i = 0; i < data.length; i++) {
                         var store = data[i];
@@ -134,22 +120,23 @@
                             map: map,
                             title: store.description,
                             label: store.name.charAt(0)
-                            // tooltip: "<strong>" + store.name + "</strong>"
-                        });
-                        var tooltip = new Tooltip({map: map}, marker);
-
-                        tooltip.bindTo("text", marker, "tooltip");
-                        google.maps.event.addListener(marker, 'mouseover', function () {
-                            tooltip.addTip();
-                            tooltip.getPos2(marker.getPosition());
                         });
 
-                        google.maps.event.addListener(marker, 'mouseout', function () {
-                            tooltip.removeTip();
-                        });
-
+                        
+                        //add stores links to html list
+                         storeText = '<li>\
+                    <a href="/stores/view/' + store.id + '" class="item-link item-content external">\
+                        <div class="item-media"><img src="' + store.logoPath + '" width="44" height="44"></div>\
+                        <div class="item-inner">\
+                            <div class="item-title-row">\
+                                <div class="item-title">' + store.name + ' is ' + (Number(store.distance)).toFixed(3) + ' km away</div>\
+                            </div>\
+                        </div>\
+                    </a>\
+                </li>';
+            $("#nearbyStores").append(storeText);
                     }
-
+                    
                 });
 
             }
@@ -165,33 +152,7 @@
             document.getElementById("lat").value = lat;
         }
 
-
-        /*  function setLong(myValue) {
-         $('#long').val(myValue)
-         .trigger('change');
-         }
-         
-         function setLat(myValue) {
-         $('#lat').val(myValue)
-         .trigger('change');
-         }
-         
-         $('#long').change(function () {
-         $.ajax({
-         type: "POST",
-         url: "products.php",
-         data: {hidden: $(this).val()}
-         });
-         });
-         $('#lat').change(function () {
-         $.ajax({
-         type: "POST",
-         url: "products.php",
-         data: {hidden: $(this).val()}
-         });
-         }); */
         $(document).ready(initialize);
 
     </script>
-    <script type="text/javascript" src="/js/custom_map_tooltip.js"></script>
 {% endblock %}

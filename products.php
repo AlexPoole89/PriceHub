@@ -89,9 +89,9 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
                     array_push($errorList, "Image must be smaller than 40kb.");
                 }
                 //CHECK IMAGE DIMENSIONS
-                if ($info[0] > 300 || $info[1] > 300) {
-                    array_push($errorList, "Image must not be bigger than 300x300 pixels.");
-                }
+//                if ($info[0] > 300 || $info[1] > 300) {
+//                    array_push($errorList, "Image must not be bigger than 300x300 pixels.");
+//                }
                 //check valid file type
                 if ($info['mime'] == 'image/jpeg' || $info['mime'] == 'image/png' || $info['mime'] == 'image/gif') {
                     //image type is valid- all good
@@ -130,7 +130,7 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
                     $ext = '.bmp';
                     break;
             }
-            $picPath = getUniqueFileNameForExtension('uploads/', $ext);  // 'uploads/' . $productImage['name'] write new file name with function 
+            $picPath = getUniqueFileNameForExtension('uploads', $ext); 
             if (!move_uploaded_file($productImage['tmp_name'], $picPath)) {
                 $log->err(sprintf("Error moving uploaded file: " . print_r($productImage, true)));
                 $app->render('error_internal.html.twig');
@@ -147,12 +147,13 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
                 unlink('.' . $product['picPath']);
                 $values['picPath'] = "/" . $picPath;
                 DB::update('products', $values, "id=%i", $id);
+                $values = DB::queryFirstRow("SELECT * FROM products WHERE id=%i", $id);
             } else { //access denied
                 $app->render('access_denied.html.twig');
                 return;
             }
         } else {
-//INSERT STATEMENT             // 1 FOR TESTING CHANGE BACK TO $_SESSION['user']['id']
+//INSERT STATEMENT        
             DB::insert('products', array('userId' => $_SESSION['user']['id'], 'name' => $name, 'comment' => $comment, 'picPath' => $values['picPath']));
             $values = DB::queryFirstRow("SELECT * FROM products ORDER BY id DESC");
         }
@@ -238,9 +239,20 @@ $app->get('/products/view/:id', function($id = -1) use($app) {
     'id' => '\d+'
 ));
 
-$app->get('/nearbystores/:lat/:long', function($lat, $long) use ($app) {
+$app->get('/nearbystores/:lat/:long/:id', function($lat, $long, $id) use ($app) {
     
-    $nearbyStores = DB::query("SELECT id, name,
+    $priceview = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,"
+            . "products.barcode as productBarcode,products.picPath as productImage,prices.id as priceId"
+            . ",storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores"
+            . " ON prices.storeId = stores.id LEFT JOIN products"
+            . " ON prices.productId = products.id WHERE prices.id = %i",$id);
+    
+    $storesWithProduct = DB::query("SELECT 
+            storeId "
+            . "FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i "
+            . "ORDER BY dateRegistered DESC",$priceview['productId']); 
+    
+    $closeStores = DB::query("SELECT id, name,
     latitude, longitude, logoPath, distance
     FROM (
     SELECT z.id, z.name,
@@ -265,9 +277,11 @@ $app->get('/nearbystores/:lat/:long', function($lat, $long) use ($app) {
     AND p.longpoint + (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
     ) AS d
     WHERE distance <= radius
+    AND Z.id IN %li
     ORDER BY distance
-    LIMIT 15", $lat, $long);
-    echo json_encode($nearbyStores);
+    LIMIT 15", $lat, $long, $storesWithProduct);
+    
+    echo json_encode($closeStores);
     /*
     if ($nearbyStores) {
       //  header("Content-type: application/json");

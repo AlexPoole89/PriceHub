@@ -7,9 +7,6 @@ if (false) {
     $log = new Monolog\Logger('main');
 }
 
-$app->get('/stores/add', function() use($app, $log) {
-    $app->render('stores_addedit.html.twig');
-});
 
 $app->get('/stores/:op(/:id)', function($op, $id = -1) use ($app) {
     if (!$_SESSION['user']) {
@@ -76,7 +73,8 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         } else {
             if (strstr($storeImage['name'], '..')) {
                 array_push($errorList, "Invalid file name");
-                $log->warn("Uploaded file name with .. in it (possible attack) " . print_r($storeImage, true));
+                $log->warn("Uploaded file name with .. in it (possible attack) " . 
+                        print_r($storeImage, true));
             }
             // check if image if valid 
             $info = getimagesize($storeImage["tmp_name"]);
@@ -84,8 +82,8 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
                 array_push($errorList, "File doesn't look like a valid image.");
             } else {
                 //CHECK IMAGE SIZE, 
-                if (filesize($storeImage["tmp_name"]) > 200000) {
-                    array_push($errorList, "Image must be smaller than 20kb.");
+                if (filesize($storeImage["tmp_name"]) > 400000) {
+                    array_push($errorList, "Image must be smaller than 40kb.");
                 }
                 //CHECK IMAGE DIMENSIONS
 //                if ($info[0] > 300 || $info[1] > 300) {
@@ -114,23 +112,23 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
         //
         if ($storeImage) { 
-//            $ext = '';
-//            switch ($info['mime']) {
-//                case "image/gif":
-//                    $ext = '.gif';
-//                    break;
-//                case "image/jpeg":
-//                    $ext = '.jpg';
-//                    break;
-//                case "image/png":
-//                    $ext = '.png';
-//                    break;
-//                case "image/bmp":
-//                    $ext = '.bmp';
-//                    break;
-//            }
+            $ext = '';
+            switch ($info['mime']) {
+                case "image/gif":
+                    $ext = '.gif';
+                    break;
+                case "image/jpeg":
+                    $ext = '.jpg';
+                    break;
+                case "image/png":
+                    $ext = '.png';
+                    break;
+                case "image/bmp":
+                    $ext = '.bmp';
+                    break;
+            }
             $log->info("In /stores pic info: " . print_r($info, true));
-            $logoPath = 'uploads/' . $storeImage['name'];  //  write new file name with function getUniqueFileNameForExtension('uploads/', $ext)
+            $logoPath = getUniqueFileNameForExtension('uploads', $ext); 
             if (!move_uploaded_file($storeImage['tmp_name'], $logoPath)) {
                 $log->err(sprintf("Error moving uploaded file: " . print_r($storeImage, true)));
                 $app->render('error_internal.html.twig');
@@ -145,7 +143,7 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 //VERIFY USER MATCHES ORIGINAL STORE ADDER
             if ($store['userId'] == $_SESSION['user']['id']) {
                 unlink('.' . $store['logoPath']);
-                $values['logoPath'] = $logoPath;
+                $values['logoPath'] = "/" . $logoPath;
                 DB::update('stores', $values, "id=%i", $id);
                 $values = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
             } else { //access denied
@@ -153,8 +151,8 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
                 return;
             }
         } else {
-//INSERT STATEMENT            //FOR TESTING, NEED TO CHANGE USERID TO $_SESSION['user']['id']
-            DB::insert('stores', array('userId' => 1, 'name' => $name, 'longitude' => $longitude, 'latitude' => $latitude, 'logoPath' => $values['logoPath']));
+//INSERT STATEMENT           
+            DB::insert('stores', array('userId' => $_SESSION['user']['id'], 'name' => $name, 'longitude' => $longitude, 'latitude' => $latitude, 'logoPath' => $values['logoPath']));
             $values = DB::queryFirstRow("SELECT * FROM stores ORDER BY id DESC");
         }
         $app->render('stores_addedit_success.html.twig', array('v' => $values, 'isEditing' => ($id != -1)));

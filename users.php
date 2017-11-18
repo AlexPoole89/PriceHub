@@ -127,70 +127,79 @@ function generateRandomString($length = 10) {
 
 $app->map('/passreset/request', function()use ($app, $log) {
     if ($app->request()->isGet()) {
+        //State 1: first show
         $app->render('passreset_request.html.twig');
         return;
     }
+    // in Post - receiving submission
     $email = $app->request()->post('email');
     $user = DB::queryFirstRow('SELECT * FROM users WHERE email=%s', $email);
     if ($user) {
         $secretToken = generateRandomString(50);
+        
         DB::insertUpdate('passresets', array('userId' => $user['id'], 'secretToken' => $secretToken, 'expiryDateTime' => date("Y-m-d H:i:s", strtotime("+1 day"))));
-        $url = 'http://' . $_SERVER['SERVER_NAME'] . '/passreset/token/' . $secretToken;
+        $url = 'https://' . $_SERVER['SERVER_NAME'] . '/passreset/token/' . $secretToken;
         $emailBody = $app->view()->render('passreset_email.html.twig', array('url' => $url));
         $headers = "MIME-Version: 1.0\r\n";
         $headers .= "Content-Type: text/html\r\n";
         $headers .= "From: Noreply <noreply@ipd10.com>\r\n";
-        mail($email, "Your password reset for" . $_SERVER['SERVER_NAME'], $emailBody, $headers);
-        $log->info('Email sent for password reset for user id =' . $user['id']);
+        $headers .= "Date: " . date("Y-m-d H:i:s");
+        $toEmail = sprintf("%s <%s>", htmlentities($user['name']), $user['email']);
+        mail($toEmail, "Your password reset for" . $_SERVER['SERVER_NAME'], $emailBody, $headers);
+        
+        $log->info('Email sent for password reset for user id=' . $user['id']);
         $app->render('passreset_request_success.html.twig');
-    } else {//fail
+    } else {//state 3: failed request, email not registered
         $app->render('passreset_request.html.twig', array('error' => true));
     }
 })->via('GET', 'POST');
 
-$app->map('/passreset/token/:secretToken', function($secretToken)use ($app, $log) {
-    $row = DB::query('SELECT * FROM passresets WHERE secretToken=%s', $secretToken);
-    if (!$row) {
+$app->map('/passreset/token/:secretToken', function($secretToken) use ($app, $log) {
+    $row = DB::queryFirstRow("SELECT * FROM passresets WHERE secretToken=%s", $secretToken);
+    if (!$row) { // row not found
         $app->render('passreset_notfound_expired.html.twig');
         return;
     }
-
-    $user = DB::queryFirstRow('SELECT * FROM users WHERE id=%i', $row['userId']);
+    if (strtotime($row['expiryDateTime']) < time()) {
+        // row found but token expired
+        $app->render('passreset_notfound_expired.html.twig');
+        return;
+    }
+    //
+    $user = DB::queryFirstRow("SELECT * FROM users WHERE id=%d", $row['userId']);
     if (!$user) {
-        $log->err(sprintf('Passreset for token user id=%d not found', $row['secretToken'], $row['userId']));
+        $log->err(sprintf("Passreset for token %s user id=%d not found", $row['secretToken'], $row['userId']));
         $app->render('error_internal.html.twig');
         return;
     }
-
-
-
-    if (strtotime($row['expiryDateTime']) < time()) {
-        $app->render('passreset_form.html.twig', array('email' => $user['email']));
-        return;
-    } else {
-         
+    if ($app->request()->isGet()) { // State 1: first show
+        $app->render('passreset_form.html.twig', array(
+            'name' => $user['name'], 'email' => $user['email']
+        ));
+    } else { // receiving POST with new password
         $pass1 = $app->request()->post('pass1');
         $pass2 = $app->request()->post('pass2');
+        // FIXME: verify quality of the new password using a function
         $errorList = array();
         if ($pass1 != $pass2) {
-            array_push($errorList, "Passwords do not match");
-        } else {
+            array_push($errorList, "Passwords don't match");
+        } else { // TODO: do a better check for password quality (lower/upper/numbers/special)
             if (strlen($pass1) < 2 || strlen($pass1) > 50) {
-                array_push($errorList, "Password must be between 2 and 50 characters");
+                array_push($errorList, "Password must be between 2 and 50 characters long");
             }
         }
-
-        if ($errorList) {
-            // 3. failed submission
-            $app->render('register.html.twig', array(
+        if ($errorList) { // 3. failed submission
+            $app->render('passreset_form.html.twig', array(
                 'errorList' => $errorList,
-                'v' => $values));
-        } else {
-
-            // 2. successful submission
+                'name' => $user['name'],
+                'email' => $user['email']
+            ));
+        } else { // 2. successful submission
             $passEnc = password_hash($pass1, PASSWORD_BCRYPT);
             DB::update('users', array('password' => $passEnc), 'id=%d', $user['id']);
-            $app->render('passreset_success.html.twig', array('email' => $email));
+            $app->render('passreset_form_success.html.twig');
         }
     }
-});
+})->via('GET', 'POST');
+
+
