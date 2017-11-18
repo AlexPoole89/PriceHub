@@ -7,21 +7,22 @@ if (false) {
 }
 //search
 $app->post('/price/search/:term', function($term) use ($app) {
-
-if(isset($_POST["term"]))
-{
-
- $priceList = DB::query("SELECT stores.name AS storeName, products.name AS productName,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE MATCH(products.name, stores.name) AGAINST('%s' IN NATURAL LANGUAGE MODE)",$term);
+if(isset($_POST["term"])){
     
+ $priceList = DB::query("SELECT stores.name AS storeName, products.name AS productName,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE products.name LIKE '%".$term."%' OR stores.name LIKE '%".$term."%'");
+ if($priceList){
+ $app->render('pricelist_ajax.html.twig', array('list' => $priceList));
 }
+ }
 else
 {
-$priceList = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
-
+    $priceList = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
+    $app->render('pricelist_ajax.html.twig', array('list' => $priceList));
 }
-$app->render('pricelist.html.twig', array(
-        "list" => $priceList,
-        ));
+if(!$priceList){
+    echo "No Results Found";
+}
+
 });
 
 //JQuery check for barcode
@@ -42,7 +43,8 @@ $app->get('/price/list', function() use ($app) {
     //
 
     $productsList = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
-    $app->render('pricelist.html.twig', array('list' => $productsList));
+
+$app->render('pricelist.html.twig', array('list' => $productsList));   
 });
 
 //JQuery check for email
@@ -98,34 +100,6 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 
     $values = array('barcode' => $barcode, 'store' => $storeName, 'product' => $productName, 'price' => $price, 'onSpecial' => $onSpecial, 'quantity' => $quantity, 'unit' => $unit, 'lat' => $lat, 'long' => $long);
     $errorList = array();
-
-       $nearbyStores = DB::query("SELECT name,
-    latitude, longitude, distance
-    FROM (
-    SELECT z.name,
-    z.latitude, z.longitude,
-    p.radius,
-    p.distance_unit
-    * DEGREES(ACOS(COS(RADIANS(p.latpoint))
-    * COS(RADIANS(z.latitude))
-    * COS(RADIANS(p.longpoint - z.longitude))
-    + SIN(RADIANS(p.latpoint))
-    * SIN(RADIANS(z.latitude)))) AS distance
-    FROM stores AS z
-    JOIN (
-    SELECT 45.447277 AS latpoint, -73.617004 AS longpoint,
-    5.0 AS radius, 111.045 AS distance_unit
-    ) AS p ON 1 = 1
-    WHERE z.latitude
-    BETWEEN p.latpoint - (p.radius / p.distance_unit)
-    AND p.latpoint + (p.radius / p.distance_unit)
-    AND z.longitude
-    BETWEEN p.longpoint - (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
-    AND p.longpoint + (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
-    ) AS d
-    WHERE distance <= radius
-    ORDER BY distance
-    LIMIT 15");
 
     if (isset($onSpecial)) {
         $onSpecial = 1; //true
@@ -271,7 +245,7 @@ $app->get('/price/view/:id', function($id = -1) use($app) {
     
 
     
-    $priceview = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,products.barcode as productBarcode,products.picPath as productImage,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE prices.id = %i",$id);
+    $priceview = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,products.barcode as productBarcode,products.picPath as productImage,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE prices.id = %i LIMIT 30 ORDER BY dateRegistered DESC",$id);
     $allprices = DB::query("SELECT stores.name AS storeName,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i ORDER BY dateRegistered DESC",$priceview['productId']); 
     $app->render('price_view.html.twig', array('list' => $priceview,'allprices'=>$allprices));
     

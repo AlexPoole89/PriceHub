@@ -1,31 +1,51 @@
 {% extends "master.html.twig" %}
-
 {% block headextra %}
-   <script>
-        
+    <script>
+ $(document).ready(function(){
+     $('input[name=term]').bind("propertychange change click keyup input paste", function () {
+         
+      var search = $('#term').val();
+if(search != '')
+  {
+   load_data(search);
+  }
+  else
+  {
+   load_data();
+  }
+ function load_data(term)
+ {
+  $.ajax({
+   url:"/price/search/" + term,
+   method:"POST",
+   data:{term:term},
+   success:function(data)
+   {
+    $('#itemsView').html(data);
+   }
+  });
+ }
 
-    </script>
+ });
+ });
 
-{% endblock %}
-{% block searchbar %}
-    <!-- Search Bar with "searchbar-init" class for auto initialization -->
-    <form class="searchbar">
+</script>
+    {% endblock %}
+{% block content %}
+    
+ <form class="searchbar searchbar-init theme-orange">
         <div class="searchbar-input">
-                 <input type="text" name="term" id="search_text" placeholder="Search by Customer Details" class="form-control" />
+            <input type="search" placeholder="Search by Product or Store" name="term" id="term">
             <a href="#" class="searchbar-clear"></a>
         </div>
+        
     </form>
 
     
-
-    <div class="page-content" id="result">
-        <div class="content-block">
-            Nothing found
-        </div>
-
-        <div class="list-block">
+      
+        <div class="list-block" id="itemsView">
             <!-- List View -->
-            <div class="content-block-title">Price List</div>
+            <div class="content-block-title theme-bluegray"><b>Price List</b></div>
             <ul>
                 <div class="list-block" id="itemsView">
                     {% for p in list %}
@@ -48,23 +68,9 @@
         </div>
         {# creates white space at bottom of screen #}
         <div class="content-block">&nbsp;</div>
-    </div>
-
+    
+   
 {% endblock %}
 
 
-{% block content %}
 
-{% endblock %}
-
-{% block scriptextra %}
-    <script>
-            $(document).ready(function() {
-                $('input[name=term]').bind("propertychange change click keyup input paste", function() {
-                    // AJAX request
-                    var term = $('input[name=term]').val();
-                    $('#result').load('/price/search/' + term);
-                });
-            });
-        </script>
-    {% endblock %}
