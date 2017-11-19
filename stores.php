@@ -174,10 +174,10 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 $app->get('/stores/delete/:id', function($id) use ($app) {
 //VERIFY USER MATCHES ORIGINAL store adder
     $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
-//    if (!$_SESSION['user'] || $store['userId'] != $_SESSION['user']['id']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
+    if (!$_SESSION['user'] || $store['userId'] != $_SESSION['user']['id']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
     if (!$store) {
         $app->render('not_found.html.twig');
         return;
@@ -190,10 +190,10 @@ $app->get('/stores/delete/:id', function($id) use ($app) {
 $app->post('/stores/delete/:id', function($id) use ($app) {
 //VERIFY USER MATCHES ORIGINAL TO-DO WRITER
     $row = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
-//    if (!$_SESSION['user'] || $_SESSION['user']['id'] != $row['userId']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }
+    if (!$_SESSION['user'] || $_SESSION['user']['id'] != $row['userId']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
     $confirmed = $app->request()->post('confirmed');
     if ($confirmed != 'true') {
         $app->render('not_found.html.twig');
@@ -212,10 +212,10 @@ $app->post('/stores/delete/:id', function($id) use ($app) {
 //
 //LIST ALL STORES
 $app->get('/stores/list', function() use($app) {
-//    if (!$_SESSION['user']) {
-//        $app->render('access_denied.html.twig');
-//        return;
-//    }                                           // WHERE stores.userId=users.id
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }                                           // WHERE stores.userId=users.id
     $storeList = DB::query("SELECT * FROM stores");
     $app->render('stores_list.html.twig', array('list' => $storeList));
 });
@@ -251,6 +251,7 @@ $app->get('/nearbystores', function() use($app) {
 //NEARBY STORES
 $app->get('/nearbystores/:lat/:long', function($lat, $long) use ($app) {
 
+    //Haversine formula
     $nearbyStores = DB::query("SELECT id, name,
     latitude, longitude, logoPath, distance
     FROM (
