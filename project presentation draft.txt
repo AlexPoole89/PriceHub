@@ -1,0 +1,56 @@
+presentation slides
+
+1- title
+
+2- background- price hub centralized price tracking 
+
+========SOLUTION OVERVIEW===========
+
+3A- store add/edit page and features		
+
+4A- product add/edit page and features
+
+5D- prices add page and features
+
+6- one slide for list view of all 3 pages
+
+7A- store view and features
+
+8A- product view and features
+
+9D- price view and features
+
+10A- nearby stores and features
+
+
+============CHALLENGES AND SOLUTIONS=============
+
+11- Framework7? talk about progressive web apps
+
+12A- google maps api, geolocation, moving marker, display saved locations
+
+13A-finding nearby locations using geolocation, haversine formula and ajax
+- code sample
+
+14D- quagga.js explain, code sample
+
+15D- chart.js explain, code sample
+
+16- searchbar?
+
+
+===========FUTURE WORK===========
+
+16- various list sorting options, extra charts, keyboard problem
+
+
+============SUMMARY===========
+
+17- used framework7 to make a progressive web app that used gps and phone camera to save and track prices products and stores etc etc
+
+
+
+
+
+
+
