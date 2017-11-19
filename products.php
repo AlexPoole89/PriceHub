@@ -239,7 +239,7 @@ $app->get('/products/view/:id', function($id = -1) use($app) {
     'id' => '\d+'
 ));
 
-$app->get('/nearbystores/:lat/:long/:id', function($lat, $long, $id) use ($app) {
+$app->get('/closestores/:lat/:long/:id', function($lat, $long, $id) use ($app) {
     
     $priceview = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,"
             . "products.barcode as productBarcode,products.picPath as productImage,prices.id as priceId"

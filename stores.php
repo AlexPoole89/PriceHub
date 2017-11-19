@@ -3,7 +3,7 @@
 if (false) {
 // fake $app, $log so that Netbeans can provide suggestions while typing code
     require_once 'vendor/autoload.php';
-    $app = new \Slim\Slim();   
+    $app = new \Slim\Slim();
     $log = new Monolog\Logger('main');
 }
 
@@ -73,7 +73,7 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         } else {
             if (strstr($storeImage['name'], '..')) {
                 array_push($errorList, "Invalid file name");
-                $log->warn("Uploaded file name with .. in it (possible attack) " . 
+                $log->warn("Uploaded file name with .. in it (possible attack) " .
                         print_r($storeImage, true));
             }
             // check if image if valid 
@@ -111,7 +111,7 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
         //
         $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
         //
-        if ($storeImage) { 
+        if ($storeImage) {
             $ext = '';
             switch ($info['mime']) {
                 case "image/gif":
@@ -128,7 +128,7 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
                     break;
             }
             $log->info("In /stores pic info: " . print_r($info, true));
-            $logoPath = getUniqueFileNameForExtension('uploads', $ext); 
+            $logoPath = getUniqueFileNameForExtension('uploads', $ext);
             if (!move_uploaded_file($storeImage['tmp_name'], $logoPath)) {
                 $log->err(sprintf("Error moving uploaded file: " . print_r($storeImage, true)));
                 $app->render('error_internal.html.twig');
@@ -215,43 +215,6 @@ $app->get('/stores/list', function() use($app) {
     $app->render('stores_list.html.twig', array('list' => $storeList));
 });
 
-//STORE LIST SEARCHBAR
-//$app->post('/storeresult/:word', function($word) use ($app) {
-//      
-//    $rows = DB::query("SELECT * FROM stores WHERE name LIKE '%%s%' ", $word);
-//     if($rows){
-//        foreach($rows as $row){
-//            echo
-//    '<li class="accordion-item"><a href="#" class="item-content item-link">
-//                        <div class="item-inner">
-//                            <div class="item-title">' . $row['name'] . '</div>
-//                        </div></a>
-//                    <div class="accordion-item-content">
-//                        <div class="content-block">    
-//                            <div class="row">
-//                                <div class="col-33">
-//                                    <a href="/stores/view/' . $row['id'] . '" class="external button button-big button-fill button-raised color-cyan">View</a>
-//                                </div>
-//                                <div class="col-33">
-//                                    <a href="/stores/edit/' . $row['id'] . '" class="external button button-big button-fill button-raised color-cyan">Update</a>
-//                                </div>
-//                              
-//                                <div class="col-33"> 
-//                                    <a href="/stores/delete/' . $row['id'] . '" class="button button-big button-fill button-raised color-pink external">Delete</a>
-//                                </div>
-//                                
-//                            </div>
-//                        </div>
-//                    </div>
-//                </li>';
-//        }
-//     } else {
-//         echo '';
-//     }
-//})->conditions(array(
-//    'word' => '\w'
-//));
-//
 //STORE PROFILE
 $app->get('/stores/view/:id', function($id = -1) use($app) {
     if (!$_SESSION['user']) {
@@ -267,3 +230,46 @@ $app->get('/stores/view/:id', function($id = -1) use($app) {
     'id' => '(\d+|\w+)'
 ));
 
+
+$app->get('/nearbystores', function() use($app) {
+    if (!$_SESSION['user']) {
+        $app->render('access_denied.html.twig');
+        return;
+    }
+
+    $app->render('nearbyStores.html.twig');
+});
+
+//NEARBY STORES
+$app->get('/nearbystores/:lat/:long', function($lat, $long) use ($app) {
+
+    $nearbyStores = DB::query("SELECT id, name,
+    latitude, longitude, logoPath, distance
+    FROM (
+    SELECT z.id, z.name,
+    z.latitude, z.longitude, z.logoPath,
+    p.radius,
+    p.distance_unit
+    * DEGREES(ACOS(COS(RADIANS(p.latpoint))
+    * COS(RADIANS(z.latitude))
+    * COS(RADIANS(p.longpoint - z.longitude))
+    + SIN(RADIANS(p.latpoint))
+    * SIN(RADIANS(z.latitude)))) AS distance
+    FROM stores AS z    
+    JOIN (
+    SELECT %d AS latpoint, %d AS longpoint,
+    5.0 AS radius, 111.045 AS distance_unit
+    ) AS p ON 1 = 1
+     WHERE z.latitude
+     BETWEEN p.latpoint  - (p.radius / p.distance_unit)
+         AND p.latpoint  + (p.radius / p.distance_unit)
+    AND z.longitude
+     BETWEEN p.longpoint - (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
+         AND p.longpoint + (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
+ ) AS d
+ WHERE distance <= radius
+ ORDER BY distance
+ LIMIT 15", $lat, $long);
+
+    echo json_encode($nearbyStores);
+});
