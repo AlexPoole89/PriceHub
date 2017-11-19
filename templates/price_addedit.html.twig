@@ -122,14 +122,28 @@
                 </li>
 
                 <li>
-                    <div class="item-content">
-                        <div class="item-inner">
-                            <div class="item-media"><i class="icon f7-icons">world</i></div>  
-                            <div class="item-input">
-                                <input type="text" placeholder="Store" name="store" id="store" value="{{v.storeName}}">
-                            </div>
-                        </div>
-                    </div>
+
+    <!-- Smart select item -->
+     <a href="#" class="item-link smart-select" data-page-title="" data-back-on-select="true">
+        <!-- select -->
+        <select name="store" id="store">
+                            {% for s in storeList %}
+                            <option value="{{s.name}}"{% if v.storeName == s.name %} selected {% endif %}>{{s.name}}</option>
+                            {% endfor %}
+        </select>
+        <div class="item-content">
+          <div class="item-inner">
+            <!-- Select label -->
+           <div class="item-media"><i class="icon f7-icons">world</i></div>  
+            <!-- Selected value, not required -->
+            <div class="item-title">Store</div>
+            <div class="item-after">{{v.storeName}}</div>
+          </div>
+        </div>
+      </a>
+  
+                                {# <input type="text" placeholder="Store" name="store" id="store" value="{{v.storeName}}"> #}
+
                 </li>
 
                 <li>

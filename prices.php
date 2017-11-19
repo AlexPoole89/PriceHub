@@ -73,9 +73,11 @@ $app->get('/price/:op(/:id)', function($op, $id = -1) use ($app) {
     } else { // nothing to load from database - adding
         $values = array();
     }
+    $storeList=DB::query("SELECT * FROM stores");
     $app->render('price_addedit.html.twig', array(
         'v' => $values,
-        'isEditing' => ($id != -1)
+        'isEditing' => ($id != -1),
+        'storeList'=>$storeList
     ));
 })->conditions(array(
     'op' => '(edit|add)',
@@ -195,7 +197,7 @@ $app->post('/price/:op(/:id)', function($op, $id = -1) use ($app, $log) {
             }
             $storeName = DB::queryFirstRow('SELECT * FROM stores WHERE name=%s', $storeName);
             $storeId = $storeName['id'];
-
+            
 
             DB::insert('prices', array('storeId' => $storeId, 'productId' => $productId, 'price' => $price, 'onSpecial' => $onSpecial, 'quantity' => $quantity, 'unit' => $unit, 'userId' => $_SESSION['user']['id']));
         }

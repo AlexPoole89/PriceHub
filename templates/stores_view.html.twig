@@ -53,7 +53,7 @@
                                 <div class="item-inner">
                                     
                                     <div class="item-title"><a class="external" href="/products/view/{{p.productId}}">{{p.productName}}</a></div>
-                                    <div class="item-after"> {{p.dateRegistered}}&nbsp;</div>
+                                    <div class="item-after"> {{p.dateRegistered|date("m/d/Y")}}&nbsp;</div>
                                     <div class="item-subtitle">${{p.price}} /{{p.quantity}} {{p.unit}}</div>
 
                                 </div>
