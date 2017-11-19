@@ -85,9 +85,9 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
                 array_push($errorList, "File doesn't look like a valid image.");
             } else {
                 //CHECK IMAGE SIZE, 
-                if (filesize($productImage["tmp_name"]) > 400000) {
-                    array_push($errorList, "Image must be smaller than 40kb.");
-                }
+//                if (filesize($productImage["tmp_name"]) > 400000) {
+//                    array_push($errorList, "Image must be smaller than 40kb.");
+//                }
                 //CHECK IMAGE DIMENSIONS
 //                if ($info[0] > 300 || $info[1] > 300) {
 //                    array_push($errorList, "Image must not be bigger than 300x300 pixels.");
@@ -142,13 +142,18 @@ $app->post('/products/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 //UPDATE
         if ($id != -1) {
 //VERIFY USER MATCHES ORIGINAL TO-DO WRITER
-
-            if ($product['userId'] == $_SESSION['user']['id']) {
+            //if the user is uploading a new picture
+            if ($product['userId'] == $_SESSION['user']['id'] && $picPath) {
                 unlink('.' . $product['picPath']);
                 $values['picPath'] = "/" . $picPath;
                 DB::update('products', $values, "id=%i", $id);
                 $values = DB::queryFirstRow("SELECT * FROM products WHERE id=%i", $id);
+                //if the user is making any other changes but not changing the picture
+            } else if ($product['userId'] == $_SESSION['user']['id'] && $productImage == "") {
+                DB::update('products', $values, "id=%i", $id);
+                $values = DB::queryFirstRow("SELECT * FROM products WHERE id=%i", $id);
             } else { //access denied
+            
                 $app->render('access_denied.html.twig');
                 return;
             }
