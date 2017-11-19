@@ -231,6 +231,7 @@ $app->get('/products/view/:id', function($id = -1) use($app) {
     $pricesCountProduct = DB::queryFirstField("SELECT count(id) FROM prices WHERE productId=%i", $id);
     $product = DB::queryFirstRow("SELECT products.name as prodName, products.id as id, users.name as username, products.barcode as barcode,"
                     . " products.comment as comment, products.picPath as picPath FROM products, users WHERE products.userId=users.id AND products.id=%i", $id);
+    $allstores = DB::query("SELECT stores.name AS storeName,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i",$id);
 
     //get user's location to search for nearest stores
 //    $long = $app->request()->post('long');
@@ -238,7 +239,7 @@ $app->get('/products/view/:id', function($id = -1) use($app) {
 //    
    
     $app->render('products_view.html.twig', array('p' => $product,
-        'price' => $pricesCountProduct
+        'price' => $pricesCountProduct,'allstores'=>$allstores
     ));
 })->conditions(array(
     'id' => '\d+'

@@ -40,6 +40,36 @@
     <input type="hidden" id="long" name="long">
     <input type="hidden" id="lat" name="lat">
 
+         <div class="accordion-item">
+             
+    <div class="card">
+          <div class="accordion-item-toggle  color-lightblue"><div class="card-header">Sold At</div></div> 
+          <div class="accordion-item-content">
+        <div class="card-content">
+            <div class="card-content-inner">
+                <div class="list-block">
+                <ul>
+                {% for p in allstores %}
+
+                    <li {% if p.onSpecial == 1 %}style="background-color:#90EE90;" {% endif %} >
+                            
+                                <div class="item-inner">
+                                    
+                                    <div class="item-title"><a class="external" href="/stores/view/{{p.storeId}}">{{p.storeName}}</a></div>
+                                    <div class="item-after"> {{p.dateRegistered|date("m/d/Y")}}&nbsp;</div>
+                                    <div class="item-subtitle">${{p.price}} /{{p.quantity}} {{p.unit}}</div>
+
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                </div>
 
     <div class="content-block-title">Nearby stores list</div>
 
@@ -55,6 +85,7 @@
             <div class="card-content-inner"><div id="map"></div></div>
         </div>
     </div>  
+
 
 
 {% endblock %}

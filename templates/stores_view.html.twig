@@ -9,7 +9,7 @@
 {% endblock %}
 {% block content %}
   {#  {% for s in store %}  #}
-    <div class="content-block-title">{{s.name}}</div>
+    <div class="content-block-title theme-bluegray" >{{s.name}}</div>
  
        
     
@@ -52,7 +52,7 @@
                             
                                 <div class="item-inner">
                                     
-                                    <div class="item-title">{{p.productName}}</div>
+                                    <div class="item-title"><a class="external" href="/products/view/{{p.productId}}">{{p.productName}}</a></div>
                                     <div class="item-after"> {{p.dateRegistered}}&nbsp;</div>
                                     <div class="item-subtitle">${{p.price}} /{{p.quantity}} {{p.unit}}</div>
 
@@ -67,16 +67,8 @@
     </div>
 </div>
                 </div>
-                    <div class="card">
-        <div class="card-content">
-            <div class="card-content-inner">
-               <canvas id="myChart" width="400" height="400"></canvas>
-            </div>
-        </div>
-    </div>
   
   
-    <div class="content-block">&nbsp;</div>
    {# {% endfor %}  #}
     
     {% endblock %}

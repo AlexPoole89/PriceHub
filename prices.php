@@ -241,7 +241,7 @@ $app->post('/price/delete/:id', function($id) use ($app) {
     }
 });
 
-$app->get('/price/view/:id', function($id) use($app) {
+$app->get('/price/view/:id', function($id = -1) use($app) {
     if (!$_SESSION['user']) {
         $app->render('access_denied.html.twig');
         return;
@@ -250,8 +250,8 @@ $app->get('/price/view/:id', function($id) use($app) {
 
     
     $priceview = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,products.barcode as productBarcode,products.picPath as productImage,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE prices.id = %i ORDER BY dateRegistered DESC LIMIT 30",$id);
-    $allprices = DB::query("SELECT stores.name AS storeName,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i ORDER BY dateRegistered DESC",$id);
-    $allprices2 = DB::query("SELECT stores.name AS storeName,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i ORDER BY dateRegistered ASC",$id); 
+    $allprices = DB::query("SELECT stores.name AS storeName,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i ORDER BY dateRegistered DESC",$priceview['productId']);
+      $allprices2 = DB::query("SELECT stores.name AS storeName,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i ORDER BY dateRegistered ASC",$priceview['productId']); 
     $app->render('price_view.html.twig', array('list' => $priceview,'allprices'=>$allprices,'allprices2'=>$allprices2));
     
 })->conditions(array(

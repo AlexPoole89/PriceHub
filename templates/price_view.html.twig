@@ -8,9 +8,9 @@
         <img src="{{list.productImage}}" style="width:100%; height:100%;">
         <div class="card-content">
             <div class="card-content-inner">
-                <p>Product: <a href="/products/view/{{list.productId}}">{{list.productName}}</a></p>
+                <p>Product: <a class="external" href="/products/view/{{list.productId}}">{{list.productName}}</a></p>
                 <p>Barcode: {{list.productBarcode}}</p>
-                <p>Store:<a href="/stores/view/{{list.storeId}}"> {{list.storeName}}</a></p>
+                <p>Store:<a class="external" href="/stores/view/{{list.storeId}}">{{list.storeName}}</a></p>
                 <p>Modified: {{list.dateRegistered}}</p>
                 {# TODO ADD link to prices page WHERE productId={{list.id}} #}
 
