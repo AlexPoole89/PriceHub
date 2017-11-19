@@ -53,9 +53,9 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
     //$address
     $longitude = $app->request()->post('longitude');
     $latitude = $app->request()->post('latitude');
-    $logoPath = '';
+    $storeImage = '';
 //
-    $values = array('name' => $name, 'longitude' => $longitude, 'latitude' => $latitude, 'logoPath' => $logoPath);
+    $values = array('name' => $name, 'longitude' => $longitude, 'latitude' => $latitude);
     $errorList = array();
 //
     if (strlen($name) < 1 || strlen($name) > 100) {
@@ -141,12 +141,17 @@ $app->post('/stores/:op(/:id)', function($op, $id = -1) use ($app, $log) {
 //UPDATE
         if ($id != -1) {
 //VERIFY USER MATCHES ORIGINAL STORE ADDER
-            if ($store['userId'] == $_SESSION['user']['id']) {
+            //if user is uploading a new picture
+            if ($store['userId'] == $_SESSION['user']['id'] && $logoPath) {
                 unlink('.' . $store['logoPath']);
                 $values['logoPath'] = "/" . $logoPath;
                 DB::update('stores', $values, "id=%i", $id);
                 $values = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
-            } else { //access denied
+                //if user is making changes but not uploading a new picture
+            } else  if ($store['userId'] == $_SESSION['user']['id'] && $storeImage == "") {
+                DB::update('stores', $values, "id=%i", $id);
+                $values = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
+            }  else { //access denied
                 $app->render('access_denied.html.twig');
                 return;
             }
