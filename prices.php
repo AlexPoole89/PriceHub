@@ -42,8 +42,12 @@ $app->get('/price/list', function() use ($app) {
     }
     //
 
-    $productsList = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
-
+        $productsList = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
+        $start = strtotime($productsList['dateRegistered']);
+        $end = time(); //
+        $dateDiff   = $end - $start;
+       
+      
 $app->render('pricelist.html.twig', array('list' => $productsList));   
 });
 
@@ -245,9 +249,10 @@ $app->get('/price/view/:id', function($id = -1) use($app) {
     
 
     
-    $priceview = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,products.barcode as productBarcode,products.picPath as productImage,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE prices.id = %i LIMIT 30 ORDER BY dateRegistered DESC",$id);
-    $allprices = DB::query("SELECT stores.name AS storeName,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i ORDER BY dateRegistered DESC",$priceview['productId']); 
-    $app->render('price_view.html.twig', array('list' => $priceview,'allprices'=>$allprices));
+    $priceview = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,products.barcode as productBarcode,products.picPath as productImage,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE prices.id = %i ORDER BY dateRegistered DESC LIMIT 30",$id);
+    $allprices = DB::query("SELECT stores.name AS storeName,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i ORDER BY dateRegistered DESC",$priceview['productId']);
+      $allprices2 = DB::query("SELECT stores.name AS storeName,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i ORDER BY dateRegistered ASC",$priceview['productId']); 
+    $app->render('price_view.html.twig', array('list' => $priceview,'allprices'=>$allprices,'allprices2'=>$allprices2));
     
 })->conditions(array(
     'id' => '\d+'

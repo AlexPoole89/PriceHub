@@ -221,10 +221,13 @@ $app->get('/stores/view/:id', function($id = -1) use($app) {
         $app->render('access_denied.html.twig');
         return;
     }
+       
+
     $pricesCountStore = DB::queryFirstField("SELECT count(id) FROM prices WHERE storeId=%i", $id);
     $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
-    $app->render('stores_view.html.twig', array('s' => $store,
-        'price' => $pricesCountStore
+    $allproducts = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE storeId = %i ORDER BY dateRegistered DESC",$id);
+     $app->render('stores_view.html.twig', array('s' => $store,
+        'price' => $pricesCountStore,'allproducts'=>$allproducts
     ));
 })->conditions(array(
     'id' => '(\d+|\w+)'

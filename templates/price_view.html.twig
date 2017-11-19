@@ -80,10 +80,10 @@ var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'line',
     data: {
-        labels: [{% for p in allprices %} {% if loop.first %}"{{p.dateRegistered|date("m/d/Y")}}" {% else %},"{{p.dateRegistered|date("m/d/Y")}}"{% endif %} {% endfor %}],
+        labels: [{% for p in allprices2 %} {% if loop.first %}"{{p.dateRegistered|date("m/d/Y")}}" {% else %},"{{p.dateRegistered|date("m/d/Y")}}"{% endif %} {% endfor %}],
         datasets: [{
             label: 'History',
-            data: [{% for p in allprices %}{% if loop.first %}{{p.price}}{% else %},{{p.price}}{% endif %}{% endfor %}],
+            data: [{% for p in allprices2 %}{% if loop.first %}{{p.price}}{% else %},{{p.price}}{% endif %}{% endfor %}],
             borderColor: 'rgb(255,127,80)',
             borderWidth: 1
         }]

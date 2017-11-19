@@ -37,6 +37,45 @@
   </div>
 </div>  
 
+       <div class="accordion-item">
+             
+    <div class="card">
+          <div class="accordion-item-toggle  color-lightblue"><div class="card-header">Products Sold</div></div> 
+          <div class="accordion-item-content">
+        <div class="card-content">
+            <div class="card-content-inner">
+                <div class="list-block">
+                <ul>
+                {% for p in allproducts %}
+
+                    <li {% if p.onSpecial == 1 %}style="background-color:#90EE90;" {% endif %} >
+                            
+                                <div class="item-inner">
+                                    
+                                    <div class="item-title">{{p.productName}}</div>
+                                    <div class="item-after"> {{p.dateRegistered}}&nbsp;</div>
+                                    <div class="item-subtitle">${{p.price}} /{{p.quantity}} {{p.unit}}</div>
+
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                </div>
+                    <div class="card">
+        <div class="card-content">
+            <div class="card-content-inner">
+               <canvas id="myChart" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+  
+  
     <div class="content-block">&nbsp;</div>
    {# {% endfor %}  #}
     
