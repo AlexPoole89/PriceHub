@@ -130,7 +130,9 @@
                             {% for s in storeList %}
                             <option value="{{s.name}}"{% if v.storeName == s.name %} selected {% endif %}>{{s.name}}</option>
                             {% endfor %}
+                            <button href="/stores/add" class="button button-fill">Add New Store</button>
         </select>
+        
         <div class="item-content">
           <div class="item-inner">
             <!-- Select label -->
