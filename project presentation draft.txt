@@ -41,7 +41,7 @@ presentation slides
 
 ===========FUTURE WORK===========
 
-16- various list sorting options, extra charts, keyboard problem
+16- various list sorting options, extra charts, keyboard problem, ajax loading on prices list
 
 
 ============SUMMARY===========
