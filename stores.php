@@ -223,13 +223,10 @@ $app->get('/stores/list', function() use($app) {
 
 
 //AJAX LOAD MORE STORES TO LIST
-$app->get('/storesList/:load', function($load) {
-    
+$app->get('/storesList/:load', function($load) {    
     $loadList = $load * 7;
-    
-        $productsCont = DB::query("SELECT * FROM stores ORDER BY id DESC LIMIT %i,7", $loadList);
-        
-    echo json_encode($productsCont);
+        $storesCont = DB::query("SELECT * FROM stores ORDER BY id DESC LIMIT %i,7", $loadList);
+    echo json_encode($storesCont);
 });
 
 

@@ -88,25 +88,20 @@
 
       function locationFound(position) {
         // we will zoom/pan to this place, and set a marker
-        var location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        var location = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
         // var accuracy = position.coords.accuracy;
-
         map.setCenter(location);
         var marker = new google.maps.Marker({
             position: location, 
             map: map, 
-            draggable: true,
-            title: "You are here! Drag the marker to the exact location."
+            draggable: true
         });
-        // set the value an value of the <input>
+        // set the value of the <input>
         updateInput(location.lat(), location.lng());
-
         // Add a "drag end" event handler
         google.maps.event.addListener(marker, 'dragend', function() {
           updateInput(this.position.lat(), this.position.lng());
         });
-
-
       }
 
       function locationNotFound() {

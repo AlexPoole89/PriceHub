@@ -201,12 +201,12 @@ $app->post('/products/delete/:id', function($id) use ($app) {
         $app->render('not_found.html.twig');
         return;
     }
-    DB::delete('products', "id=%i", $id);
     DB::delete('prices', 'productId=%i', $id);
+    DB::delete('products', "id=%i", $id);   
     if (DB::affectedRows() == 0) {
         $app->render('not_found.html.twig');
     } else {
-        $app->render('product_delete_success.html.twig');
+        $app->render('products_delete_success.html.twig');
     }
 });
 //
