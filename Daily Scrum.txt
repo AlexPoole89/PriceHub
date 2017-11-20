@@ -108,3 +108,19 @@ date and name
 
 
 11/13/2017
+
+11/18/2017 Derek
+1.added charts
+2.work on search bar for prices
+3.
+
+11/19/2017 Derek
+1.Finished search bar
+2.add smart select for stores
+-add lists to all view pages
+
+11/20/2017 Derek
+1.Finished smart select/lists
+2.fix up some css issues
+-add manifest
+-fix some bugs
