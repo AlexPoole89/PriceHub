@@ -216,9 +216,21 @@ $app->get('/products/list', function() use($app) {
     if (!$_SESSION['user']) {
         $app->render('access_denied.html.twig');
         return;
-    }                                               //  WHERE products.userId=users.id
-    $productsList = DB::query("SELECT * FROM products");
-    $app->render('products_list.html.twig', array('list' => $productsList));
+    }                                               //  SET LIMIT FOR AJAX TO LOAD REST LATER
+    $newestProductsList = DB::query("SELECT * FROM products ORDER BY id DESC LIMIT 0,7");
+    $productCount = DB::queryFirstField("SELECT COUNT(*) FROM products");
+    $app->render('products_list.html.twig', array('list' => $newestProductsList, 'pc' => $productCount));
+});
+
+
+//AJAX LOAD MORE PRODUCTS TO LIST
+$app->get('/productsList/:load', function($load) {
+    
+    $loadList = $load * 7;
+    
+        $productsCont = DB::query("SELECT * FROM products ORDER BY id DESC LIMIT %i,7", $loadList);
+        
+    echo json_encode($productsCont);
 });
 
 
@@ -233,11 +245,7 @@ $app->get('/products/view/:id', function($id = -1) use($app) {
                     . " products.comment as comment, products.picPath as picPath FROM products, users WHERE products.userId=users.id AND products.id=%i", $id);
     $allstores = DB::query("SELECT stores.name AS storeName,prices.id as priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i",$id);
 
-    //get user's location to search for nearest stores
-//    $long = $app->request()->post('long');
-//    $lat = $app->request()->post('lat');
-//    
-   
+
     $app->render('products_view.html.twig', array('p' => $product,
         'price' => $pricesCountProduct,'allstores'=>$allstores
     ));
@@ -245,52 +253,6 @@ $app->get('/products/view/:id', function($id = -1) use($app) {
     'id' => '\d+'
 ));
 
-$app->get('/closestores/:lat/:long/:id', function($lat, $long, $id) use ($app) {
-    
-    $priceview = DB::queryFirstRow("SELECT stores.name AS storeName, products.name AS productName,"
-            . "products.barcode as productBarcode,products.picPath as productImage,prices.id as priceId"
-            . ",storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores"
-            . " ON prices.storeId = stores.id LEFT JOIN products"
-            . " ON prices.productId = products.id WHERE prices.id = %i",$id);
-    
-    $storesWithProduct = DB::query("SELECT 
-            storeId "
-            . "FROM prices LEFT JOIN stores ON prices.storeId = stores.id WHERE productId = %i "
-            . "ORDER BY dateRegistered DESC",$priceview['productId']); 
-    
-    $closeStores = DB::query("SELECT id, name,
-    latitude, longitude, logoPath, distance
-    FROM (
-    SELECT z.id, z.name,
-    z.latitude, z.longitude, z.logoPath,
-    p.radius,
-    p.distance_unit
-    * DEGREES(ACOS(COS(RADIANS(p.latpoint))
-    * COS(RADIANS(z.latitude))
-    * COS(RADIANS(p.longpoint - z.longitude))
-    + SIN(RADIANS(p.latpoint))
-    * SIN(RADIANS(z.latitude)))) AS distance
-    FROM stores AS z    
-    JOIN (
-    SELECT %d AS latpoint, %d AS longpoint,
-    5.0 AS radius, 111.045 AS distance_unit
-    ) AS p ON 1 = 1
-    WHERE z.latitude
-    BETWEEN p.latpoint - (p.radius / p.distance_unit)
-    AND p.latpoint + (p.radius / p.distance_unit)
-    AND z.longitude
-    BETWEEN p.longpoint - (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
-    AND p.longpoint + (p.radius / (p.distance_unit * COS(RADIANS(p.latpoint))))
-    ) AS d
-    WHERE distance <= radius
-    AND Z.id IN %li
-    ORDER BY distance
-    LIMIT 15", $lat, $long, $storesWithProduct);
-    
-    echo json_encode($closeStores);
-    /*
-    if ($nearbyStores) {
-      //  header("Content-type: application/json");
-        echo array('nearbyStores' => $nearbyStores);
-    } */
-});
+
+
+

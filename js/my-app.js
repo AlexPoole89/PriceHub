@@ -51,7 +51,7 @@ function createContentPage() {
  //try to implement js fix for input/text area and mobile screen keyboard
     //use class or element name
     //$$(document).on("focus","input,textarea", function(e){
-    $$(document).on("focus",".kbdfix", function(e){
+ /*   $$(document).on("focus",".kbdfix", function(e){
         var el = $$(e.target);
         var page = el.closest(".page-content");
         var elTop = el.offset().top;
@@ -74,4 +74,4 @@ function createContentPage() {
     $$(document).on("blur",".kbdfix", function(e){
         //reduce all fixes
         $$("#keyboard-fix").css("height", "0px");
-    }, true);
+    }, true); */

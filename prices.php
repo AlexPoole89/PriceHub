@@ -35,21 +35,34 @@ $app->post('/isbarcoderegistered/:barcode', function($barcode) use ($app) {
     }
 });
 
+//PRICE LIST
 $app->get('/price/list', function() use ($app) {
     if (!$_SESSION['user']) {
         $app->render('access_denied.html.twig');
         return;
     }
     //
-
-        $productsList = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id");
+   
+        $productsList = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id ");
         $start = strtotime($productsList['dateRegistered']);
         $end = time(); //
         $dateDiff   = $end - $start;
-       
-      
+    //   $priceCount = DB::queryFirstField("SELECT count(*) FROM prices"); for knowing max amount for ajax loading
 $app->render('pricelist.html.twig', array('list' => $productsList));   
 });
+
+
+//AJAX LOAD MORE PRODUCTS TO PRICE LIST
+//$app->get('/pricesList/:load', function($load) {
+//    
+//    $loadList = $load * 7;
+//    
+//        $pricesCont = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id LIMIT %i,7", $loadList);
+//        
+//    echo json_encode($pricesCont);
+//});
+
+
 
 //JQuery check for email
 //add/edit a price

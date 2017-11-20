@@ -215,10 +215,25 @@ $app->get('/stores/list', function() use($app) {
     if (!$_SESSION['user']) {
         $app->render('access_denied.html.twig');
         return;
-    }                                           // WHERE stores.userId=users.id
-    $storeList = DB::query("SELECT * FROM stores");
-    $app->render('stores_list.html.twig', array('list' => $storeList));
+    }                                           
+    $storeList = DB::query("SELECT * FROM stores ORDER BY id DESC LIMIT 0,7");
+    $storeCount = DB::queryFirstField("SELECT COUNT(*) FROM stores");
+    $app->render('stores_list.html.twig', array('list' => $storeList, 'sc' => $storeCount));
 });
+
+
+//AJAX LOAD MORE STORES TO LIST
+$app->get('/storesList/:load', function($load) {
+    
+    $loadList = $load * 7;
+    
+        $productsCont = DB::query("SELECT * FROM stores ORDER BY id DESC LIMIT %i,7", $loadList);
+        
+    echo json_encode($productsCont);
+});
+
+
+
 
 //STORE PROFILE
 $app->get('/stores/view/:id', function($id = -1) use($app) {
@@ -226,8 +241,7 @@ $app->get('/stores/view/:id', function($id = -1) use($app) {
         $app->render('access_denied.html.twig');
         return;
     }
-       
-
+      
     $pricesCountStore = DB::queryFirstField("SELECT count(id) FROM prices WHERE storeId=%i", $id);
     $store = DB::queryFirstRow("SELECT * FROM stores WHERE id=%i", $id);
     $allproducts = DB::query("SELECT stores.name AS storeName, products.name AS productName,products.id AS productId,prices.id AS priceId,storeId,productId,quantity,dateRegistered,price,unit,onSpecial FROM prices LEFT JOIN stores ON prices.storeId = stores.id LEFT JOIN products ON prices.productId = products.id WHERE storeId = %i ORDER BY dateRegistered DESC",$id);

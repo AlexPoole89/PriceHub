@@ -70,7 +70,7 @@
     </div>
 </div>
                 </div>
-
+{#
     <div class="content-block-title">Nearby stores list</div>
 
     <div class="list-block">
@@ -87,11 +87,11 @@
     </div>  
 
 
-
+#}
 {% endblock %}
 
 {% block scriptextra %} 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxl2OsLeKyA3upPOzMaPDpVUq6dNzR48">
+  {#  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBxxl2OsLeKyA3upPOzMaPDpVUq6dNzR48">
     </script> 
     <script>
         var map;
@@ -164,5 +164,5 @@
 
         $(document).ready(initialize);
 
-    </script>
+    </script> #}
 {% endblock %}
