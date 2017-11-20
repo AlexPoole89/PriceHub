@@ -1,8 +1,8 @@
 presentation slides
 
-1- title
+1A- title
 
-2- background- price hub centralized price tracking 
+2D- background- price hub centralized price tracking , progressive web app
 
 ========SOLUTION OVERVIEW===========
 
@@ -12,7 +12,7 @@ presentation slides
 
 5D- prices add page and features
 
-6- one slide for list view of all 3 pages
+6D- one slide for list view of all 3 pages
 
 7A- store view and features
 
@@ -25,28 +25,27 @@ presentation slides
 
 ============CHALLENGES AND SOLUTIONS=============
 
-11- Framework7? talk about progressive web apps
+11A- google maps api, geolocation, moving marker, display saved locations
 
-12A- google maps api, geolocation, moving marker, display saved locations
-
-13A-finding nearby locations using geolocation, haversine formula and ajax
+12A-finding nearby locations using geolocation, haversine formula and ajax
 - code sample
 
-14D- quagga.js explain, code sample
+13D- quagga.js explain, code sample
 
-15D- chart.js explain, code sample
+14D- chart.js explain, code sample
 
-16- searchbar?
+15A- infinite scroll ajax
 
+16D- searchbar?
 
 ===========FUTURE WORK===========
 
-16- various list sorting options, extra charts, keyboard problem, ajax loading on prices list
+17A- various list sorting options, extra charts, keyboard problem, ajax loading on prices list
 
 
 ============SUMMARY===========
 
-17- used framework7 to make a progressive web app that used gps and phone camera to save and track prices products and stores etc etc
+18D- used framework7 to make a progressive web app that used gps and phone camera to save and track prices products and stores etc etc
 
 
 
